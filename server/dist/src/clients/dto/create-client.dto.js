@@ -11,15 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateClientDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 class CreateClientDto {
 }
 exports.CreateClientDto = CreateClientDto;
 __decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: 'Иванов Михаил Иваныч', description: 'ФИО' }),
     __metadata("design:type", String)
 ], CreateClientDto.prototype, "fullname", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: '+7 985 242 24 64', description: 'Телефон' }),
+    (0, class_validator_1.IsPhoneNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ example: '+7 (800) 242-24-64', description: 'Телефон' }),
     __metadata("design:type", String)
 ], CreateClientDto.prototype, "phone", void 0);
 //# sourceMappingURL=create-client.dto.js.map

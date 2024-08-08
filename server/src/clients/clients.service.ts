@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from "@nestjs/common";
+import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { Client } from "./client.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
@@ -6,6 +6,7 @@ import { CreateClientDto } from "./dto/create-client.dto";
 import { IncompleteClientDto } from "./dto/incomplete-client.dto";
 import { Photographer } from "src/photographers/photographer.entity";
 import { Studio } from "src/studios/studio.entity";
+import { error } from "console";
 
 @Injectable ()
 export class ClientsService {
@@ -41,7 +42,7 @@ export class ClientsService {
     async findIncomplete(): Promise<IncompleteClientDto[]> {
         const clients = await this.clientRepository.find({
             relations: {
-                photographers: true,
+                photographers: false,
                 studios: true,
             }
         });
@@ -55,28 +56,41 @@ export class ClientsService {
     }
 
     async update(id: number, updatedClient: Client): Promise<Client> {
-        const client = await this.clientRepository.findOne({
-            where: { id },
-            relations: {studios: true, photographers: true}
-        });
+        try{
+            const client = await this.clientRepository.findOne({
+                where: { id },
+                relations: {studios: true, photographers: true}
+            });
 
-        client.fullname = updatedClient.fullname;
+            if (!client) {
+                throw new NotFoundException(`Пользователь с id ${id} не найден`);
+            }
 
-        client.phone = updatedClient.phone;
+            client.fullname = updatedClient.fullname;
 
-        const studios = await this.studioRepository.findBy({
-            id: In(updatedClient.studios),
-        });
-        client.studios = studios;
+            client.phone = updatedClient.phone;
 
-        const photographers = await this.photographerRepository.findBy({
-            id: In(updatedClient.photographers),
-        });
-        client.photographers = photographers;
+            const studios = await this.studioRepository.findBy({
+                id: In(updatedClient.studios),
+            });
+            client.studios = studios;
 
-        await this.clientRepository.save(client);
+            const photographers = await this.photographerRepository.findBy({
+                id: In(updatedClient.photographers),
+            });
+            client.photographers = photographers;
 
-        return client;
+            await this.clientRepository.save(client);
+
+            return client;
+        }
+        catch(error){
+            throw error;
+        }
+        
+        
+
+        
     }
 
     remove(id: number) {

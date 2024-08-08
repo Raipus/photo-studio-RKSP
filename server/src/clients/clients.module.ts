@@ -9,7 +9,7 @@ import { Studio } from "src/studios/studio.entity";
 import { IncompleteController } from "./incomplete.controller";
 
 @Module({
-    controllers: [ClientsController, IncompleteController],
+    controllers: [ClientsController],
     providers: [ClientsService],
     imports: [Client, DatasourceModule, TypeOrmModule.forFeature([Client,Photographer,Studio])],
 })

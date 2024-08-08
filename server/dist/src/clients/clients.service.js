@@ -46,7 +46,7 @@ let ClientsService = class ClientsService {
     async findIncomplete() {
         const clients = await this.clientRepository.find({
             relations: {
-                photographers: true,
+                photographers: false,
                 studios: true,
             }
         });
@@ -59,22 +59,30 @@ let ClientsService = class ClientsService {
         return incompleteClients;
     }
     async update(id, updatedClient) {
-        const client = await this.clientRepository.findOne({
-            where: { id },
-            relations: { studios: true, photographers: true }
-        });
-        client.fullname = updatedClient.fullname;
-        client.phone = updatedClient.phone;
-        const studios = await this.studioRepository.findBy({
-            id: (0, typeorm_2.In)(updatedClient.studios),
-        });
-        client.studios = studios;
-        const photographers = await this.photographerRepository.findBy({
-            id: (0, typeorm_2.In)(updatedClient.photographers),
-        });
-        client.photographers = photographers;
-        await this.clientRepository.save(client);
-        return client;
+        try {
+            const client = await this.clientRepository.findOne({
+                where: { id },
+                relations: { studios: true, photographers: true }
+            });
+            if (!client) {
+                throw new common_1.NotFoundException(`Пользователь с id ${id} не найден`);
+            }
+            client.fullname = updatedClient.fullname;
+            client.phone = updatedClient.phone;
+            const studios = await this.studioRepository.findBy({
+                id: (0, typeorm_2.In)(updatedClient.studios),
+            });
+            client.studios = studios;
+            const photographers = await this.photographerRepository.findBy({
+                id: (0, typeorm_2.In)(updatedClient.photographers),
+            });
+            client.photographers = photographers;
+            await this.clientRepository.save(client);
+            return client;
+        }
+        catch (error) {
+            throw error;
+        }
     }
     remove(id) {
         this.clientRepository.delete({ id });
