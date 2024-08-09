@@ -6,7 +6,6 @@ import { CreateClientDto } from "./dto/create-client.dto";
 import { IncompleteClientDto } from "./dto/incomplete-client.dto";
 import { Photographer } from "src/photographers/photographer.entity";
 import { Studio } from "src/studios/studio.entity";
-import { error } from "console";
 
 @Injectable ()
 export class ClientsService {
@@ -28,10 +27,21 @@ export class ClientsService {
     }
 
     async findOne(id: number): Promise<Client> {
-        return this.clientRepository.findOne({
-            where: { id },
-            relations: {studios: true, photographers: true}
-        });
+        try{
+            const client = await this.clientRepository.findOne({
+                where: { id },
+                relations: {studios: true, photographers: true}
+            });
+
+            if (!client) {
+                throw new NotFoundException(`Клиент с id ${id} не найден`);
+            }
+            
+            return client;
+        }
+        catch(error){
+            throw error;
+        }
     }
 
     async findAll(): Promise<Client[]> {
@@ -63,7 +73,7 @@ export class ClientsService {
             });
 
             if (!client) {
-                throw new NotFoundException(`Пользователь с id ${id} не найден`);
+                throw new NotFoundException(`Клиент с id ${id} не найден`);
             }
 
             client.fullname = updatedClient.fullname;
@@ -93,8 +103,21 @@ export class ClientsService {
         
     }
 
-    remove(id: number) {
-        this.clientRepository.delete({id});
-        return HttpStatus.OK;
+    async remove(id: number) {
+        try{
+            const client = await this.clientRepository.findOne({
+                where: { id }
+            });
+
+            if (!client) {
+                throw new NotFoundException(`Клиент с id ${id} не найден`);
+            }
+
+            this.clientRepository.delete({id});
+            return HttpStatus.OK;
+        }
+        catch(error){
+            throw error;
+        }
     }
 }

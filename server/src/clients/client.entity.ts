@@ -1,18 +1,25 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 import { Photographer } from "src/photographers/photographer.entity";
 import { Studio } from "src/studios/studio.entity";
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('clients')
 export class Client {
+    @IsNumber()
+    @IsNotEmpty()
     @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
     @PrimaryGeneratedColumn()
     id: number;
     
+    @IsString()
+    @IsNotEmpty()
     @ApiProperty({ example: 'Иванов Иван Иваныч', description: 'ФИО' })
     @Column()
     fullname: string;
 
+    @IsPhoneNumber()
+    @IsNotEmpty()
     @ApiProperty({ example: '+7 985 242 52 64', description: 'Телефон' })
     @Column()
     phone: string;

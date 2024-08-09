@@ -1,8 +1,9 @@
-import { HttpStatus, Injectable } from "@nestjs/common";
+import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { Studio } from "./studio.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
 import { Client } from "src/clients/client.entity";
+import { CreateStudioDto } from "./dto/create-studio.dto";
 
 @Injectable ()
 export class StudiosService {
@@ -13,21 +14,31 @@ export class StudiosService {
         private readonly studioRepository: Repository<Studio>
     ) {}
 
-    async create(studioNew: Studio): Promise<Studio> {
+    async create(studioNew: CreateStudioDto): Promise<Studio> {
         const studio = this.studioRepository.create();
         studio.name = studioNew.name;
         studio.location = studioNew.location;
         studio.description = studioNew.description;
-        studio.clients = null;
         await this.studioRepository.save(studio);
         return studio;
     }
 
     async findOne(id: number): Promise<Studio> {
-        return this.studioRepository.findOne({
-            where: { id },
-            relations: {clients: true}
-        });
+        try{
+            const studio = await this.studioRepository.findOne({
+                where: { id },
+                relations: {clients: true}
+            });
+            
+            if(!studio){
+                throw new NotFoundException(`Студия с id ${id} не найдена`);
+            }
+
+            return studio;
+        }
+        catch(error){
+            throw error;
+        }
     }
 
     async findAll(): Promise<Studio[]> {
@@ -36,20 +47,41 @@ export class StudiosService {
     }
 
     async update(id: number, updatedStudio: Studio): Promise<Studio>  {
-        const studio = await this.studioRepository.findOne({where: { id }});
-        studio.name = updatedStudio.name;
-        studio.location = updatedStudio.location;
-        studio.description = updatedStudio.description;
-        const clients = await this.clientRepository.findBy({
-            id: In(updatedStudio.clients),
-        });
-        studio.clients = clients;
-        await this.studioRepository.save(studio);
-        return studio;
+        try{
+            const studio = await this.studioRepository.findOne({where: { id }});
+
+            if(!studio){
+                throw new NotFoundException(`Студия с id ${id} не найдена`);
+            }
+            
+            studio.name = updatedStudio.name;
+            studio.location = updatedStudio.location;
+            studio.description = updatedStudio.description;
+            const clients = await this.clientRepository.findBy({
+                id: In(updatedStudio.clients),
+            });
+            studio.clients = clients;
+            await this.studioRepository.save(studio);
+            return studio;
+        }
+        catch(error){
+            throw error;
+        }
     }
 
     async remove(id: number) {
-        this.studioRepository.delete({id});
-        return HttpStatus.OK;
+        try{
+            const studio = await this.studioRepository.findOne({where: { id }});
+            
+            if(!studio){
+                throw new NotFoundException(`Студия с id ${id} не найдена`);
+            }
+
+            this.studioRepository.delete({id});
+            return HttpStatus.OK;
+        }
+        catch(error){
+            throw error;
+        }
     }
 }

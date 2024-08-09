@@ -3,7 +3,6 @@ import { ClientsService } from "./clients.service";
 import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateClientDto } from "./dto/create-client.dto";
-import { IncompleteClientDto } from "./dto/incomplete-client.dto";
 
 @Controller('clients')
 @ApiTags('Клиенты')
