@@ -4,7 +4,7 @@ import { PhotographersService } from "./photographers.service";
 import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe } from "@nestjs/common";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@Controller('Photographers')
+@Controller('photographers')
 @ApiTags('Фотографы')
 export class PhotographersController {
     constructor(private readonly PhotographersService: PhotographersService) {}

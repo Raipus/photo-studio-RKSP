@@ -4,7 +4,7 @@ import { StudiosService } from "./studios.service";
 import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe } from "@nestjs/common";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@Controller('Studios')
+@Controller('studios')
 @ApiTags('Студии')
 export class StudiosController {
     constructor(private readonly StudiosService: StudiosService) {}
