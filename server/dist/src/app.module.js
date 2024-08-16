@@ -8,19 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const clients_module_1 = require("./clients/clients.module");
-const datasource_module_1 = require("./datasource/datasource.module");
+const user_module_1 = require("./users/user.module");
 const photographers_module_1 = require("./photographers/photographers.module");
 const studios_module_1 = require("./studios/studios.module");
 const typeorm_1 = require("@nestjs/typeorm");
+const logger_middleware_1 = require("./middleware/logger.middleware");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('users', 'studios', 'photographers');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            clients_module_1.ClientsModule,
-            datasource_module_1.DatasourceModule,
+            user_module_1.UsersModule,
             photographers_module_1.PhotographersModule,
             studios_module_1.StudiosModule,
             typeorm_1.TypeOrmModule.forRoot({

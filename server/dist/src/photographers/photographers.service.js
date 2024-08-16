@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const photographer_entity_1 = require("./photographer.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const client_entity_1 = require("../clients/client.entity");
+const user_entity_1 = require("../users/user.entity");
 let PhotographersService = class PhotographersService {
     constructor(clientRepository, photographerRepository) {
         this.clientRepository = clientRepository;
@@ -28,41 +28,72 @@ let PhotographersService = class PhotographersService {
         photographer.fullname = photographerNew.fullname;
         photographer.phone = photographerNew.phone;
         photographer.work_exp = photographerNew.work_exp;
-        photographer.clients = null;
         await this.photographerRepository.save(photographer);
         return photographer;
     }
     async findOne(id) {
-        return this.photographerRepository.findOne({
-            where: { id },
-            relations: { clients: true }
-        });
+        try {
+            const photographer = await this.photographerRepository.findOne({
+                where: { id },
+                relations: { users: true }
+            });
+            if (!photographer) {
+                throw new common_1.NotFoundException(`Фотографа с id ${id} не найдено`);
+            }
+            return photographer;
+        }
+        catch (error) {
+            throw error;
+        }
     }
     async findAll() {
         const photographers = await this.photographerRepository.find();
         return photographers;
     }
     async update(id, updatedPhotographer) {
-        const photographer = await this.photographerRepository.findOne({ where: { id } });
-        photographer.fullname = updatedPhotographer.fullname;
-        photographer.phone = updatedPhotographer.phone;
-        photographer.work_exp = updatedPhotographer.work_exp;
-        const clients = await this.clientRepository.findBy({
-            id: (0, typeorm_2.In)(updatedPhotographer.clients),
-        });
-        photographer.clients = clients;
-        await this.photographerRepository.save(photographer);
-        return photographer;
+        try {
+            const photographer = await this.photographerRepository.findOne({
+                where: { id },
+                relations: { users: true }
+            });
+            if (!photographer) {
+                throw new common_1.NotFoundException(`Фотографа с id ${id} не найдено`);
+            }
+            photographer.fullname = updatedPhotographer.fullname;
+            photographer.phone = updatedPhotographer.phone;
+            photographer.work_exp = updatedPhotographer.work_exp;
+            const clients = await this.clientRepository.findBy({
+                id: (0, typeorm_2.In)(updatedPhotographer.users),
+            });
+            photographer.users = clients;
+            await this.photographerRepository.save(photographer);
+            return photographer;
+        }
+        catch (error) {
+            throw error;
+        }
     }
     async remove(id) {
-        this.photographerRepository.delete({ id });
-        return common_1.HttpStatus.OK;
+        try {
+            const photographer = await this.photographerRepository.findOne({
+                where: { id },
+                relations: { users: true }
+            });
+            if (!photographer) {
+                throw new common_1.NotFoundException(`Фотографа с id ${id} не найдено`);
+            }
+            this.photographerRepository.delete({ id });
+            return common_1.HttpStatus.OK;
+        }
+        catch (error) {
+            throw error;
+        }
     }
 };
 exports.PhotographersService = PhotographersService;
 exports.PhotographersService = PhotographersService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(client_entity_1.Client)),
+    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __param(1, (0, typeorm_1.InjectRepository)(photographer_entity_1.Photographer)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository])

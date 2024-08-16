@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { Client } from "src/clients/client.entity";
+import { User } from "src/users/user.entity";
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('studios')
@@ -30,11 +30,11 @@ export class Studio {
     description: string;
 
     @ApiProperty({ example: [1, 4], description: 'Клиенты, забронировавшие студию' })
-    @ManyToMany((type) => Client, (clients) => clients.studios)
+    @ManyToMany((type) => User, (user) => user.studios)
     @JoinTable({
-        name: 'client_studio',
+        name: 'user_studio',
         joinColumn: {name:'studio_id'},
-        inverseJoinColumn: {name:'client_id'},
+        inverseJoinColumn: {name:'user_id'},
     })
-    clients: Client[];
+    users: User[];
 }

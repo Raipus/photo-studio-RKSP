@@ -11,8 +11,7 @@ const common_1 = require("@nestjs/common");
 const studio_entity_1 = require("./studio.entity");
 const studios_controller_1 = require("./studios.controller");
 const studios_service_1 = require("./studios.service");
-const datasource_module_1 = require("../datasource/datasource.module");
-const client_entity_1 = require("../clients/client.entity");
+const user_entity_1 = require("../users/user.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 let StudiosModule = class StudiosModule {
 };
@@ -21,7 +20,7 @@ exports.StudiosModule = StudiosModule = __decorate([
     (0, common_1.Module)({
         controllers: [studios_controller_1.StudiosController],
         providers: [studios_service_1.StudiosService],
-        imports: [studio_entity_1.Studio, datasource_module_1.DatasourceModule, typeorm_1.TypeOrmModule.forFeature([client_entity_1.Client, studio_entity_1.Studio])],
+        imports: [studio_entity_1.Studio, typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, studio_entity_1.Studio])],
     })
 ], StudiosModule);
 //# sourceMappingURL=studios.module.js.map

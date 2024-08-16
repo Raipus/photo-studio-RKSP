@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudiosController = void 0;
+const create_studio_dto_1 = require("./dto/create-studio.dto");
 const studio_entity_1 = require("./studio.entity");
 const studios_service_1 = require("./studios.service");
 const common_1 = require("@nestjs/common");
@@ -48,7 +49,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Получить конкретную студию' }),
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
@@ -56,7 +57,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Изменить студию' }),
     (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, studio_entity_1.Studio]),
@@ -67,19 +68,19 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [studio_entity_1.Studio]),
+    __metadata("design:paramtypes", [create_studio_dto_1.CreateStudioDto]),
     __metadata("design:returntype", void 0)
 ], StudiosController.prototype, "create", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Удалить студию' }),
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], StudiosController.prototype, "remove", null);
 exports.StudiosController = StudiosController = __decorate([
-    (0, common_1.Controller)('Studios'),
+    (0, common_1.Controller)('studios'),
     (0, swagger_1.ApiTags)('Студии'),
     __metadata("design:paramtypes", [studios_service_1.StudiosService])
 ], StudiosController);

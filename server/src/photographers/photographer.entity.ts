@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
-import { Client } from "src/clients/client.entity";
+import { User } from "src/users/user.entity";
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('photographers')
@@ -30,11 +30,11 @@ export class Photographer {
     work_exp: number;
 
     @ApiProperty({ example: [1, 4], description: 'Клиенты, забронировавшие фотографа' })
-    @ManyToMany((type) => Client, (client) => client.photographers)
+    @ManyToMany((type) => User, (user) => user.photographers)
     @JoinTable({
-        name: 'client_photographer',
+        name: 'user_photographer',
         joinColumn: {name:'photographer_id'},
         inverseJoinColumn: {name:'client_id'},
     })
-    clients: Client[];
+    users: User[];
 }

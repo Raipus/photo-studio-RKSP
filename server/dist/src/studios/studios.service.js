@@ -17,10 +17,10 @@ const common_1 = require("@nestjs/common");
 const studio_entity_1 = require("./studio.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const client_entity_1 = require("../clients/client.entity");
+const user_entity_1 = require("../users/user.entity");
 let StudiosService = class StudiosService {
-    constructor(clientRepository, studioRepository) {
-        this.clientRepository = clientRepository;
+    constructor(userRepository, studioRepository) {
+        this.userRepository = userRepository;
         this.studioRepository = studioRepository;
     }
     async create(studioNew) {
@@ -28,41 +28,66 @@ let StudiosService = class StudiosService {
         studio.name = studioNew.name;
         studio.location = studioNew.location;
         studio.description = studioNew.description;
-        studio.clients = null;
         await this.studioRepository.save(studio);
         return studio;
     }
     async findOne(id) {
-        return this.studioRepository.findOne({
-            where: { id },
-            relations: { clients: true }
-        });
+        try {
+            const studio = await this.studioRepository.findOne({
+                where: { id },
+                relations: { users: true }
+            });
+            if (!studio) {
+                throw new common_1.NotFoundException(`Студия с id ${id} не найдена`);
+            }
+            return studio;
+        }
+        catch (error) {
+            throw error;
+        }
     }
     async findAll() {
         const studios = await this.studioRepository.find();
         return studios;
     }
     async update(id, updatedStudio) {
-        const studio = await this.studioRepository.findOne({ where: { id } });
-        studio.name = updatedStudio.name;
-        studio.location = updatedStudio.location;
-        studio.description = updatedStudio.description;
-        const clients = await this.clientRepository.findBy({
-            id: (0, typeorm_2.In)(updatedStudio.clients),
-        });
-        studio.clients = clients;
-        await this.studioRepository.save(studio);
-        return studio;
+        try {
+            const studio = await this.studioRepository.findOne({ where: { id } });
+            if (!studio) {
+                throw new common_1.NotFoundException(`Студия с id ${id} не найдена`);
+            }
+            studio.name = updatedStudio.name;
+            studio.location = updatedStudio.location;
+            studio.description = updatedStudio.description;
+            const users = await this.userRepository.findBy({
+                id: (0, typeorm_2.In)(updatedStudio.users),
+            });
+            studio.users = users;
+            await this.studioRepository.save(studio);
+            return studio;
+        }
+        catch (error) {
+            throw error;
+        }
     }
     async remove(id) {
-        this.studioRepository.delete({ id });
-        return common_1.HttpStatus.OK;
+        try {
+            const studio = await this.studioRepository.findOne({ where: { id } });
+            if (!studio) {
+                throw new common_1.NotFoundException(`Студия с id ${id} не найдена`);
+            }
+            this.studioRepository.delete({ id });
+            return common_1.HttpStatus.OK;
+        }
+        catch (error) {
+            throw error;
+        }
     }
 };
 exports.StudiosService = StudiosService;
 exports.StudiosService = StudiosService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(client_entity_1.Client)),
+    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __param(1, (0, typeorm_1.InjectRepository)(studio_entity_1.Studio)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository])

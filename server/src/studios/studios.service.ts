@@ -2,14 +2,14 @@ import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { Studio } from "./studio.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
-import { Client } from "src/clients/client.entity";
+import { User } from "src/users/user.entity";
 import { CreateStudioDto } from "./dto/create-studio.dto";
 
 @Injectable ()
 export class StudiosService {
     constructor (
-        @InjectRepository(Client)
-        private readonly clientRepository: Repository<Client>,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>,
         @InjectRepository(Studio)
         private readonly studioRepository: Repository<Studio>
     ) {}
@@ -27,7 +27,7 @@ export class StudiosService {
         try{
             const studio = await this.studioRepository.findOne({
                 where: { id },
-                relations: {clients: true}
+                relations: {users: true}
             });
             
             if(!studio){
@@ -57,10 +57,10 @@ export class StudiosService {
             studio.name = updatedStudio.name;
             studio.location = updatedStudio.location;
             studio.description = updatedStudio.description;
-            const clients = await this.clientRepository.findBy({
-                id: In(updatedStudio.clients),
+            const users = await this.userRepository.findBy({
+                id: In(updatedStudio.users),
             });
-            studio.clients = clients;
+            studio.users = users;
             await this.studioRepository.save(studio);
             return studio;
         }

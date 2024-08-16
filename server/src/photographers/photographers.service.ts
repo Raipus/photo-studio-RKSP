@@ -2,14 +2,14 @@ import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { Photographer } from "./photographer.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
-import { Client } from "src/clients/client.entity";
+import { User } from "src/users/user.entity";
 import { CreatePhotographerDto } from "./dto/create-photographer.dto";
 
 @Injectable ()
 export class PhotographersService {
     constructor (
-        @InjectRepository(Client)
-        private readonly clientRepository: Repository<Client>,
+        @InjectRepository(User)
+        private readonly clientRepository: Repository<User>,
         @InjectRepository(Photographer)
         private readonly photographerRepository: Repository<Photographer>
     ) {}
@@ -27,7 +27,7 @@ export class PhotographersService {
         try{
             const photographer = await this.photographerRepository.findOne({
                 where: { id },
-                relations: {clients: true}
+                relations: {users: true}
             });
 
             if(!photographer){
@@ -51,7 +51,7 @@ export class PhotographersService {
         try{
             const photographer = await this.photographerRepository.findOne({
                 where: { id },
-                relations: {clients: true}
+                relations: {users: true}
             });
 
             if(!photographer){
@@ -62,9 +62,9 @@ export class PhotographersService {
             photographer.phone = updatedPhotographer.phone;
             photographer.work_exp = updatedPhotographer.work_exp;
             const clients = await this.clientRepository.findBy({
-                id: In(updatedPhotographer.clients),
+                id: In(updatedPhotographer.users),
             });
-            photographer.clients = clients;
+            photographer.users = clients;
             await this.photographerRepository.save(photographer);
             return photographer;
         }
@@ -77,7 +77,7 @@ export class PhotographersService {
         try{
             const photographer = await this.photographerRepository.findOne({
                 where: { id },
-                relations: {clients: true}
+                relations: {users: true}
             });
 
             if(!photographer){

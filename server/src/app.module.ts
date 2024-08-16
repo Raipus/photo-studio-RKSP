@@ -1,5 +1,5 @@
 import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
-import { ClientsModule } from './clients/clients.module';
+import { UsersModule } from './users/user.module';
 import { PhotographersModule } from './photographers/photographers.module';
 import { StudiosModule } from './studios/studios.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,7 +7,7 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 
 @Module({
   imports: [
-    ClientsModule,
+    UsersModule,
     PhotographersModule, 
     StudiosModule, 
     TypeOrmModule.forRoot({
@@ -26,6 +26,6 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('clients','studios','photographers');
+    consumer.apply(LoggerMiddleware).forRoutes('users','studios','photographers');
   }
 }

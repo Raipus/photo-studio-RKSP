@@ -11,41 +11,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Photographer = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const client_entity_1 = require("../clients/client.entity");
+const class_validator_1 = require("class-validator");
+const user_entity_1 = require("../users/user.entity");
 const typeorm_1 = require("typeorm");
 let Photographer = class Photographer {
 };
 exports.Photographer = Photographer;
 __decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: '1', description: 'Уникальный идентификатор' }),
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Photographer.prototype, "id", void 0);
 __decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: 'Иванов Иван Иваныч', description: 'ФИО' }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Photographer.prototype, "fullname", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: '+7 985 242 52 64', description: 'Телефон' }),
+    (0, class_validator_1.IsPhoneNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ example: '+7 (985) 242-52-64', description: 'Телефон' }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Photographer.prototype, "phone", void 0);
 __decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: '4', description: 'Опыт работы, в годах' }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Photographer.prototype, "work_exp", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'Клиенты, забронировавшие фотографа' }),
-    (0, typeorm_1.ManyToMany)((type) => client_entity_1.Client, (client) => client.photographers),
+    (0, typeorm_1.ManyToMany)((type) => user_entity_1.User, (user) => user.photographers),
     (0, typeorm_1.JoinTable)({
-        name: 'client_photographer',
+        name: 'user_photographer',
         joinColumn: { name: 'photographer_id' },
         inverseJoinColumn: { name: 'client_id' },
     }),
     __metadata("design:type", Array)
-], Photographer.prototype, "clients", void 0);
+], Photographer.prototype, "users", void 0);
 exports.Photographer = Photographer = __decorate([
     (0, typeorm_1.Entity)('photographers')
 ], Photographer);
