@@ -9,7 +9,7 @@ import { CreateUserDto } from "./dto/create-user.dto";
 export class UsersController {
     constructor(private readonly UsersService: UsersService) {}
 
-    @ApiOperation({ summary: 'Получить всех пользователей в неполном формате' }) 
+    @ApiOperation({ summary: 'Демонстрация возможности получения всех пользователей в неполном формате' }) 
     @Get('incomplete')
     findIncomplete() {
         return this.UsersService.findIncomplete();

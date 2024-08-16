@@ -1,40 +1,58 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
-import { User } from "src/users/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('photographers')
-export class Photographer {
+export class User {
     @IsNumber()
     @IsNotEmpty()
     @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
     @PrimaryGeneratedColumn()
     id: number;
+    
+    @IsString()
+    @ApiProperty({ example: 'Алексей', description: 'Имя' })
+    @Column()
+    fullname: string;
+
+    @IsEmail()
+    @IsNotEmpty()
+    @ApiProperty({ example: 'someemail@mail.ru', description: 'Почта (Логин)' })
+    @Column()
+    email: string;
+
+    @IsPhoneNumber()
+    @ApiProperty({ example: '+7 (985) 242-52-64', description: 'Телефон (Альтернативный логин)' })
+    @Column()
+    phone: string;
 
     @IsString()
     @IsNotEmpty()
-    @ApiProperty({ example: 'Иванов Иван Иваныч', description: 'ФИО' })
+    @ApiProperty({ example: 'somepassword', description: 'Пароль' })
     @Column()
-    fullname: string;
-    
-    @IsPhoneNumber()
+    password: string;
+
+    @IsString()
     @IsNotEmpty()
-    @ApiProperty({ example: '+7 (985) 242-52-64', description: 'Телефон' })
+    @ApiProperty({ example: 'photographer', description: 'Роль пользователя' })
     @Column()
-    phone: string;
-    
+    role: string;
+
     @IsNumber()
-    @IsNotEmpty()
     @ApiProperty({ example: '4', description: 'Опыт работы, в годах' })
     @Column()
     work_exp: number;
 
-    @ApiProperty({ example: [1, 4], description: 'Клиенты, забронировавшие фотографа' })
-    @ManyToMany((type) => User, (user) => user.photographers)
-    @JoinTable({
-        name: 'user_photographer',
-        joinColumn: {name:'photographer_id'},
-        inverseJoinColumn: {name:'client_id'},
-    })
-    users: User[];
+    @IsNumber()
+    @ApiProperty({ example: '1600', description: 'Стоимость услуг за час в рублях' })
+    @Column()
+    cost: number;
+
+    @ApiProperty({ example: 3, description: 'ID фото фотографа' })
+    @OneToOne((type) => Photo, photo => photo.photographer, { nullable: true })
+    photo: Photo;
+
+    @ApiProperty({ example: [1, 4], description: 'ID всех бронь, где заказаны услуги данного фотографа' })
+    @OneToMany(() => Booking, bookings => bookings.photographer)
+    bookings: Booking[];
 }

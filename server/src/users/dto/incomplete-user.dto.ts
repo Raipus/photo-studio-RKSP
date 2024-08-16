@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class IncompleteUserDto {
-    @ApiProperty({ example: 'Иванов Михаил Иваныч', description: 'ФИО' })
+    @ApiProperty({ example: 'Алексей', description: 'Имя' })
     fullname: string;
-    @ApiProperty({ example: [1, 4], description: 'Студии, забронированные клиентом' })
-    studios: number[];
+    @ApiProperty({ example: [1, 4], description: 'ID всех бронь пользователя' })
+    bookings: Booking[];
 }
