@@ -1,5 +1,7 @@
 export declare class CreatePhotographerDto {
     fullname: string;
-    phone: string;
+    email: string;
+    password: string;
     work_exp: number;
+    cost: number;
 }

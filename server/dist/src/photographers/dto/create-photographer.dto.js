@@ -18,19 +18,29 @@ exports.CreatePhotographerDto = CreatePhotographerDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: 'Иванов Иван Иваныч', description: 'ФИО' }),
+    (0, swagger_1.ApiProperty)({ example: 'Алексей', description: 'Имя' }),
     __metadata("design:type", String)
 ], CreatePhotographerDto.prototype, "fullname", void 0);
 __decorate([
-    (0, class_validator_1.IsPhoneNumber)(),
+    (0, class_validator_1.IsEmail)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: '+7 (985) 242-52-64', description: 'Телефон' }),
+    (0, swagger_1.ApiProperty)({ example: 'someemail@mail.ru', description: 'Почта (Логин)' }),
     __metadata("design:type", String)
-], CreatePhotographerDto.prototype, "phone", void 0);
+], CreatePhotographerDto.prototype, "email", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ example: 'somepassword', description: 'Пароль' }),
+    __metadata("design:type", String)
+], CreatePhotographerDto.prototype, "password", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: '4', description: 'Опыт работы, в годах' }),
     __metadata("design:type", Number)
 ], CreatePhotographerDto.prototype, "work_exp", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, swagger_1.ApiProperty)({ example: '1600', description: 'Стоимость услуг за час в рублях' }),
+    __metadata("design:type", Number)
+], CreatePhotographerDto.prototype, "cost", void 0);
 //# sourceMappingURL=create-photographer.dto.js.map

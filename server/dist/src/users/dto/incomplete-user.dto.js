@@ -15,11 +15,11 @@ class IncompleteUserDto {
 }
 exports.IncompleteUserDto = IncompleteUserDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'Иванов Михаил Иваныч', description: 'ФИО' }),
+    (0, swagger_1.ApiProperty)({ example: 'Алексей', description: 'Имя' }),
     __metadata("design:type", String)
 ], IncompleteUserDto.prototype, "fullname", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'Студии, забронированные клиентом' }),
+    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID всех бронь пользователя' }),
     __metadata("design:type", Array)
-], IncompleteUserDto.prototype, "studios", void 0);
+], IncompleteUserDto.prototype, "bookings", void 0);
 //# sourceMappingURL=incomplete-user.dto.js.map

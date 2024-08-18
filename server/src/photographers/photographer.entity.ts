@@ -13,6 +13,7 @@ export class Photographer {
     id: number;
     
     @IsString()
+    @IsNotEmpty()
     @ApiProperty({ example: 'Алексей', description: 'Имя' })
     @Column()
     fullname: string;
@@ -41,11 +42,13 @@ export class Photographer {
     role: string;
 
     @IsNumber()
+    @IsNotEmpty()
     @ApiProperty({ example: '4', description: 'Опыт работы, в годах' })
     @Column()
     work_exp: number;
 
     @IsNumber()
+    @IsNotEmpty()
     @ApiProperty({ example: '1600', description: 'Стоимость услуг за час в рублях' })
     @Column()
     cost: number;

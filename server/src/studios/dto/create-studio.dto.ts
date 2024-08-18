@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateStudioDto {
     @IsString()
@@ -16,4 +16,9 @@ export class CreateStudioDto {
     @IsNotEmpty()
     @ApiProperty({ example: 'Помещение с красивым уютным камином', description: 'Описание студии' })
     description: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    @ApiProperty({ example: '4000', description: 'Стоимость услуг за час в рублях' })
+    cost: number;
 }

@@ -33,4 +33,10 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 'Помещение с красивым уютным камином', description: 'Описание студии' }),
     __metadata("design:type", String)
 ], CreateStudioDto.prototype, "description", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ example: '4000', description: 'Стоимость услуг за час в рублях' }),
+    __metadata("design:type", Number)
+], CreateStudioDto.prototype, "cost", void 0);
 //# sourceMappingURL=create-studio.dto.js.map

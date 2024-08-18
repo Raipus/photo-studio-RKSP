@@ -43,7 +43,7 @@ let UsersController = class UsersController {
 };
 exports.UsersController = UsersController;
 __decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Получить всех пользователей в неполном формате' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Демонстрация возможности получения всех пользователей в неполном формате' }),
     (0, common_1.Get)('incomplete'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),

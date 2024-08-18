@@ -26,6 +26,6 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('users','studios','photographers');
+    consumer.apply(LoggerMiddleware).forRoutes('users','studios','photographers','photos','bookings');
   }
 }

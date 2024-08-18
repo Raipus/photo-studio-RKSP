@@ -12,7 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Studio = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-const user_entity_1 = require("../users/user.entity");
+const bookings_entity_1 = require("../bookings/bookings.entity");
+const photo_entity_1 = require("../photos/photo.entity");
 const typeorm_1 = require("typeorm");
 let Studio = class Studio {
 };
@@ -46,15 +47,22 @@ __decorate([
     __metadata("design:type", String)
 ], Studio.prototype, "description", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'Клиенты, забронировавшие студию' }),
-    (0, typeorm_1.ManyToMany)((type) => user_entity_1.User, (user) => user.studios),
-    (0, typeorm_1.JoinTable)({
-        name: 'user_studio',
-        joinColumn: { name: 'studio_id' },
-        inverseJoinColumn: { name: 'user_id' },
-    }),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ example: '4000', description: 'Стоимость услуг за час в рублях' }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Studio.prototype, "cost", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 3, description: 'ID фото студий' }),
+    (0, typeorm_1.OneToMany)((type) => photo_entity_1.Photo, photo => photo.studio, { nullable: true }),
     __metadata("design:type", Array)
-], Studio.prototype, "users", void 0);
+], Studio.prototype, "photos", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID всех бронь, где заказаны услуги данной студии' }),
+    (0, typeorm_1.OneToMany)((type) => bookings_entity_1.Booking, bookings => bookings.studio),
+    __metadata("design:type", Array)
+], Studio.prototype, "bookings", void 0);
 exports.Studio = Studio = __decorate([
     (0, typeorm_1.Entity)('studios')
 ], Studio);

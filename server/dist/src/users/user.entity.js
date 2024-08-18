@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-const photographer_entity_1 = require("../photographers/photographer.entity");
-const studio_entity_1 = require("../studios/studio.entity");
+const bookings_entity_1 = require("../bookings/bookings.entity");
+const photo_entity_1 = require("../photos/photo.entity");
 const typeorm_1 = require("typeorm");
 let User = class User {
 };
@@ -27,38 +27,47 @@ __decorate([
 ], User.prototype, "id", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: 'Иванов Иван Иваныч', description: 'ФИО' }),
+    (0, swagger_1.ApiProperty)({ example: 'Алексей', description: 'Имя' }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "fullname", void 0);
 __decorate([
-    (0, class_validator_1.IsPhoneNumber)(),
+    (0, class_validator_1.IsEmail)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: '+7 985 242 52 64', description: 'Телефон' }),
+    (0, swagger_1.ApiProperty)({ example: 'someemail@mail.ru', description: 'Почта (Логин)' }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "email", void 0);
+__decorate([
+    (0, class_validator_1.IsPhoneNumber)(),
+    (0, swagger_1.ApiProperty)({ example: '+7 (985) 242-52-64', description: 'Телефон (Альтернативный логин)' }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "phone", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'Студии, забронированные клиентом' }),
-    (0, typeorm_1.ManyToMany)((type) => studio_entity_1.Studio, (studio) => studio.users),
-    (0, typeorm_1.JoinTable)({
-        name: 'client_studio',
-        joinColumn: { name: 'client_id' },
-        inverseJoinColumn: { name: 'studio_id' },
-    }),
-    __metadata("design:type", Array)
-], User.prototype, "studios", void 0);
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ example: 'somepassword', description: 'Пароль' }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'Фотографы, забронированные клиентом' }),
-    (0, typeorm_1.ManyToMany)((type) => photographer_entity_1.Photographer, (photographer) => photographer.users),
-    (0, typeorm_1.JoinTable)({
-        name: 'client_photographer',
-        joinColumn: { name: 'client_id' },
-        inverseJoinColumn: { name: 'photographer_id' },
-    }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ example: 'user', description: 'Роль пользователя' }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "role", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 3, description: 'ID фото пользователя' }),
+    (0, typeorm_1.OneToOne)((type) => photo_entity_1.Photo, photo => photo.user, { nullable: true }),
+    __metadata("design:type", photo_entity_1.Photo)
+], User.prototype, "photo", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID всех бронь пользователя' }),
+    (0, typeorm_1.OneToMany)(() => bookings_entity_1.Booking, bookings => bookings.user),
     __metadata("design:type", Array)
-], User.prototype, "photographers", void 0);
+], User.prototype, "bookings", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)('users')
 ], User);

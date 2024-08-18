@@ -16,15 +16,15 @@ class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;
 __decorate([
+    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ example: 'someemail@mail.ru', description: 'Почта (Логин)' }),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "email", void 0);
+__decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: 'Иванов Михаил Иваныч', description: 'ФИО' }),
+    (0, swagger_1.ApiProperty)({ example: 'somepassword', description: 'Пароль' }),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "fullname", void 0);
-__decorate([
-    (0, class_validator_1.IsPhoneNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: '+7 (800) 242-24-64', description: 'Телефон' }),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "phone", void 0);
+], CreateUserDto.prototype, "password", void 0);
 //# sourceMappingURL=create-user.dto.js.map

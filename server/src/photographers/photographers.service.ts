@@ -4,34 +4,39 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
 import { User } from "src/users/user.entity";
 import { CreatePhotographerDto } from "./dto/create-photographer.dto";
+import { Photo } from "src/photos/photo.entity";
+import { Booking } from "src/bookings/bookings.entity";
 
 @Injectable ()
 export class PhotographersService {
     constructor (
         @InjectRepository(User)
-        private readonly clientRepository: Repository<User>,
+        private readonly userRepository: Repository<User>,
         @InjectRepository(Photographer)
-        private readonly photographerRepository: Repository<Photographer>
+        private readonly photographerRepository: Repository<Photographer>,
+        @InjectRepository(Photo)
+        private readonly photoRepository: Repository<Photo>,
+        @InjectRepository(Booking)
+        private readonly bookingRepository: Repository<Booking>
     ) {}
 
     async create(photographerNew: CreatePhotographerDto): Promise<Photographer> {
         const photographer = this.photographerRepository.create();
         photographer.fullname = photographerNew.fullname;
-        photographer.phone = photographerNew.phone;
+        photographer.email = photographerNew.email;
+        photographer.password = photographerNew.password;
         photographer.work_exp = photographerNew.work_exp;
+        photographer.cost = photographerNew.cost;
         await this.photographerRepository.save(photographer);
         return photographer;
     }
 
-    async findOne(id: number): Promise<Photographer> {
+    async findOne(email: string): Promise<Photographer> {
         try{
-            const photographer = await this.photographerRepository.findOne({
-                where: { id },
-                relations: {users: true}
-            });
+            const photographer = await this.photographerRepository.findOne({ where: { email } });
 
             if(!photographer){
-                throw new NotFoundException(`Фотографа с id ${id} не найдено`);
+                throw new NotFoundException(`Фотографа с почтой ${email} не найдено`);
             }
 
             return photographer;
@@ -49,22 +54,25 @@ export class PhotographersService {
     async update(id: number, updatedPhotographer: Photographer): Promise<Photographer>  {
 
         try{
-            const photographer = await this.photographerRepository.findOne({
-                where: { id },
-                relations: {users: true}
-            });
+            const photographer = await this.photographerRepository.findOne({ where: { id } });
 
             if(!photographer){
                 throw new NotFoundException(`Фотографа с id ${id} не найдено`);
             }
 
             photographer.fullname = updatedPhotographer.fullname;
-            photographer.phone = updatedPhotographer.phone;
+            photographer.email = updatedPhotographer.email;
+            photographer.password = updatedPhotographer.password;
             photographer.work_exp = updatedPhotographer.work_exp;
-            const clients = await this.clientRepository.findBy({
-                id: In(updatedPhotographer.users),
+            photographer.cost = updatedPhotographer.cost;
+            const bookings = await this.bookingRepository.findBy({
+                id: In(updatedPhotographer.bookings),
             });
-            photographer.users = clients;
+            photographer.bookings = bookings;
+            const photo = await this.photoRepository.findBy({
+                id: In(updatedPhotographer.photo),
+            });
+            photographer.photo = photo;
             await this.photographerRepository.save(photographer);
             return photographer;
         }

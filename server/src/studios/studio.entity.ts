@@ -2,8 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { Booking } from "src/bookings/bookings.entity";
 import { Photo } from "src/photos/photo.entity";
-import { User } from "src/users/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('studios')
 export class Studio {
@@ -32,6 +31,7 @@ export class Studio {
     description: string;
 
     @IsNumber()
+    @IsNotEmpty()
     @ApiProperty({ example: '4000', description: 'Стоимость услуг за час в рублях' })
     @Column()
     cost: number;
