@@ -1,9 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
+import { Booking } from "src/bookings/bookings.entity";
+import { Photo } from "src/photos/photo.entity";
 import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('photographers')
-export class User {
+export class Photographer {
     @IsNumber()
     @IsNotEmpty()
     @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
