@@ -4,7 +4,7 @@ import { StudiosController } from "./studios.controller";
 import { StudiosService } from "./studios.service";
 import { User } from "src/users/user.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Booking } from "src/bookings/bookings.entity";
+import { Booking } from "src/bookings/booking.entity";
 import { Photo } from "src/photos/photo.entity";
 
 @Module({

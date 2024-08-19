@@ -1,6 +1,6 @@
 import { User } from "./user.entity";
 import { UsersService } from "./user.service";
-import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe, Query } from "@nestjs/common";
+import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe } from "@nestjs/common";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from "./dto/create-user.dto";
 
@@ -22,9 +22,9 @@ export class UsersController {
     }
 
     @ApiOperation({ summary: 'Получить конкретного пользователя' }) 
-    @Get(':id')
-    findOne(@Param('id',ParseIntPipe) id:number) {
-        return this.UsersService.findOne(+id);
+    @Get(':email')
+    findOne(@Param('email') email:string) {
+        return this.UsersService.findOne(email);
     }
 
     @ApiOperation({ summary: 'Изменить пользователя' }) 

@@ -18,27 +18,30 @@ const photographer_entity_1 = require("./photographer.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("../users/user.entity");
+const photo_entity_1 = require("../photos/photo.entity");
+const booking_entity_1 = require("../bookings/booking.entity");
 let PhotographersService = class PhotographersService {
-    constructor(clientRepository, photographerRepository) {
-        this.clientRepository = clientRepository;
+    constructor(userRepository, photographerRepository, photoRepository, bookingRepository) {
+        this.userRepository = userRepository;
         this.photographerRepository = photographerRepository;
+        this.photoRepository = photoRepository;
+        this.bookingRepository = bookingRepository;
     }
     async create(photographerNew) {
         const photographer = this.photographerRepository.create();
         photographer.fullname = photographerNew.fullname;
-        photographer.phone = photographerNew.phone;
+        photographer.email = photographerNew.email;
+        photographer.password = photographerNew.password;
         photographer.work_exp = photographerNew.work_exp;
+        photographer.cost = photographerNew.cost;
         await this.photographerRepository.save(photographer);
         return photographer;
     }
-    async findOne(id) {
+    async findOne(email) {
         try {
-            const photographer = await this.photographerRepository.findOne({
-                where: { id },
-                relations: { users: true }
-            });
+            const photographer = await this.photographerRepository.findOne({ where: { email } });
             if (!photographer) {
-                throw new common_1.NotFoundException(`Фотографа с id ${id} не найдено`);
+                throw new common_1.NotFoundException(`Фотографа с почтой ${email} не найдено`);
             }
             return photographer;
         }
@@ -52,20 +55,27 @@ let PhotographersService = class PhotographersService {
     }
     async update(id, updatedPhotographer) {
         try {
-            const photographer = await this.photographerRepository.findOne({
-                where: { id },
-                relations: { users: true }
-            });
+            const photographer = await this.photographerRepository.findOne({ where: { id } });
             if (!photographer) {
                 throw new common_1.NotFoundException(`Фотографа с id ${id} не найдено`);
             }
             photographer.fullname = updatedPhotographer.fullname;
-            photographer.phone = updatedPhotographer.phone;
+            photographer.email = updatedPhotographer.email;
+            photographer.password = updatedPhotographer.password;
             photographer.work_exp = updatedPhotographer.work_exp;
-            const clients = await this.clientRepository.findBy({
-                id: (0, typeorm_2.In)(updatedPhotographer.users),
-            });
-            photographer.users = clients;
+            photographer.cost = updatedPhotographer.cost;
+            if (updatedPhotographer.photo != null) {
+                const photo = await this.photoRepository.findOne({
+                    where: { id: updatedPhotographer.photo.id },
+                });
+                photographer.photo = photo;
+            }
+            if (updatedPhotographer.bookings != null) {
+                const bookings = await this.bookingRepository.findBy({
+                    id: (0, typeorm_2.In)(updatedPhotographer.bookings),
+                });
+                photographer.bookings = bookings;
+            }
             await this.photographerRepository.save(photographer);
             return photographer;
         }
@@ -75,10 +85,7 @@ let PhotographersService = class PhotographersService {
     }
     async remove(id) {
         try {
-            const photographer = await this.photographerRepository.findOne({
-                where: { id },
-                relations: { users: true }
-            });
+            const photographer = await this.photographerRepository.findOne({ where: { id } });
             if (!photographer) {
                 throw new common_1.NotFoundException(`Фотографа с id ${id} не найдено`);
             }
@@ -95,7 +102,11 @@ exports.PhotographersService = PhotographersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __param(1, (0, typeorm_1.InjectRepository)(photographer_entity_1.Photographer)),
+    __param(2, (0, typeorm_1.InjectRepository)(photo_entity_1.Photo)),
+    __param(3, (0, typeorm_1.InjectRepository)(booking_entity_1.Booking)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], PhotographersService);
 //# sourceMappingURL=photographers.service.js.map

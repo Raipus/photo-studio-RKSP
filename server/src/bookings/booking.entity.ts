@@ -15,7 +15,7 @@ export class Booking {
 
     @IsDateString()
     @IsNotEmpty()
-    @ApiProperty({ example: '10.12.2023', description: 'Дата брони' })
+    @ApiProperty({ example: '2021-04-19', description: 'Дата брони' })
     @Column()
     date: string;
 
@@ -25,15 +25,15 @@ export class Booking {
     @Column()
     people_number: number;
     
-    @ApiProperty({ example: 1, description: 'ID юзера' })
-    @ManyToOne((type) => User, user => user.bookings)
+    @ApiProperty({ example: '1', description: 'ID юзера', type: () => User })
+    @ManyToOne(() => User, user => user.bookings)
     user: User;
 
-    @ApiProperty({ example: 1, description: 'ID студии' })
-    @ManyToOne((type) => Studio, studio => studio.bookings)
+    @ApiProperty({ example: '1', description: 'ID студии', type: () => Studio })
+    @ManyToOne(() => Studio, studio => studio.bookings)
     studio: Studio;
 
-    @ApiProperty({ example: 1, description: 'ID фотографа' })
-    @ManyToOne((type) => Photographer, photographer => photographer.bookings)
+    @ApiProperty({ example: '1', description: 'ID фотографа', type: () => Photographer })
+    @ManyToOne(() => Photographer, photographer => photographer.bookings)
     photographer: Photographer;
 }

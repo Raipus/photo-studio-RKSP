@@ -6,7 +6,7 @@ export declare class UsersController {
     constructor(UsersService: UsersService);
     findIncomplete(): Promise<import("./dto/incomplete-user.dto").IncompleteUserDto[]>;
     findAll(): Promise<User[]>;
-    findOne(id: number): Promise<User>;
+    findOne(email: string): Promise<User>;
     update(id: number, updateUser: User): Promise<User>;
     create(createUser: CreateUserDto): Promise<User>;
     remove(id: number): Promise<import("@nestjs/common").HttpStatus>;

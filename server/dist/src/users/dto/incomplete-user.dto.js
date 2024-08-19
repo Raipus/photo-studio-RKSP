@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IncompleteUserDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const booking_entity_1 = require("../../bookings/booking.entity");
 class IncompleteUserDto {
 }
 exports.IncompleteUserDto = IncompleteUserDto;
@@ -19,7 +20,7 @@ __decorate([
     __metadata("design:type", String)
 ], IncompleteUserDto.prototype, "fullname", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID всех бронь пользователя' }),
+    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID всех бронь пользователя', type: () => booking_entity_1.Booking }),
     __metadata("design:type", Array)
 ], IncompleteUserDto.prototype, "bookings", void 0);
 //# sourceMappingURL=incomplete-user.dto.js.map

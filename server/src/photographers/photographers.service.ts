@@ -5,7 +5,7 @@ import { In, Repository } from "typeorm";
 import { User } from "src/users/user.entity";
 import { CreatePhotographerDto } from "./dto/create-photographer.dto";
 import { Photo } from "src/photos/photo.entity";
-import { Booking } from "src/bookings/bookings.entity";
+import { Booking } from "src/bookings/booking.entity";
 
 @Injectable ()
 export class PhotographersService {
@@ -65,15 +65,23 @@ export class PhotographersService {
             photographer.password = updatedPhotographer.password;
             photographer.work_exp = updatedPhotographer.work_exp;
             photographer.cost = updatedPhotographer.cost;
-            const bookings = await this.bookingRepository.findBy({
-                id: In(updatedPhotographer.bookings),
-            });
-            photographer.bookings = bookings;
-            const photo = await this.photoRepository.findBy({
-                id: In(updatedPhotographer.photo),
-            });
-            photographer.photo = photo;
+
+            if (updatedPhotographer.photo!=null) {
+                const photo = await this.photoRepository.findOne({
+                    where: { id: updatedPhotographer.photo.id },
+                });
+                photographer.photo = photo;
+            }
+
+            if (updatedPhotographer.bookings!=null) {
+                const bookings = await this.bookingRepository.findBy({
+                    id: In(updatedPhotographer.bookings),
+                });
+                photographer.bookings = bookings;
+            }
+
             await this.photographerRepository.save(photographer);
+            
             return photographer;
         }
         catch(error){
@@ -83,10 +91,7 @@ export class PhotographersService {
 
     async remove(id: number) {
         try{
-            const photographer = await this.photographerRepository.findOne({
-                where: { id },
-                relations: {users: true}
-            });
+            const photographer = await this.photographerRepository.findOne({ where: { id } });
 
             if(!photographer){
                 throw new NotFoundException(`Фотографа с id ${id} не найдено`);

@@ -28,8 +28,8 @@ let UsersController = class UsersController {
     findAll() {
         return this.UsersService.findAll();
     }
-    findOne(id) {
-        return this.UsersService.findOne(+id);
+    findOne(email) {
+        return this.UsersService.findOne(email);
     }
     update(id, updateUser) {
         return this.UsersService.update(+id, updateUser);
@@ -58,10 +58,10 @@ __decorate([
 ], UsersController.prototype, "findAll", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Получить конкретного пользователя' }),
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    (0, common_1.Get)(':email'),
+    __param(0, (0, common_1.Param)('email')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "findOne", null);
 __decorate([

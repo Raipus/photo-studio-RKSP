@@ -18,7 +18,7 @@ export class PhotographersController {
     @ApiOperation({ summary: 'Получить конкретного фотографа' }) 
     @Get(':email')
     findOne(@Param('email') email:string) {
-        return this.PhotographersService.findOne(+email);
+        return this.PhotographersService.findOne(email);
     }
 
     @ApiOperation({ summary: 'Изменить фотографа' }) 

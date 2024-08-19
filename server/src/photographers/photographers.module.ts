@@ -5,7 +5,7 @@ import { PhotographersService } from "./photographers.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "src/users/user.entity";
 import { Photo } from "src/photos/photo.entity";
-import { Booking } from "src/bookings/bookings.entity";
+import { Booking } from "src/bookings/booking.entity";
 
 @Module({
     controllers: [PhotographersController],

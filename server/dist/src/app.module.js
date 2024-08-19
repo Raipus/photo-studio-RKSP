@@ -13,9 +13,11 @@ const photographers_module_1 = require("./photographers/photographers.module");
 const studios_module_1 = require("./studios/studios.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const logger_middleware_1 = require("./middleware/logger.middleware");
+const booking_module_1 = require("./bookings/booking.module");
+const photo_module_1 = require("./photos/photo.module");
 let AppModule = class AppModule {
     configure(consumer) {
-        consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('users', 'studios', 'photographers');
+        consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('users', 'studios', 'photographers', 'photos', 'bookings');
     }
 };
 exports.AppModule = AppModule;
@@ -25,6 +27,8 @@ exports.AppModule = AppModule = __decorate([
             user_module_1.UsersModule,
             photographers_module_1.PhotographersModule,
             studios_module_1.StudiosModule,
+            booking_module_1.BookingsModule,
+            photo_module_1.PhotosModule,
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
                 port: 5432,

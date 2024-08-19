@@ -41,17 +41,17 @@ __decorate([
     __metadata("design:type", String)
 ], Photo.prototype, "path", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID студии (Может быть NULL)' }),
+    (0, swagger_1.ApiProperty)({ example: '1', description: 'ID студии (Может быть NULL)', type: () => studio_entity_1.Studio }),
     (0, typeorm_1.ManyToOne)(() => studio_entity_1.Studio, studio => studio.photos, { nullable: true }),
     __metadata("design:type", studio_entity_1.Studio)
 ], Photo.prototype, "studio", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 1, description: 'ID фотографа (Может быть NULL)' }),
+    (0, swagger_1.ApiProperty)({ example: '1', description: 'ID фотографа (Может быть NULL)', type: () => photographer_entity_1.Photographer }),
     (0, typeorm_1.OneToOne)(() => photographer_entity_1.Photographer, photographer => photographer.photo, { nullable: true }),
     __metadata("design:type", photographer_entity_1.Photographer)
 ], Photo.prototype, "photographer", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 4, description: 'ID клиента (Может быть NULL)' }),
+    (0, swagger_1.ApiProperty)({ example: '4', description: 'ID клиента (Может быть NULL)', type: () => user_entity_1.User }),
     (0, typeorm_1.OneToOne)(() => user_entity_1.User, user => user.photo, { nullable: true }),
     __metadata("design:type", user_entity_1.User)
 ], Photo.prototype, "user", void 0);

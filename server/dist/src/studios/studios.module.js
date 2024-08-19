@@ -13,6 +13,8 @@ const studios_controller_1 = require("./studios.controller");
 const studios_service_1 = require("./studios.service");
 const user_entity_1 = require("../users/user.entity");
 const typeorm_1 = require("@nestjs/typeorm");
+const booking_entity_1 = require("../bookings/booking.entity");
+const photo_entity_1 = require("../photos/photo.entity");
 let StudiosModule = class StudiosModule {
 };
 exports.StudiosModule = StudiosModule;
@@ -20,7 +22,7 @@ exports.StudiosModule = StudiosModule = __decorate([
     (0, common_1.Module)({
         controllers: [studios_controller_1.StudiosController],
         providers: [studios_service_1.StudiosService],
-        imports: [studio_entity_1.Studio, typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, studio_entity_1.Studio])],
+        imports: [studio_entity_1.Studio, typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, studio_entity_1.Studio, photo_entity_1.Photo, booking_entity_1.Booking])],
     })
 ], StudiosModule);
 //# sourceMappingURL=studios.module.js.map

@@ -1,12 +1,14 @@
 import { HttpStatus } from "@nestjs/common";
 import { Studio } from "./studio.entity";
 import { Repository } from "typeorm";
-import { User } from "src/users/user.entity";
 import { CreateStudioDto } from "./dto/create-studio.dto";
+import { Photo } from "src/photos/photo.entity";
+import { Booking } from "src/bookings/booking.entity";
 export declare class StudiosService {
-    private readonly userRepository;
+    private readonly bookingRepository;
     private readonly studioRepository;
-    constructor(userRepository: Repository<User>, studioRepository: Repository<Studio>);
+    private readonly photoRepository;
+    constructor(bookingRepository: Repository<Booking>, studioRepository: Repository<Studio>, photoRepository: Repository<Photo>);
     create(studioNew: CreateStudioDto): Promise<Studio>;
     findOne(id: number): Promise<Studio>;
     findAll(): Promise<Studio[]>;

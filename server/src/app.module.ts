@@ -4,12 +4,16 @@ import { PhotographersModule } from './photographers/photographers.module';
 import { StudiosModule } from './studios/studios.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { BookingsModule } from './bookings/booking.module';
+import { PhotosModule } from './photos/photo.module';
 
 @Module({
   imports: [
     UsersModule,
     PhotographersModule, 
     StudiosModule, 
+    BookingsModule,
+    PhotosModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       port: 5432,

@@ -25,15 +25,15 @@ export class Photo {
     @Column()
     path: string;
 
-    @ApiProperty({ example: [1, 4], description: 'ID студии (Может быть NULL)' })
+    @ApiProperty({ example: '1', description: 'ID студии (Может быть NULL)', type: () => Studio })
     @ManyToOne(() => Studio, studio => studio.photos, { nullable: true })
     studio: Studio;
 
-    @ApiProperty({ example: 1, description: 'ID фотографа (Может быть NULL)' })
+    @ApiProperty({ example: '1', description: 'ID фотографа (Может быть NULL)', type: () => Photographer })
     @OneToOne(() => Photographer, photographer => photographer.photo, { nullable: true })
     photographer: Photographer;
 
-    @ApiProperty({ example: 4, description: 'ID клиента (Может быть NULL)' })
+    @ApiProperty({ example: '4', description: 'ID клиента (Может быть NULL)', type: () => User })
     @OneToOne(() => User, user => user.photo, { nullable: true })
     user: User;
 }

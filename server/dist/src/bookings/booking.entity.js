@@ -29,7 +29,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsDateString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: '10.12.2023', description: 'Дата брони' }),
+    (0, swagger_1.ApiProperty)({ example: '2021-04-19', description: 'Дата брони' }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Booking.prototype, "date", void 0);
@@ -41,21 +41,21 @@ __decorate([
     __metadata("design:type", Number)
 ], Booking.prototype, "people_number", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 1, description: 'ID юзера' }),
-    (0, typeorm_1.ManyToOne)((type) => user_entity_1.User, user => user.bookings),
+    (0, swagger_1.ApiProperty)({ example: '1', description: 'ID юзера', type: () => user_entity_1.User }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.bookings),
     __metadata("design:type", user_entity_1.User)
 ], Booking.prototype, "user", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 1, description: 'ID студии' }),
-    (0, typeorm_1.ManyToOne)((type) => studio_entity_1.Studio, studio => studio.bookings),
+    (0, swagger_1.ApiProperty)({ example: '1', description: 'ID студии', type: () => studio_entity_1.Studio }),
+    (0, typeorm_1.ManyToOne)(() => studio_entity_1.Studio, studio => studio.bookings),
     __metadata("design:type", studio_entity_1.Studio)
 ], Booking.prototype, "studio", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 1, description: 'ID фотографа' }),
-    (0, typeorm_1.ManyToOne)((type) => photographer_entity_1.Photographer, photographer => photographer.bookings),
+    (0, swagger_1.ApiProperty)({ example: '1', description: 'ID фотографа', type: () => photographer_entity_1.Photographer }),
+    (0, typeorm_1.ManyToOne)(() => photographer_entity_1.Photographer, photographer => photographer.bookings),
     __metadata("design:type", photographer_entity_1.Photographer)
 ], Booking.prototype, "photographer", void 0);
 exports.Booking = Booking = __decorate([
     (0, typeorm_1.Entity)('bookings')
 ], Booking);
-//# sourceMappingURL=bookings.entity.js.map
+//# sourceMappingURL=booking.entity.js.map

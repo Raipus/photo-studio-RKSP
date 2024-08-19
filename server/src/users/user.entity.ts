@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
-import { Booking } from "src/bookings/bookings.entity";
+import { Booking } from "src/bookings/booking.entity";
 import { Photo } from "src/photos/photo.entity";
-import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -14,7 +14,7 @@ export class User {
     
     @IsString()
     @ApiProperty({ example: 'Алексей', description: 'Имя' })
-    @Column()
+    @Column({ nullable: true })
     fullname: string;
 
     @IsEmail()
@@ -25,7 +25,7 @@ export class User {
 
     @IsPhoneNumber()
     @ApiProperty({ example: '+7 (985) 242-52-64', description: 'Телефон (Альтернативный логин)' })
-    @Column()
+    @Column({ nullable: true })
     phone: string;
 
     @IsString()
@@ -37,14 +37,15 @@ export class User {
     @IsString()
     @IsNotEmpty()
     @ApiProperty({ example: 'user', description: 'Роль пользователя' })
-    @Column()
+    @Column({ nullable: true })
     role: string;
 
-    @ApiProperty({ example: 3, description: 'ID фото пользователя' })
-    @OneToOne((type) => Photo, photo => photo.user, { nullable: true })
+    @ApiProperty({ example: '3', description: 'ID фото пользователя', type: () => Photo })
+    @OneToOne(() => Photo, { nullable: true })
+    @JoinColumn()
     photo: Photo;
 
-    @ApiProperty({ example: [1, 4], description: 'ID всех бронь пользователя' })
+    @ApiProperty({ example: [1, 4], description: 'ID всех бронь пользователя', type: () => Booking })
     @OneToMany(() => Booking, bookings => bookings.user)
     bookings: Booking[];
 }

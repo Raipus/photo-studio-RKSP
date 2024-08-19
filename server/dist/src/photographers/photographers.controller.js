@@ -25,8 +25,8 @@ let PhotographersController = class PhotographersController {
     findAll() {
         return this.PhotographersService.findAll();
     }
-    findOne(id) {
-        return this.PhotographersService.findOne(+id);
+    findOne(email) {
+        return this.PhotographersService.findOne(email);
     }
     update(id, updatePhotographer) {
         return this.PhotographersService.update(+id, updatePhotographer);
@@ -48,8 +48,8 @@ __decorate([
 ], PhotographersController.prototype, "findAll", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Получить конкретного фотографа' }),
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    (0, common_1.Get)(':email'),
+    __param(0, (0, common_1.Param)('email')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)

@@ -6,6 +6,8 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { IncompleteUserDto } from "./dto/incomplete-user.dto";
 import { Photographer } from "src/photographers/photographer.entity";
 import { Studio } from "src/studios/studio.entity";
+import { Photo } from "src/photos/photo.entity";
+import { Booking } from "src/bookings/booking.entity";
 
 @Injectable ()
 export class UsersService {
@@ -15,7 +17,11 @@ export class UsersService {
         @InjectRepository(Photographer)
         private readonly photographerRepository: Repository<Photographer>,
         @InjectRepository(Studio)
-        private readonly studioRepository: Repository<Studio>
+        private readonly studioRepository: Repository<Studio>,
+        @InjectRepository(Photo)
+        private readonly photoRepository: Repository<Photo>,
+        @InjectRepository(Booking)
+        private readonly bookingRepository: Repository<Booking>
     ) {}
 
     async create(userDto: CreateUserDto): Promise<User> {
@@ -26,15 +32,12 @@ export class UsersService {
         return user;
     }
 
-    async findOne(id: number): Promise<User> {
+    async findOne(email: string): Promise<User> {
         try{
-            const user = await this.userRepository.findOne({
-                where: { id },
-                relations: {studios: true, photographers: true}
-            });
+            const user = await this.userRepository.findOne({ where: { email } });
 
             if (!user) {
-                throw new NotFoundException(`Клиент с id ${id} не найден`);
+                throw new NotFoundException(`Клиент с почтой ${email} не найден`);
             }
             
             return user;
@@ -52,14 +55,14 @@ export class UsersService {
     async findIncomplete(): Promise<IncompleteUserDto[]> {
         const users = await this.userRepository.find({
             relations: {
-                photographers: false,
-                studios: true,
+                photo: true,
+                bookings: true
             }
         });
         const incompleteUsers: IncompleteUserDto[] = users.map((user) => {
             const incompleteUser = new IncompleteUserDto();
             incompleteUser.fullname = user.fullname;
-            incompleteUser.studios = user.studios.map((studio) => studio.id);
+            incompleteUser.bookings = user.bookings.map((booking) => booking);
             return incompleteUser;
         });
         return incompleteUsers;
@@ -69,7 +72,10 @@ export class UsersService {
         try{
             const user = await this.userRepository.findOne({
                 where: { id },
-                relations: {studios: true, photographers: true}
+                relations: {
+                    photo: true,
+                    bookings: true
+                }
             });
 
             if (!user) {
@@ -77,19 +83,25 @@ export class UsersService {
             }
 
             user.fullname = updatedUser.fullname;
-
+            user.email = updatedUser.email;
             user.phone = updatedUser.phone;
+            user.password = updatedUser.password;
+            user.role = updatedUser.role;
 
-            const studios = await this.studioRepository.findBy({
-                id: In(updatedUser.studios),
-            });
-            user.studios = studios;
-
-            const photographers = await this.photographerRepository.findBy({
-                id: In(updatedUser.photographers),
-            });
-            user.photographers = photographers;
-
+            if (updatedUser.bookings!=null) {
+                const bookings = await this.bookingRepository.findBy({
+                    id: In(updatedUser.bookings),
+                });
+                user.bookings = bookings;
+            }
+            
+            if (updatedUser.photo!=null) {
+                const photo = await this.photoRepository.findOne({
+                    where: { id: updatedUser.photo.id },
+                });
+                user.photo = photo;
+            }
+            
             await this.userRepository.save(user);
 
             return user;

@@ -13,6 +13,8 @@ const photographers_controller_1 = require("./photographers.controller");
 const photographers_service_1 = require("./photographers.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("../users/user.entity");
+const photo_entity_1 = require("../photos/photo.entity");
+const booking_entity_1 = require("../bookings/booking.entity");
 let PhotographersModule = class PhotographersModule {
 };
 exports.PhotographersModule = PhotographersModule;
@@ -20,7 +22,7 @@ exports.PhotographersModule = PhotographersModule = __decorate([
     (0, common_1.Module)({
         controllers: [photographers_controller_1.PhotographersController],
         providers: [photographers_service_1.PhotographersService],
-        imports: [photographer_entity_1.Photographer, typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, photographer_entity_1.Photographer])],
+        imports: [photographer_entity_1.Photographer, typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, photographer_entity_1.Photographer, photo_entity_1.Photo, booking_entity_1.Booking])],
     })
 ], PhotographersModule);
 //# sourceMappingURL=photographers.module.js.map
