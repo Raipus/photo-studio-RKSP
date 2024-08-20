@@ -50,7 +50,7 @@ let UsersService = class UsersService {
         }
     }
     async findAll() {
-        const users = await this.userRepository.find();
+        const users = await this.userRepository.find({ relations: { photo: true } });
         return users;
     }
     async findIncomplete() {
@@ -72,28 +72,29 @@ let UsersService = class UsersService {
         try {
             const user = await this.userRepository.findOne({
                 where: { id },
-                relations: {
-                    photo: true,
-                    bookings: true
-                }
+                relations: { photo: true }
             });
             if (!user) {
                 throw new common_1.NotFoundException(`Клиент с id ${id} не найден`);
             }
-            user.fullname = updatedUser.fullname;
-            user.email = updatedUser.email;
-            user.phone = updatedUser.phone;
-            user.password = updatedUser.password;
-            user.role = updatedUser.role;
-            if (updatedUser.bookings != null) {
-                const bookings = await this.bookingRepository.findBy({
-                    id: (0, typeorm_2.In)(updatedUser.bookings),
-                });
-                user.bookings = bookings;
+            if (updatedUser.fullname != null) {
+                user.fullname = updatedUser.fullname;
+            }
+            if (updatedUser.email != null) {
+                user.email = updatedUser.email;
+            }
+            if (updatedUser.phone != null) {
+                user.phone = updatedUser.phone;
+            }
+            if (updatedUser.password != null) {
+                user.password = updatedUser.password;
+            }
+            if (updatedUser.role != null) {
+                user.role = updatedUser.role;
             }
             if (updatedUser.photo != null) {
                 const photo = await this.photoRepository.findOne({
-                    where: { id: updatedUser.photo.id },
+                    where: { id: updatedUser.photo },
                 });
                 user.photo = photo;
             }

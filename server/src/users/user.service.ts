@@ -8,6 +8,7 @@ import { Photographer } from "src/photographers/photographer.entity";
 import { Studio } from "src/studios/studio.entity";
 import { Photo } from "src/photos/photo.entity";
 import { Booking } from "src/bookings/booking.entity";
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Injectable ()
 export class UsersService {
@@ -48,7 +49,7 @@ export class UsersService {
     }
 
     async findAll(): Promise<User[]> {
-        const users = await this.userRepository.find();
+        const users = await this.userRepository.find({ relations: { photo: true } });
         return users;
     }
 
@@ -68,36 +69,40 @@ export class UsersService {
         return incompleteUsers;
     }
 
-    async update(id: number, updatedUser: User): Promise<User> {
+    async update(id: number, updatedUser: UpdateUserDto): Promise<User> {
         try{
             const user = await this.userRepository.findOne({
                 where: { id },
-                relations: {
-                    photo: true,
-                    bookings: true
-                }
+                relations: { photo: true }
             });
 
             if (!user) {
                 throw new NotFoundException(`Клиент с id ${id} не найден`);
             }
 
-            user.fullname = updatedUser.fullname;
-            user.email = updatedUser.email;
-            user.phone = updatedUser.phone;
-            user.password = updatedUser.password;
-            user.role = updatedUser.role;
-
-            if (updatedUser.bookings!=null) {
-                const bookings = await this.bookingRepository.findBy({
-                    id: In(updatedUser.bookings),
-                });
-                user.bookings = bookings;
+            if (updatedUser.fullname!=null) {
+                user.fullname = updatedUser.fullname;
+            }
+            
+            if (updatedUser.email!=null) {
+                user.email = updatedUser.email;
+            }
+            
+            if (updatedUser.phone!=null) {
+                user.phone = updatedUser.phone;
+            }
+            
+            if (updatedUser.password!=null) {
+                user.password = updatedUser.password;
+            }
+            
+            if (updatedUser.role!=null) {
+                user.role = updatedUser.role;
             }
             
             if (updatedUser.photo!=null) {
                 const photo = await this.photoRepository.findOne({
-                    where: { id: updatedUser.photo.id },
+                    where: { id: updatedUser.photo },
                 });
                 user.photo = photo;
             }
@@ -109,10 +114,6 @@ export class UsersService {
         catch(error){
             throw error;
         }
-        
-        
-
-        
     }
 
     async remove(id: number) {

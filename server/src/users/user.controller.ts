@@ -3,6 +3,7 @@ import { UsersService } from "./user.service";
 import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe } from "@nestjs/common";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Controller('users')
 @ApiTags('Пользователи')
@@ -29,7 +30,7 @@ export class UsersController {
 
     @ApiOperation({ summary: 'Изменить пользователя' }) 
     @Put(':id')
-    update(@Param('id',ParseIntPipe) id: number, @Body() updateUser: User) {
+    update(@Param('id',ParseIntPipe) id: number, @Body() updateUser: UpdateUserDto) {
         return this.UsersService.update(+id,updateUser);
     }
 

@@ -7,6 +7,7 @@ import { Photographer } from "src/photographers/photographer.entity";
 import { Studio } from "src/studios/studio.entity";
 import { Photo } from "src/photos/photo.entity";
 import { Booking } from "src/bookings/booking.entity";
+import { UpdateUserDto } from "./dto/update-user.dto";
 export declare class UsersService {
     private readonly userRepository;
     private readonly photographerRepository;
@@ -18,6 +19,6 @@ export declare class UsersService {
     findOne(email: string): Promise<User>;
     findAll(): Promise<User[]>;
     findIncomplete(): Promise<IncompleteUserDto[]>;
-    update(id: number, updatedUser: User): Promise<User>;
+    update(id: number, updatedUser: UpdateUserDto): Promise<User>;
     remove(id: number): Promise<HttpStatus>;
 }
