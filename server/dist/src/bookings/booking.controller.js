@@ -16,7 +16,6 @@ exports.BookingsController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const booking_service_1 = require("./booking.service");
-const booking_entity_1 = require("./booking.entity");
 const create_booking_dto_1 = require("./dto/create-booking.dto");
 let BookingsController = class BookingsController {
     constructor(BookingsService) {
@@ -60,7 +59,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, booking_entity_1.Booking]),
+    __metadata("design:paramtypes", [Number, create_booking_dto_1.CreateBookingDto]),
     __metadata("design:returntype", void 0)
 ], BookingsController.prototype, "update", null);
 __decorate([

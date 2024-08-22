@@ -6,7 +6,7 @@ export declare class PhotographersController {
     constructor(PhotographersService: PhotographersService);
     findAll(): Promise<Photographer[]>;
     findOne(email: string): Promise<Photographer>;
-    update(id: string, updatePhotographer: Photographer): Promise<Photographer>;
+    update(id: string, updatePhotographer: CreatePhotographerDto): Promise<Photographer>;
     create(createPhotographer: CreatePhotographerDto): Promise<Photographer>;
     remove(id: string): Promise<import("@nestjs/common").HttpStatus>;
 }

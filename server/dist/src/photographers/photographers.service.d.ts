@@ -14,6 +14,6 @@ export declare class PhotographersService {
     create(photographerNew: CreatePhotographerDto): Promise<Photographer>;
     findOne(email: string): Promise<Photographer>;
     findAll(): Promise<Photographer[]>;
-    update(id: number, updatedPhotographer: Photographer): Promise<Photographer>;
+    update(id: number, updatedPhotographer: CreatePhotographerDto): Promise<Photographer>;
     remove(id: number): Promise<HttpStatus>;
 }

@@ -6,7 +6,7 @@ export declare class StudiosController {
     constructor(StudiosService: StudiosService);
     findAll(): Promise<Studio[]>;
     findOne(id: string): Promise<Studio>;
-    update(id: string, updateStudio: Studio): Promise<Studio>;
+    update(id: string, updateStudio: CreateStudioDto): Promise<Studio>;
     create(createStudio: CreateStudioDto): Promise<Studio>;
     remove(id: string): Promise<import("@nestjs/common").HttpStatus>;
 }

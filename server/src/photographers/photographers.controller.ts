@@ -23,7 +23,7 @@ export class PhotographersController {
 
     @ApiOperation({ summary: 'Изменить фотографа' }) 
     @Put(':id')
-    update(@Param('id', ParseIntPipe) id: string, @Body() updatePhotographer: Photographer) {
+    update(@Param('id', ParseIntPipe) id: string, @Body() updatePhotographer: CreatePhotographerDto) {
         return this.PhotographersService.update(+id,updatePhotographer);
     }
 

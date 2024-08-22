@@ -3,6 +3,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PhotosService } from "./photo.service";
 import { Photo } from "./photo.entity";
 import { CreatePhotoDto } from "./dto/create-photo.dto";
+import { UpdatePhotoDto } from "./dto/update-photo.dto";
 
 @Controller('photos')
 @ApiTags('Фото')
@@ -23,7 +24,7 @@ export class PhotosController {
 
     @ApiOperation({ summary: 'Изменить фото' }) 
     @Put(':id')
-    update(@Param('id',ParseIntPipe) id: number, @Body() updatePhoto: Photo) {
+    update(@Param('id',ParseIntPipe) id: number, @Body() updatePhoto: UpdatePhotoDto) {
         return this.PhotosService.update(+id,updatePhoto);
     }
 

@@ -47,7 +47,7 @@ export class StudiosService {
         return studios;
     }
 
-    async update(id: number, updatedStudio: Studio): Promise<Studio>  {
+    async update(id: number, updatedStudio: CreateStudioDto): Promise<Studio>  {
         try{
             const studio = await this.studioRepository.findOne({
                 where: { id },
@@ -65,20 +65,6 @@ export class StudiosService {
             studio.location = updatedStudio.location;
             studio.description = updatedStudio.description;
             studio.cost = updatedStudio.cost;
-
-            if (updatedStudio.bookings!=null) {
-                const bookings = await this.bookingRepository.findBy({
-                    id: In(updatedStudio.bookings),
-                });
-                studio.bookings = bookings;
-            }
-
-            if (updatedStudio.photos!=null) {
-                const photos = await this.photoRepository.findBy({
-                    id: In(updatedStudio.photos),
-                });
-                studio.photos = photos;
-            }
 
             await this.studioRepository.save(studio);
             return studio;

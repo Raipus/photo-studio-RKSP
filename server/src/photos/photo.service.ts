@@ -6,6 +6,7 @@ import { Studio } from "src/studios/studio.entity";
 import { User } from "src/users/user.entity";
 import { Photo } from "./photo.entity";
 import { CreatePhotoDto } from "./dto/create-photo.dto";
+import { UpdatePhotoDto } from "./dto/update-photo.dto";
 
 @Injectable ()
 export class PhotosService {
@@ -25,27 +26,6 @@ export class PhotosService {
 
         photo.category = photoDto.category;
         photo.path = photoDto.path;
-
-        if (photoDto.user!=null) {
-            const user = await this.userRepository.findOne({
-                where: { id: photoDto.user.id },
-            });
-            photo.user = user;
-        }
-
-        if (photoDto.studio!=null) {
-            const studio = await this.studioRepository.findOne({
-                where: { id: photoDto.studio.id },
-            });
-            photo.studio = studio;
-        }
-
-        if (photoDto.photographer!=null) {
-            const photographer = await this.photographerRepository.findOne({
-                where: { id: photoDto.photographer.id },
-            });
-            photo.photographer = photographer;
-        }
 
         await this.photoRepository.save(photo);
         return photo;
@@ -71,7 +51,7 @@ export class PhotosService {
         return photos;
     }
 
-    async update(id: number, updatedPhoto: Photo): Promise<Photo> {
+    async update(id: number, updatedPhoto: UpdatePhotoDto): Promise<Photo> {
         try{
             const photo = await this.photoRepository.findOne({
                 where: { id },
@@ -89,23 +69,23 @@ export class PhotosService {
             photo.category = updatedPhoto.category;
             photo.path = updatedPhoto.path;
 
-            if (updatedPhoto.user!=null) {
+            if (updatedPhoto.user_id!=null) {
                 const user = await this.userRepository.findOne({
-                    where: { id: updatedPhoto.user.id },
+                    where: { id: updatedPhoto.user_id },
                 });
                 photo.user = user;
             }
             
-            if (updatedPhoto.studio!=null) {
+            if (updatedPhoto.studio_id!=null) {
                 const studio = await this.studioRepository.findOne({
-                    where: { id: updatedPhoto.studio.id },
+                    where: { id: updatedPhoto.studio_id },
                 });
                 photo.studio = studio;
             }
     
-            if (updatedPhoto.photographer!=null) {
+            if (updatedPhoto.photographer_id!=null) {
                 const photographer = await this.photographerRepository.findOne({
-                    where: { id: updatedPhoto.photographer.id },
+                    where: { id: updatedPhoto.photographer_id },
                 });
                 photo.photographer = photographer;
             }

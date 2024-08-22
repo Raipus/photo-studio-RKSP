@@ -9,34 +9,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateBookingDto = void 0;
+exports.UpdatePhotoDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-class CreateBookingDto {
+class UpdatePhotoDto {
 }
-exports.CreateBookingDto = CreateBookingDto;
+exports.UpdatePhotoDto = UpdatePhotoDto;
 __decorate([
-    (0, class_validator_1.IsDateString)(),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: '2021-04-19', description: 'Дата брони' }),
+    (0, swagger_1.ApiProperty)({ example: 'User', description: 'Категория фотографии для удобства (User, Photographer, Studio)' }),
     __metadata("design:type", String)
-], CreateBookingDto.prototype, "date", void 0);
+], UpdatePhotoDto.prototype, "category", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: '5', description: 'Количество людей на брони' }),
-    __metadata("design:type", Number)
-], CreateBookingDto.prototype, "people_number", void 0);
+    (0, swagger_1.ApiProperty)({ example: '/client/src/photos/img.png', description: 'Путь до файла' }),
+    __metadata("design:type", String)
+], UpdatePhotoDto.prototype, "path", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 1, description: 'ID юзера' }),
+    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID студии (Может быть NULL)' }),
     __metadata("design:type", Number)
-], CreateBookingDto.prototype, "user_id", void 0);
+], UpdatePhotoDto.prototype, "studio_id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 1, description: 'ID студии' }),
+    (0, swagger_1.ApiProperty)({ example: 1, description: 'ID фотографа (Может быть NULL)' }),
     __metadata("design:type", Number)
-], CreateBookingDto.prototype, "studio_id", void 0);
+], UpdatePhotoDto.prototype, "photographer_id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 1, description: 'ID фотографа' }),
+    (0, swagger_1.ApiProperty)({ example: 4, description: 'ID клиента (Может быть NULL)' }),
     __metadata("design:type", Number)
-], CreateBookingDto.prototype, "photographer_id", void 0);
-//# sourceMappingURL=create-booking.dto.js.map
+], UpdatePhotoDto.prototype, "user_id", void 0);
+//# sourceMappingURL=update-photo.dto.js.map

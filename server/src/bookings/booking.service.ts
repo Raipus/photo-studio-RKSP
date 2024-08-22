@@ -26,23 +26,23 @@ export class BookingsService {
         booking.date = bookingDto.date;
         booking.people_number = bookingDto.people_number;
 
-        if (bookingDto.user!=null) {
+        if (bookingDto.user_id!=null) {
             const user = await this.userRepository.findOne({
-                where: { id: bookingDto.user.id },
+                where: { id: bookingDto.user_id },
             });
             booking.user = user;
         }
 
-        if (bookingDto.studio!=null) {
+        if (bookingDto.studio_id!=null) {
             const studio = await this.studioRepository.findOne({
-                where: { id: bookingDto.studio.id },
+                where: { id: bookingDto.studio_id },
             });
             booking.studio = studio;
         }
 
-        if (bookingDto.photographer!=null) {
+        if (bookingDto.photographer_id!=null) {
             const photographer = await this.photographerRepository.findOne({
-                where: { id: bookingDto.photographer.id },
+                where: { id: bookingDto.photographer_id },
             });
             booking.photographer = photographer;
         }
@@ -71,7 +71,7 @@ export class BookingsService {
         return bookings;
     }
 
-    async update(id: number, updatedBooking: Booking): Promise<Booking> {
+    async update(id: number, updatedBooking: CreateBookingDto): Promise<Booking> {
         try{
             const booking = await this.bookingRepository.findOne({
                 where: { id },
@@ -86,26 +86,31 @@ export class BookingsService {
                 throw new NotFoundException(`Бронь с id ${id} не найдена`);
             }
 
-            booking.date = updatedBooking.date;
-            booking.people_number = updatedBooking.people_number;
+            if (updatedBooking.date!=null) {
+                booking.date = updatedBooking.date;
+            }
 
-            if (updatedBooking.user!=null) {
+            if (updatedBooking.people_number!=null) {
+                booking.people_number = updatedBooking.people_number;
+            }
+
+            if (updatedBooking.user_id!=null) {
             const user = await this.userRepository.findOne({
-                where: { id: updatedBooking.user.id },
+                where: { id: updatedBooking.user_id },
             });
             booking.user = user;
             }
     
-            if (updatedBooking.studio!=null) {
+            if (updatedBooking.studio_id!=null) {
             const studio = await this.studioRepository.findOne({
-                where: { id: updatedBooking.studio.id },
+                where: { id: updatedBooking.studio_id },
             });
             booking.studio = studio;
             }
     
-            if (updatedBooking.photographer!=null) {
+            if (updatedBooking.photographer_id!=null) {
                 const photographer = await this.photographerRepository.findOne({
-                    where: { id: updatedBooking.photographer.id },
+                    where: { id: updatedBooking.photographer_id },
                 });
                 booking.photographer = photographer;
             }

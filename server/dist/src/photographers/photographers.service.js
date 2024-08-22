@@ -64,18 +64,6 @@ let PhotographersService = class PhotographersService {
             photographer.password = updatedPhotographer.password;
             photographer.work_exp = updatedPhotographer.work_exp;
             photographer.cost = updatedPhotographer.cost;
-            if (updatedPhotographer.photo != null) {
-                const photo = await this.photoRepository.findOne({
-                    where: { id: updatedPhotographer.photo.id },
-                });
-                photographer.photo = photo;
-            }
-            if (updatedPhotographer.bookings != null) {
-                const bookings = await this.bookingRepository.findBy({
-                    id: (0, typeorm_2.In)(updatedPhotographer.bookings),
-                });
-                photographer.bookings = bookings;
-            }
             await this.photographerRepository.save(photographer);
             return photographer;
         }

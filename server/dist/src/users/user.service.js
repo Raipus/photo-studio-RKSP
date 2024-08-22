@@ -92,12 +92,6 @@ let UsersService = class UsersService {
             if (updatedUser.role != null) {
                 user.role = updatedUser.role;
             }
-            if (updatedUser.photo != null) {
-                const photo = await this.photoRepository.findOne({
-                    where: { id: updatedUser.photo },
-                });
-                user.photo = photo;
-            }
             await this.userRepository.save(user);
             return user;
         }

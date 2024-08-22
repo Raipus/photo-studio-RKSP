@@ -23,7 +23,7 @@ export class BookingsController {
 
     @ApiOperation({ summary: 'Изменить бронь' }) 
     @Put(':id')
-    update(@Param('id',ParseIntPipe) id: number, @Body() updateBooking: Booking) {
+    update(@Param('id',ParseIntPipe) id: number, @Body() updateBooking: CreateBookingDto) {
         return this.BookingsService.update(+id,updateBooking);
     }
 

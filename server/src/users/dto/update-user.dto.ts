@@ -27,8 +27,4 @@ export class UpdateUserDto {
     @ApiProperty({ example: 'user', description: 'Роль пользователя' })
     role: string;
 
-    @IsNumber()
-    @IsOptional()
-    @ApiProperty({ example: '0', description: 'ID фото пользователя'})
-    photo: number;
 }

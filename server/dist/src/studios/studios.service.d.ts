@@ -12,6 +12,6 @@ export declare class StudiosService {
     create(studioNew: CreateStudioDto): Promise<Studio>;
     findOne(id: number): Promise<Studio>;
     findAll(): Promise<Studio[]>;
-    update(id: number, updatedStudio: Studio): Promise<Studio>;
+    update(id: number, updatedStudio: CreateStudioDto): Promise<Studio>;
     remove(id: number): Promise<HttpStatus>;
 }

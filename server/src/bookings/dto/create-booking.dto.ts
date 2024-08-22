@@ -1,8 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDateString, IsNotEmpty, IsNumber } from "class-validator";
-import { Photographer } from "src/photographers/photographer.entity";
-import { Studio } from "src/studios/studio.entity";
-import { User } from "src/users/user.entity";
 
 export class CreateBookingDto {
     @IsDateString()
@@ -15,12 +12,12 @@ export class CreateBookingDto {
     @ApiProperty({ example: '5', description: 'Количество людей на брони' })
     people_number: number;
     
-    @ApiProperty({ example: 1, description: 'ID юзера', type: () => User })
-    user: User;
+    @ApiProperty({ example: 1, description: 'ID юзера' })
+    user_id: number;
 
-    @ApiProperty({ example: 1, description: 'ID студии', type: () => Studio })
-    studio: Studio;
+    @ApiProperty({ example: 1, description: 'ID студии' })
+    studio_id: number;
 
-    @ApiProperty({ example: 1, description: 'ID фотографа', type: () => Photographer })
-    photographer: Photographer;
+    @ApiProperty({ example: 1, description: 'ID фотографа' })
+    photographer_id: number;
 }

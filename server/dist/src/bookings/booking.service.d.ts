@@ -14,6 +14,6 @@ export declare class BookingsService {
     create(bookingDto: CreateBookingDto): Promise<Booking>;
     findOne(id: number): Promise<Booking>;
     findAll(): Promise<Booking[]>;
-    update(id: number, updatedBooking: Booking): Promise<Booking>;
+    update(id: number, updatedBooking: CreateBookingDto): Promise<Booking>;
     remove(id: number): Promise<HttpStatus>;
 }

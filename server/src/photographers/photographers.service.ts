@@ -51,7 +51,7 @@ export class PhotographersService {
         return photographers;
     }
 
-    async update(id: number, updatedPhotographer: Photographer): Promise<Photographer>  {
+    async update(id: number, updatedPhotographer: CreatePhotographerDto): Promise<Photographer>  {
 
         try{
             const photographer = await this.photographerRepository.findOne({ where: { id } });
@@ -65,20 +65,6 @@ export class PhotographersService {
             photographer.password = updatedPhotographer.password;
             photographer.work_exp = updatedPhotographer.work_exp;
             photographer.cost = updatedPhotographer.cost;
-
-            if (updatedPhotographer.photo!=null) {
-                const photo = await this.photoRepository.findOne({
-                    where: { id: updatedPhotographer.photo.id },
-                });
-                photographer.photo = photo;
-            }
-
-            if (updatedPhotographer.bookings!=null) {
-                const bookings = await this.bookingRepository.findBy({
-                    id: In(updatedPhotographer.bookings),
-                });
-                photographer.bookings = bookings;
-            }
 
             await this.photographerRepository.save(photographer);
             

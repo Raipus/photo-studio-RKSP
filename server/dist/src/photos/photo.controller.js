@@ -16,8 +16,8 @@ exports.PhotosController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const photo_service_1 = require("./photo.service");
-const photo_entity_1 = require("./photo.entity");
 const create_photo_dto_1 = require("./dto/create-photo.dto");
+const update_photo_dto_1 = require("./dto/update-photo.dto");
 let PhotosController = class PhotosController {
     constructor(PhotosService) {
         this.PhotosService = PhotosService;
@@ -60,7 +60,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, photo_entity_1.Photo]),
+    __metadata("design:paramtypes", [Number, update_photo_dto_1.UpdatePhotoDto]),
     __metadata("design:returntype", void 0)
 ], PhotosController.prototype, "update", null);
 __decorate([

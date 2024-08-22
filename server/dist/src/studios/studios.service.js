@@ -66,18 +66,6 @@ let StudiosService = class StudiosService {
             studio.location = updatedStudio.location;
             studio.description = updatedStudio.description;
             studio.cost = updatedStudio.cost;
-            if (updatedStudio.bookings != null) {
-                const bookings = await this.bookingRepository.findBy({
-                    id: (0, typeorm_2.In)(updatedStudio.bookings),
-                });
-                studio.bookings = bookings;
-            }
-            if (updatedStudio.photos != null) {
-                const photos = await this.photoRepository.findBy({
-                    id: (0, typeorm_2.In)(updatedStudio.photos),
-                });
-                studio.photos = photos;
-            }
             await this.studioRepository.save(studio);
             return studio;
         }

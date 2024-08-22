@@ -23,7 +23,7 @@ export class StudiosController {
 
     @ApiOperation({ summary: 'Изменить студию' }) 
     @Put(':id')
-    update(@Param('id',ParseIntPipe) id: string, @Body() updateStudio: Studio) {
+    update(@Param('id',ParseIntPipe) id: string, @Body() updateStudio: CreateStudioDto) {
         return this.StudiosService.update(+id,updateStudio);
     }
 

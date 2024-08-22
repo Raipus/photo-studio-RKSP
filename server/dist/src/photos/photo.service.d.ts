@@ -5,6 +5,7 @@ import { Studio } from "src/studios/studio.entity";
 import { User } from "src/users/user.entity";
 import { Photo } from "./photo.entity";
 import { CreatePhotoDto } from "./dto/create-photo.dto";
+import { UpdatePhotoDto } from "./dto/update-photo.dto";
 export declare class PhotosService {
     private readonly userRepository;
     private readonly photographerRepository;
@@ -14,6 +15,6 @@ export declare class PhotosService {
     create(photoDto: CreatePhotoDto): Promise<Photo>;
     findOne(id: number): Promise<Photo>;
     findAll(): Promise<Photo[]>;
-    update(id: number, updatedPhoto: Photo): Promise<Photo>;
+    update(id: number, updatedPhoto: UpdatePhotoDto): Promise<Photo>;
     remove(id: number): Promise<HttpStatus>;
 }

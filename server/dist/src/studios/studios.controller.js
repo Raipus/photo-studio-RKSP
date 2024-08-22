@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudiosController = void 0;
 const create_studio_dto_1 = require("./dto/create-studio.dto");
-const studio_entity_1 = require("./studio.entity");
 const studios_service_1 = require("./studios.service");
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
@@ -60,7 +59,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, studio_entity_1.Studio]),
+    __metadata("design:paramtypes", [String, create_studio_dto_1.CreateStudioDto]),
     __metadata("design:returntype", void 0)
 ], StudiosController.prototype, "update", null);
 __decorate([

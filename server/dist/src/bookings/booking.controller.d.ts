@@ -6,7 +6,7 @@ export declare class BookingsController {
     constructor(BookingsService: BookingsService);
     findAll(): Promise<Booking[]>;
     findOne(id: number): Promise<Booking>;
-    update(id: number, updateBooking: Booking): Promise<Booking>;
+    update(id: number, updateBooking: CreateBookingDto): Promise<Booking>;
     create(createBooking: CreateBookingDto): Promise<Booking>;
     remove(id: number): Promise<import("@nestjs/common").HttpStatus>;
 }

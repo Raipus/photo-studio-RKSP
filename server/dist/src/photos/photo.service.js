@@ -31,24 +31,6 @@ let PhotosService = class PhotosService {
         const photo = this.photoRepository.create();
         photo.category = photoDto.category;
         photo.path = photoDto.path;
-        if (photoDto.user != null) {
-            const user = await this.userRepository.findOne({
-                where: { id: photoDto.user.id },
-            });
-            photo.user = user;
-        }
-        if (photoDto.studio != null) {
-            const studio = await this.studioRepository.findOne({
-                where: { id: photoDto.studio.id },
-            });
-            photo.studio = studio;
-        }
-        if (photoDto.photographer != null) {
-            const photographer = await this.photographerRepository.findOne({
-                where: { id: photoDto.photographer.id },
-            });
-            photo.photographer = photographer;
-        }
         await this.photoRepository.save(photo);
         return photo;
     }
@@ -83,21 +65,21 @@ let PhotosService = class PhotosService {
             }
             photo.category = updatedPhoto.category;
             photo.path = updatedPhoto.path;
-            if (updatedPhoto.user != null) {
+            if (updatedPhoto.user_id != null) {
                 const user = await this.userRepository.findOne({
-                    where: { id: updatedPhoto.user.id },
+                    where: { id: updatedPhoto.user_id },
                 });
                 photo.user = user;
             }
-            if (updatedPhoto.studio != null) {
+            if (updatedPhoto.studio_id != null) {
                 const studio = await this.studioRepository.findOne({
-                    where: { id: updatedPhoto.studio.id },
+                    where: { id: updatedPhoto.studio_id },
                 });
                 photo.studio = studio;
             }
-            if (updatedPhoto.photographer != null) {
+            if (updatedPhoto.photographer_id != null) {
                 const photographer = await this.photographerRepository.findOne({
-                    where: { id: updatedPhoto.photographer.id },
+                    where: { id: updatedPhoto.photographer_id },
                 });
                 photo.photographer = photographer;
             }
