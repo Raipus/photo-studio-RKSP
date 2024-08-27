@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { User } from "./user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
@@ -9,6 +9,7 @@ import { Studio } from "src/studios/studio.entity";
 import { Photo } from "src/photos/photo.entity";
 import { Booking } from "src/bookings/booking.entity";
 import { UpdateUserDto } from "./dto/update-user.dto";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable ()
 export class UsersService {
@@ -22,15 +23,31 @@ export class UsersService {
         @InjectRepository(Photo)
         private readonly photoRepository: Repository<Photo>,
         @InjectRepository(Booking)
-        private readonly bookingRepository: Repository<Booking>
+        private readonly bookingRepository: Repository<Booking>,
+        private readonly jwtService: JwtService,
     ) {}
 
     async create(userDto: CreateUserDto): Promise<User> {
-        const user = this.userRepository.create();
-        user.email = userDto.email;
-        user.password = userDto.password;
-        await this.userRepository.save(user);
-        return user;
+        try{
+            const user = await this.userRepository.findOne({ where: { email: userDto.email } });
+
+            if (user) {
+                throw new BadRequestException(`Клиент с почтой ${userDto.email} уже существует!`);
+            }
+
+            const newUser = this.userRepository.create();
+            newUser.email = userDto.email;
+            newUser.password = userDto.password;
+            await this.userRepository.save(newUser);
+
+            const token = this.jwtService.sign({ email: userDto.email })
+
+            // Разобраться как добавить токен в return
+            return newUser;
+        }
+        catch(error){
+            throw error;
+        }
     }
 
     async findOne(email: string): Promise<User> {

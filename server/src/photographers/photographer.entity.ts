@@ -1,6 +1,6 @@
 import { forwardRef } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, IsString, MinLength } from "class-validator";
 import { Booking } from "src/bookings/booking.entity";
 import { Photo } from "src/photos/photo.entity";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
@@ -32,6 +32,7 @@ export class Photographer {
 
     @IsString()
     @IsNotEmpty()
+    @MinLength(6, { message: 'Пароль должен быть минимум 6 символов!' } )
     @ApiProperty({ example: 'somepassword', description: 'Пароль' })
     @Column()
     password: string;

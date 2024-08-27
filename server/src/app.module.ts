@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { BookingsModule } from './bookings/booking.module';
 import { PhotosModule } from './photos/photo.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -14,16 +16,22 @@ import { PhotosModule } from './photos/photo.module';
     StudiosModule, 
     BookingsModule,
     PhotosModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      port: 5432,
-      username: 'education',
-      password:'password',
-      host:'localhost',
-      synchronize: false,
-      logging: 'all',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-    })
+    AuthModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        synchronize: false,
+        logging: 'all',
+        entities: ['dist/**/*.entity{.ts,.js}'],
+      }),
+      inject: [ConfigService],
+    }),
   ],
   controllers: [],
   providers: [],

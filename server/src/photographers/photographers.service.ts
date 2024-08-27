@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { Photographer } from "./photographer.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
@@ -21,14 +21,26 @@ export class PhotographersService {
     ) {}
 
     async create(photographerNew: CreatePhotographerDto): Promise<Photographer> {
-        const photographer = this.photographerRepository.create();
-        photographer.fullname = photographerNew.fullname;
-        photographer.email = photographerNew.email;
-        photographer.password = photographerNew.password;
-        photographer.work_exp = photographerNew.work_exp;
-        photographer.cost = photographerNew.cost;
-        await this.photographerRepository.save(photographer);
-        return photographer;
+
+        try{
+            const photographer = await this.photographerRepository.findOne({ where: { email: photographerNew.email } });
+
+            if(!photographer){
+                throw new BadRequestException(`Фотограф с почтой ${photographerNew.email} уже существует!`);
+            }
+
+            const newPhotographer = this.photographerRepository.create();
+            newPhotographer.fullname = photographerNew.fullname;
+            newPhotographer.email = photographerNew.email;
+            newPhotographer.password = photographerNew.password;
+            newPhotographer.work_exp = photographerNew.work_exp;
+            newPhotographer.cost = photographerNew.cost;
+            await this.photographerRepository.save(newPhotographer);
+            return newPhotographer;
+        }
+        catch(error){
+            throw error;
+        }
     }
 
     async findOne(email: string): Promise<Photographer> {
