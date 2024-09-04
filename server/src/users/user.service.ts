@@ -10,6 +10,7 @@ import { Photo } from "src/photos/photo.entity";
 import { Booking } from "src/bookings/booking.entity";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { JwtService } from "@nestjs/jwt";
+import * as argon2 from "argon2";
 
 @Injectable ()
 export class UsersService {
@@ -27,7 +28,7 @@ export class UsersService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async create(userDto: CreateUserDto): Promise<User> {
+    async create(userDto: CreateUserDto) {
         try{
             const user = await this.userRepository.findOne({ where: { email: userDto.email } });
 
@@ -37,13 +38,12 @@ export class UsersService {
 
             const newUser = this.userRepository.create();
             newUser.email = userDto.email;
-            newUser.password = userDto.password;
+            newUser.password = await argon2.hash(userDto.password);
             await this.userRepository.save(newUser);
 
             const token = this.jwtService.sign({ email: userDto.email })
 
-            // Разобраться как добавить токен в return
-            return newUser;
+            return { newUser, token };
         }
         catch(error){
             throw error;

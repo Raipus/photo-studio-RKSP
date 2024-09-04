@@ -1,14 +1,16 @@
-import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { BookingsService } from "./booking.service";
 import { Booking } from "./booking.entity";
 import { CreateBookingDto } from "./dto/create-booking.dto";
+import { AuthorGuard } from "src/auth/author.guard";
 
 @Controller('bookings')
 @ApiTags('Брони')
 export class BookingsController {
     constructor(private readonly BookingsService: BookingsService) {}
 
+    @UseGuards(AuthorGuard)
     @ApiOperation({ summary: 'Получить все брони' }) 
     @Get()
     findAll(){

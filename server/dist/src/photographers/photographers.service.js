@@ -28,14 +28,23 @@ let PhotographersService = class PhotographersService {
         this.bookingRepository = bookingRepository;
     }
     async create(photographerNew) {
-        const photographer = this.photographerRepository.create();
-        photographer.fullname = photographerNew.fullname;
-        photographer.email = photographerNew.email;
-        photographer.password = photographerNew.password;
-        photographer.work_exp = photographerNew.work_exp;
-        photographer.cost = photographerNew.cost;
-        await this.photographerRepository.save(photographer);
-        return photographer;
+        try {
+            const photographer = await this.photographerRepository.findOne({ where: { email: photographerNew.email } });
+            if (!photographer) {
+                throw new common_1.BadRequestException(`Фотограф с почтой ${photographerNew.email} уже существует!`);
+            }
+            const newPhotographer = this.photographerRepository.create();
+            newPhotographer.fullname = photographerNew.fullname;
+            newPhotographer.email = photographerNew.email;
+            newPhotographer.password = photographerNew.password;
+            newPhotographer.work_exp = photographerNew.work_exp;
+            newPhotographer.cost = photographerNew.cost;
+            await this.photographerRepository.save(newPhotographer);
+            return newPhotographer;
+        }
+        catch (error) {
+            throw error;
+        }
     }
     async findOne(email) {
         try {

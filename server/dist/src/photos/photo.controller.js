@@ -18,6 +18,7 @@ const swagger_1 = require("@nestjs/swagger");
 const photo_service_1 = require("./photo.service");
 const create_photo_dto_1 = require("./dto/create-photo.dto");
 const update_photo_dto_1 = require("./dto/update-photo.dto");
+const author_guard_1 = require("../auth/author.guard");
 let PhotosController = class PhotosController {
     constructor(PhotosService) {
         this.PhotosService = PhotosService;
@@ -40,6 +41,7 @@ let PhotosController = class PhotosController {
 };
 exports.PhotosController = PhotosController;
 __decorate([
+    (0, common_1.UseGuards)(author_guard_1.AuthorGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить все фото' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),

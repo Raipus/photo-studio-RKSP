@@ -22,20 +22,33 @@ const photographer_entity_1 = require("../photographers/photographer.entity");
 const studio_entity_1 = require("../studios/studio.entity");
 const photo_entity_1 = require("../photos/photo.entity");
 const booking_entity_1 = require("../bookings/booking.entity");
+const jwt_1 = require("@nestjs/jwt");
+const argon2 = require("argon2");
 let UsersService = class UsersService {
-    constructor(userRepository, photographerRepository, studioRepository, photoRepository, bookingRepository) {
+    constructor(userRepository, photographerRepository, studioRepository, photoRepository, bookingRepository, jwtService) {
         this.userRepository = userRepository;
         this.photographerRepository = photographerRepository;
         this.studioRepository = studioRepository;
         this.photoRepository = photoRepository;
         this.bookingRepository = bookingRepository;
+        this.jwtService = jwtService;
     }
     async create(userDto) {
-        const user = this.userRepository.create();
-        user.email = userDto.email;
-        user.password = userDto.password;
-        await this.userRepository.save(user);
-        return user;
+        try {
+            const user = await this.userRepository.findOne({ where: { email: userDto.email } });
+            if (user) {
+                throw new common_1.BadRequestException(`Клиент с почтой ${userDto.email} уже существует!`);
+            }
+            const newUser = this.userRepository.create();
+            newUser.email = userDto.email;
+            newUser.password = await argon2.hash(userDto.password);
+            await this.userRepository.save(newUser);
+            const token = this.jwtService.sign({ email: userDto.email });
+            return { newUser, token };
+        }
+        catch (error) {
+            throw error;
+        }
     }
     async findOne(email) {
         try {
@@ -127,6 +140,7 @@ exports.UsersService = UsersService = __decorate([
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
-        typeorm_2.Repository])
+        typeorm_2.Repository,
+        jwt_1.JwtService])
 ], UsersService);
 //# sourceMappingURL=user.service.js.map

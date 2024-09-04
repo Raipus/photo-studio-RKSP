@@ -8,14 +8,19 @@ import { Studio } from "src/studios/studio.entity";
 import { Photo } from "src/photos/photo.entity";
 import { Booking } from "src/bookings/booking.entity";
 import { UpdateUserDto } from "./dto/update-user.dto";
+import { JwtService } from "@nestjs/jwt";
 export declare class UsersService {
     private readonly userRepository;
     private readonly photographerRepository;
     private readonly studioRepository;
     private readonly photoRepository;
     private readonly bookingRepository;
-    constructor(userRepository: Repository<User>, photographerRepository: Repository<Photographer>, studioRepository: Repository<Studio>, photoRepository: Repository<Photo>, bookingRepository: Repository<Booking>);
-    create(userDto: CreateUserDto): Promise<User>;
+    private readonly jwtService;
+    constructor(userRepository: Repository<User>, photographerRepository: Repository<Photographer>, studioRepository: Repository<Studio>, photoRepository: Repository<Photo>, bookingRepository: Repository<Booking>, jwtService: JwtService);
+    create(userDto: CreateUserDto): Promise<{
+        newUser: User;
+        token: string;
+    }>;
     findOne(email: string): Promise<User>;
     findAll(): Promise<User[]>;
     findIncomplete(): Promise<IncompleteUserDto[]>;

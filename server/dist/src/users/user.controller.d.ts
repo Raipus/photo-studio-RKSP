@@ -9,6 +9,9 @@ export declare class UsersController {
     findAll(): Promise<User[]>;
     findOne(email: string): Promise<User>;
     update(id: number, updateUser: UpdateUserDto): Promise<User>;
-    create(createUser: CreateUserDto): Promise<User>;
+    create(createUser: CreateUserDto): Promise<{
+        newUser: User;
+        token: string;
+    }>;
     remove(id: number): Promise<import("@nestjs/common").HttpStatus>;
 }

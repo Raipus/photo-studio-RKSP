@@ -16,6 +16,8 @@ const photographer_entity_1 = require("../photographers/photographer.entity");
 const studio_entity_1 = require("../studios/studio.entity");
 const photo_entity_1 = require("../photos/photo.entity");
 const booking_entity_1 = require("../bookings/booking.entity");
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
 let UsersModule = class UsersModule {
 };
 exports.UsersModule = UsersModule;
@@ -23,7 +25,19 @@ exports.UsersModule = UsersModule = __decorate([
     (0, common_1.Module)({
         controllers: [user_controller_1.UsersController],
         providers: [user_service_1.UsersService],
-        imports: [user_entity_1.User, typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, photographer_entity_1.Photographer, studio_entity_1.Studio, photo_entity_1.Photo, booking_entity_1.Booking])],
+        imports: [
+            user_entity_1.User,
+            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, photographer_entity_1.Photographer, studio_entity_1.Studio, photo_entity_1.Photo, booking_entity_1.Booking]),
+            jwt_1.JwtModule.registerAsync({
+                imports: [config_1.ConfigModule],
+                useFactory: (configService) => ({
+                    secret: configService.get('JWT_SECRET'),
+                    signOptions: { expiresIn: '30d' },
+                }),
+                inject: [config_1.ConfigService],
+            })
+        ],
+        exports: [user_service_1.UsersService],
     })
 ], UsersModule);
 //# sourceMappingURL=user.module.js.map

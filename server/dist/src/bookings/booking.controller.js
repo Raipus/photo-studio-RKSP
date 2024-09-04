@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const booking_service_1 = require("./booking.service");
 const create_booking_dto_1 = require("./dto/create-booking.dto");
+const author_guard_1 = require("../auth/author.guard");
 let BookingsController = class BookingsController {
     constructor(BookingsService) {
         this.BookingsService = BookingsService;
@@ -39,6 +40,7 @@ let BookingsController = class BookingsController {
 };
 exports.BookingsController = BookingsController;
 __decorate([
+    (0, common_1.UseGuards)(author_guard_1.AuthorGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить все брони' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
