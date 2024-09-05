@@ -1,15 +1,41 @@
-import { CanActivate, ExecutionContext } from "@nestjs/common";
+import { BadRequestException, CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { BookingsService } from "src/bookings/booking.service";
+import { PhotographersService } from "src/photographers/photographers.service";
+import { PhotosService } from "src/photos/photo.service";
+import { StudiosService } from "src/studios/studios.service";
+import { UsersService } from "src/users/user.service";
 
+@Injectable()
 export class AuthorGuard implements CanActivate {
+    constructor(
+        private readonly bookingService: BookingsService,
+        private readonly photographerService: PhotographersService,
+        private readonly photosService: PhotosService,
+        private readonly studiosService: StudiosService,
+        private readonly usersService: UsersService,
+    ) {}
+
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
         const path = request.url.split('/');
+        const id = request.params;
 
-        //Работает
+        let entity
+
         if (path.includes('bookings')) {
-            console.log('Bookings');
+            entity = await this.bookingService.findOne(id);
         }
 
-        return true
+        if (path.includes('photos')) {
+            entity = await this.photosService.findOne(id);
+        }
+
+        const user = request.user;
+
+        if (entity && user && entity.user.id == user.id) {
+            return true
+        }
+
+        throw new BadRequestException('Something went wrong...')
     }
 }
