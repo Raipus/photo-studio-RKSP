@@ -9,10 +9,7 @@ import { UsersService } from "src/users/user.service";
 export class AuthorGuard implements CanActivate {
     constructor(
         private readonly bookingService: BookingsService,
-        private readonly photographerService: PhotographersService,
         private readonly photosService: PhotosService,
-        private readonly studiosService: StudiosService,
-        private readonly usersService: UsersService,
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {

@@ -16,14 +16,16 @@ const booking_entity_1 = require("../bookings/booking.entity");
 const user_entity_1 = require("../users/user.entity");
 const photo_service_1 = require("./photo.service");
 const photo_controller_1 = require("./photo.controller");
+const booking_service_1 = require("../bookings/booking.service");
 let PhotosModule = class PhotosModule {
 };
 exports.PhotosModule = PhotosModule;
 exports.PhotosModule = PhotosModule = __decorate([
     (0, common_1.Module)({
         controllers: [photo_controller_1.PhotosController],
-        providers: [photo_service_1.PhotosService],
+        providers: [photo_service_1.PhotosService, booking_service_1.BookingsService],
         imports: [user_entity_1.User, typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, photographer_entity_1.Photographer, studio_entity_1.Studio, photo_entity_1.Photo, booking_entity_1.Booking])],
+        exports: [photo_service_1.PhotosService],
     })
 ], PhotosModule);
 //# sourceMappingURL=photo.module.js.map

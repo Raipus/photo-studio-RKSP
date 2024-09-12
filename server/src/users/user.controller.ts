@@ -39,7 +39,6 @@ export class UsersController {
         return this.UsersService.update(+id,updateUser);
     }
 
-    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Создать пользователя' }) 
     @Post()
     create(@Body() createUser: CreateUserDto) {

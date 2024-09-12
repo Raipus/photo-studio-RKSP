@@ -19,6 +19,7 @@ const photo_service_1 = require("./photo.service");
 const create_photo_dto_1 = require("./dto/create-photo.dto");
 const update_photo_dto_1 = require("./dto/update-photo.dto");
 const author_guard_1 = require("../auth/author.guard");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let PhotosController = class PhotosController {
     constructor(PhotosService) {
         this.PhotosService = PhotosService;
@@ -41,7 +42,7 @@ let PhotosController = class PhotosController {
 };
 exports.PhotosController = PhotosController;
 __decorate([
-    (0, common_1.UseGuards)(author_guard_1.AuthorGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить все фото' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -49,6 +50,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotosController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, author_guard_1.AuthorGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить конкретное фото' }),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -57,6 +59,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotosController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, author_guard_1.AuthorGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Изменить фото' }),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -66,6 +69,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotosController.prototype, "update", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать фото' }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
@@ -74,6 +78,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotosController.prototype, "create", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, author_guard_1.AuthorGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Удалить фото' }),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),

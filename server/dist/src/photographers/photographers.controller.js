@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PhotographersController = void 0;
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const create_photographer_dto_1 = require("./dto/create-photographer.dto");
 const photographers_service_1 = require("./photographers.service");
 const common_1 = require("@nestjs/common");
@@ -39,6 +40,7 @@ let PhotographersController = class PhotographersController {
 };
 exports.PhotographersController = PhotographersController;
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить всех фотографов' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -46,6 +48,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotographersController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить конкретного фотографа' }),
     (0, common_1.Get)(':email'),
     __param(0, (0, common_1.Param)('email')),
@@ -54,6 +57,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotographersController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Изменить фотографа' }),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -63,6 +67,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotographersController.prototype, "update", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать фотографа' }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
@@ -71,6 +76,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotographersController.prototype, "create", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Удалить фотографа' }),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
