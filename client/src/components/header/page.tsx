@@ -2,8 +2,8 @@
 
 const Header = () => {
     return (
-        <div className="row-start-3 flex absolute bottom-0 border-5 h-52 items-center justify-center bg-white p-10 min-w-full">
-            <p>Сайт был сделан солевыми наркоманами проходящими реабилитацию в подвале реабилитационного центра #1 Солнышко</p>
+        <div className="flex absolute top-0 border-5 h-24 items-center justify-center bg-[#1D1D1CFF] p-10 min-w-full">
+            <p>Сайт был сделан солевыми наркоманами проходящими реабилитацию</p>
         </div>
     )
 }
