@@ -16,7 +16,7 @@ const roboto_condensed = Roboto_Condensed({
 
 export const metadata: Metadata = {
   title: "Richard's Photos",
-  description: "Website for renting the best photo studios",
+  description: "Website for renting the best photo studios"
 };
 
 export default function RootLayout({
