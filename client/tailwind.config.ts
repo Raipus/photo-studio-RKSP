@@ -12,6 +12,37 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        slideRightEnter: {
+          "0%": {
+            opacity: 0,
+            transform: "translateX(-30px)",
+          },
+          "100%": {
+            opacity: 100,
+            transform: "translateX(0px)",
+          },
+        },
+        slideLeftEnter: {
+          "0%": {
+            opacity: 0,
+            transform: "translateX(30px)",
+          },
+          "100%": {
+            opacity: 100,
+            transform: "translateX(0px)",
+          },
+        },
+        opacityEnter: {
+          "0%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 100,
+          },
+        }
+      },
+
     },
   },
   plugins: [],

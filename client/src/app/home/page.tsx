@@ -4,55 +4,49 @@ import Image from "next/image";
 
 export default function HomePage() {
     return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-roboto-mono)]">
-      <Header></Header>
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-inter)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="items-center justify-items-center min-h-screen min-w-screen font-[family-name:var(--font-roboto-mono)] text-lg">
+      <Header/>
+      <div className="flex min-w-full dark:bg-[#111111] bg-[#EEF2E6] h-[870px] items-center justify-center">
+        <div className="flex justify-between w-[1300px] h-auto pt-16 pb-24">
+          <div className="w-[600px] h-auto">
+            <div className="animate-[slideRightEnter_1s_ease-in-out] font-[family-name:var(--font-inter)] font-bold text-6xl leading-tight mt-10">
+              Создавайте Незабываемые Впечатления Уже Сегодня!
+            </div>
+            <div className="animate-[slideRightEnter_1.25s_ease-in-out] w-[300px] h-auto mt-10">
+              Richard's Studios предлагает аренду студий для всех ваших потребностей в фото и видео съемке. 
+            </div>
+            <button className="animate-[slideRightEnter_1.5s_ease-in-out] mt-10 pt-3 pb-3 pl-11 pr-11 bg-[#3D8361] hover:bg-[#2F6A4E] rounded-[5%] text-white font-medium">Забронировать студию сейчас</button>
+          </div>
+          <div className="animate-[slideLeftEnter_1s_ease-in-out] w-[500px] h-[600px]">
             <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/home1.jpg"
+              alt="Изображение дома"
+              width={500}
+              height={600}
+              quality={100}
+              className="w-full h-full object-cover rounded-[3%]"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
         </div>
-      </main>
-      <Footer></Footer>
+      </div>
+      <div id="about-us" className="flex min-w-full bg-[#1C6758] items-center justify-center text-white">
+        <div className="w-[1300px] h-auto pt-14 pb-14 flex justify-between">
+          <div className="animate-[opacityEnter_1s_ease-in-out] flex flex-col items-center h-auto w-[335px]">
+            <div className="font-[family-name:var(--font-inter)] font-bold text-5xl">50+</div>
+            <div className="text-center mt-4">Современного оборудования для получения потрясающих результатов фотосъемки.</div>
+          </div>
+          <div className="animate-[opacityEnter_1s_ease-in-out] flex flex-col items-center h-auto w-[335px]">
+            <div className="font-[family-name:var(--font-inter)] font-bold text-5xl">100%</div>
+            <div className="text-center mt-4">Квалифицированные рекомендации для безупречной фотосъемки.</div>
+          </div>
+          <div className="animate-[opacityEnter_1s_ease-in-out] flex flex-col items-center h-auto w-[335px]">
+            <div className="font-[family-name:var(--font-inter)] font-bold text-5xl">100+</div>
+            <div className="text-center mt-4">Индивидуальных макетов для универсальных фотосессий.</div>
+          </div>
+        </div>
+      </div>
+
+      <Footer/>
     </div>
     )
 }
