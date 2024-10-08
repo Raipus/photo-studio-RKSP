@@ -1,6 +1,6 @@
-import Footer from "@/components/footer";
-import Header from "@/components/header";
-import Image from "next/image";
+import Footer from "@/components/footer"
+import Header from "@/components/header"
+import Image from "next/image"
 
 export default function HomePage() {
     return (
@@ -15,7 +15,7 @@ export default function HomePage() {
             <div className="animate-[slideRightEnter_1.25s_ease-in-out] w-[300px] h-auto mt-10">
               Richard's Studios предлагает аренду студий для всех ваших потребностей в фото и видео съемке. 
             </div>
-            <button className="animate-[slideRightEnter_1.5s_ease-in-out] mt-10 pt-3 pb-3 pl-11 pr-11 bg-[#3D8361] hover:bg-[#2F6A4E] rounded-[5%] text-white font-medium">Забронировать студию сейчас</button>
+            <button className="animate-[slideRightEnter_1.5s_ease-in-out] mt-10 pt-3 pb-3 pl-11 pr-11 bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 rounded-md text-white font-medium">Забронировать студию сейчас</button>
           </div>
           <div className="animate-[slideLeftEnter_1s_ease-in-out] w-[500px] h-[600px]">
             <Image

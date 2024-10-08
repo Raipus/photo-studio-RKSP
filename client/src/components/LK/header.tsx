@@ -1,7 +1,5 @@
 'use client'
 
-import Link from 'next/link'
-
 const Header = () => {
     return (
         <div className="flex h-24 items-center justify-center dark:bg-[#111111] bg-[#EEF2E6] min-w-full transition-all duration-300 z-10">
@@ -12,14 +10,11 @@ const Header = () => {
                 <div className="flex w-full justify-between items-center">
                     <div>
                         <a href="/home" className="p-4 mr-1">Главная</a>
-                        <a href="/#about-us" className="p-4 mr-1">Cтудии</a>
+                        <a href="/#about-us" className="p-4 mr-1">Студии</a>
                         <a className="p-4 mr-1">Фотографы</a>
                         <a className="p-4 mr-1">Контакты</a>
+												<a href='/userID' className="p-4 mr-1">Личный кабинет</a>
                     </div>
-                    <Link href='/loginPage'>
-                        <button className="pt-3 pb-3 pl-11 pr-11 bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 rounded-md text-white">Вход
-                        </button>
-                    </Link>
                 </div>
             </div>
         </div>
