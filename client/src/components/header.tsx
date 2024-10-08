@@ -11,13 +11,13 @@ const Header = () => {
                 </div>
                 <div className="flex w-full justify-between items-center">
                     <div>
-                        <a href="/home" className="p-4 mr-1">Главная</a>
-                        <a href="/#about-us" className="p-4 mr-1">Cтудии</a>
-                        <a className="p-4 mr-1">Фотографы</a>
-                        <a className="p-4 mr-1">Контакты</a>
+                        <a href="/home" className="p-4 mr-4">Главная</a>
+                        <a href="/#about-us" className="p-4 mr-4">Cтудии</a>
+                        <a className="p-4 mr-4">Фотографы</a>
+                        <a className="p-4 mr-4">Контакты</a>
                     </div>
                     <Link href='/loginPage'>
-                        <button className="pt-3 pb-3 pl-11 pr-11 bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 rounded-md text-white">Вход
+                        <button className="pt-3 pb-3 pl-14 pr-14 bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 rounded-md text-white">Вход
                         </button>
                     </Link>
                 </div>
