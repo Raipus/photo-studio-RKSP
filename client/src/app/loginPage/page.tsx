@@ -2,26 +2,25 @@
 import Header from '@/components/header'
 import Footer from '@/components/LK/footer'
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 interface IFormStateLogin{
-  name: string;
-  password:string;
-  email:string;
-  phone:string;
-  save_login:boolean;
+  ID: number;
+  email: string;
+  password: string;
 }
 
 export default function LoginPage() {
   const {register, handleSubmit} = useForm<IFormStateLogin>();
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<IFormStateLogin>= async (data) => {
+  const onSubmit: SubmitHandler<IFormStateLogin> = async (data) => {
     console.log("отправляю данные")
       try {
-        const response = await fetch('http://localhost:3001/requests', {
-          method: 'POST',
+        const ApiUrl = 'http://localhost:3001/users/'+register('email')
+        const response = await fetch(ApiUrl, {
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -35,7 +34,8 @@ export default function LoginPage() {
       } catch (error) {
         console.error('Error:', error);
       }
-      router.push("http://localhost:3000/userID");
+      const lk = 'http://localhost:3000/'+data.ID
+      redirect(lk);
   }
   return (
     <div className=' bg-cover'>
