@@ -3,7 +3,6 @@ import Footer from "@/components/footer"
 import Header from "@/components/header"
 import Image from "next/image"
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 
 interface IStudio {
   id: number
@@ -24,28 +23,27 @@ interface IPhotographer{
   cost:number  
 }
 
-export default function HomePage() {
-  const [studios, setStudios] = useState<IStudio[]>([])
-  const [photographers, setPhotographers] = useState<IPhotographer[]>([])
-	useEffect(() => {
-		const fetchStudios = async () => {
-			const response = await fetch('http://localhost:3001/requests')
-			const data = await response.json()
-			setStudios(data)
-		}
+async function fetchPhotographers(): Promise<IPhotographer[]> {
+  const res = await fetch('http://localhost:3001/photographers');
+  if (!res.ok) {
+    throw new Error('Failed to fetch photographers');
+  }
+  return res.json();
+}
 
-		fetchStudios()
-	}, [])
-  useEffect(() => {
-    const fetchPhotographers = async () => {
-      const response = await fetch('http://localhost:3001/requests')
-      const data = await response.json()
-      setPhotographers(data)
-    }
+async function fetchStudios(): Promise<IStudio[]> {
+  const res = await fetch('http://localhost:3001/studios');
+  if (!res.ok) {
+    throw new Error('Failed to fetch studios');
+  }
+  return res.json();
+}
 
-    fetchPhotographers
-  }, [])
-    return (
+const HomePage = async () => {
+  const photographers = await fetchPhotographers();
+  const studios = await fetchStudios();
+
+  return (
     <div className="items-center justify-items-center min-h-screen min-w-screen font-[family-name:var(--font-roboto-mono)] text-lg">
       <Header/>
       <div className="flex min-w-full dark:bg-[#111111] bg-[#EEF2E6] h-[870px] items-center justify-center">
@@ -118,4 +116,6 @@ export default function HomePage() {
       <Footer/>
     </div>
     )
-}
+};
+
+export default HomePage;

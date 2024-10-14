@@ -40,7 +40,6 @@ let StudiosController = class StudiosController {
 };
 exports.StudiosController = StudiosController;
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить все студии' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -67,7 +66,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StudiosController.prototype, "update", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать студию' }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

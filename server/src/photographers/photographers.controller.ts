@@ -10,7 +10,6 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 export class PhotographersController {
     constructor(private readonly PhotographersService: PhotographersService) {}
 
-    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Получить всех фотографов' }) 
     @Get()
     findAll(){

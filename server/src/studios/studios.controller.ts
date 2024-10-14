@@ -10,7 +10,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 export class StudiosController {
     constructor(private readonly StudiosService: StudiosService) {}
 
-    @UseGuards(JwtAuthGuard)
+
     @ApiOperation({ summary: 'Получить все студии' }) 
     @Get()
     findAll(){

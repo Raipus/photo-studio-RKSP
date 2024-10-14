@@ -40,7 +40,6 @@ let PhotographersController = class PhotographersController {
 };
 exports.PhotographersController = PhotographersController;
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить всех фотографов' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
