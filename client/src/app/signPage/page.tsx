@@ -41,15 +41,14 @@ export default function SigninPage() {
       <main className="grid justify-items-center">
         <div className="m-10 grid justify-items-center">
           <form onSubmit={handleSubmit(onSubmit)} className="justify-self-center grid space-y-4">
-            <h1 className="mb-3 text-center text-2xl">Регистрация</h1>
-            <input placeholder='Имя и фамилия пользователя' type='name' {...register('name', { required: true })} />
-
-            <input placeholder='Пароль' type="password"{...register('password', {required: true})} />
-            <input placeholder='Почта' type='email' {...register('email', { required: true })} />
-            <input placeholder="Номер телефона" type='number'{...register('phone', {required:true})}/>
-            <button  type="submit" className="bg-[#3D8361] rounded-md px-5 py-2 mt-6 text-xl hover: hover:scale-102 hover:bg-[#1C6758] duration-300">Зарегистрироваться</button>
+            <h1 className="mb-3 text-center text-2xl mt-32">Регистрация</h1>
+            <input className ="rounded-md text-black border-black border-[1px] p-1" placeholder='ФИО' type='name' {...register('name', { required: true })} />
+            <input className ="rounded-md text-black border-black border-[1px] p-1" placeholder='Пароль' type="password"{...register('password', {required: true})} />
+            <input className ="rounded-md text-black border-black border-[1px] p-1" placeholder='Почта' type='email' {...register('email', { required: true })} />
+            <input className ="rounded-md text-black border-black border-[1px] p-1" placeholder="Номер телефона" type='number'{...register('phone', {required:true})}/>
+            <button  type="submit" className="bg-[#3D8361] rounded-md px-5 py-2 mt-6 text-xl hover: hover:scale-102 hover:bg-[#2F6A4E] duration-300 text-white">Зарегистрироваться</button>
           </form>
-					<a href='/loginPage' className='mt-2'>Уже есть аккаунт?</a>
+					<a href='/loginPage' className='mt-2 mb-28'>Уже есть аккаунт?</a>
         </div>
       </main>
       <Footer/>
