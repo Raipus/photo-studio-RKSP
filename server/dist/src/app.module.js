@@ -8,18 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const user_module_1 = require("./users/user.module");
-const photographers_module_1 = require("./photographers/photographers.module");
-const studios_module_1 = require("./studios/studios.module");
-const typeorm_1 = require("@nestjs/typeorm");
-const logger_middleware_1 = require("./middleware/logger.middleware");
-const booking_module_1 = require("./bookings/booking.module");
-const photo_module_1 = require("./photos/photo.module");
-const auth_module_1 = require("./auth/auth.module");
 const config_1 = require("@nestjs/config");
+const typeorm_1 = require("@nestjs/typeorm");
+const auth_module_1 = require("./auth/auth.module");
+const booking_module_1 = require("./bookings/booking.module");
+const logger_middleware_1 = require("./middleware/logger.middleware");
+const photographers_module_1 = require("./photographers/photographers.module");
+const photo_module_1 = require("./photos/photo.module");
+const studios_module_1 = require("./studios/studios.module");
+const user_module_1 = require("./users/user.module");
 let AppModule = class AppModule {
     configure(consumer) {
-        consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('users', 'studios', 'photographers', 'photos', 'bookings');
+        consumer
+            .apply(logger_middleware_1.LoggerMiddleware)
+            .forRoutes('users', 'studios', 'photographers', 'photos', 'bookings');
     }
 };
 exports.AppModule = AppModule;
@@ -39,6 +41,7 @@ exports.AppModule = AppModule = __decorate([
                     type: 'postgres',
                     host: configService.get('DB_HOST'),
                     port: configService.get('DB_PORT'),
+                    database: configService.get('DB_DATABASE'),
                     username: configService.get('DB_USERNAME'),
                     password: configService.get('DB_PASSWORD'),
                     synchronize: false,

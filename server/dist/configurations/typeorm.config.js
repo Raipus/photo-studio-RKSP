@@ -6,7 +6,7 @@ const ormConfig = new typeorm_1.DataSource({
     host: 'localhost',
     port: 5432,
     database: 'education',
-    username: 'education',
+    username: 'postgres',
     password: 'password',
     entities: ['dist/**/*.entity{.ts,.js}'],
     logging: true,
