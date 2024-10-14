@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 interface IStudio {
+  id: number
 	name: string
   location: string
 	description: string
@@ -13,9 +14,12 @@ interface IStudio {
 }
 
 interface IPhotographer{
+  id: number
   fullname: string
   email: string
+  phone: number
   password: string
+  role: string
   work_exp: number
   cost:number  
 }
