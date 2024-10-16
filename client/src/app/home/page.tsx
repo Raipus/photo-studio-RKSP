@@ -116,32 +116,87 @@ const HomePage = () => {
       <div className='grid place-content-center'>
       <div id='studios' className='grid grid-cols-1 text-center w-[1300px]'>
         <a className='text-4xl'>Наши студии:</a>
-        <a>{studios.length}</a>
 				<div className='inline-flex max-w-full overflow-x-scroll'>
-					{studios.map(studio => (
-						<div key={studio.id} className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+						<div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
               <div>
-                <h3 className='text-4xl'>{studio.name}</h3>  
+                <h3 className='text-4xl'>Уютный камин</h3>  
               </div>
               <div>
-        				<p>{studio.location}</p>
-                <p>{studio.cost}</p>        
+        				<p>ул. Ленинский проспект, д.6</p>
+                <p>4000 руб/ч</p>        
               </div>
 						</div>
-					))}
+
+            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Уютный камин</h3>  
+              </div>
+              <div>
+        				<p>ул. Ленинский проспект, д.6</p>
+                <p>4000 руб/ч</p>        
+              </div>
+						</div>
+
+            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Уютный камин</h3>  
+              </div>
+              <div>
+        				<p>ул. Ленинский проспект, д.6</p>
+                <p>4000 руб/ч</p>        
+              </div>
+						</div>
+
+            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Уютный камин</h3>  
+              </div>
+              <div>
+        				<p>ул. Ленинский проспект, д.6</p>
+                <p>4000 руб/ч</p>        
+              </div>
+						</div>
+
+            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Уютный камин</h3>  
+              </div>
+              <div>
+        				<p>ул. Ленинский проспект, д.6</p>
+                <p>4000 руб/ч</p>        
+              </div>
+						</div>
+
+            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Уютный камин</h3>  
+              </div>
+              <div>
+        				<p>ул. Ленинский проспект, д.6</p>
+                <p>4000 руб/ч</p>        
+              </div>
+						</div>
+
+            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Уютный камин</h3>  
+              </div>
+              <div>
+        				<p>ул. Ленинский проспект, д.6</p>
+                <p>4000 руб/ч</p>        
+              </div>
+						</div>
 				</div>
       </div>
       
       <div id='photographers' className='grid grid-cols-1 text-center w-[1300px]'>
         <a className='text-4xl'>Наши фотографы:</a>
 				<div className='inline-flex max-w-full overflow-x-scroll'>
-					{photographers.map(photographer => (
-						<div key={photographer.id} className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
-							<h3>{photographer.fullname}</h3>
-							<p>{photographer.work_exp}</p>
-              <p>{photographer.cost}</p>
+						<div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+							<h3>Уютный камин</h3>
+							<p></p>
+              <p></p>
 						</div>
-					))}
 				</div>
       </div>
       </div>
