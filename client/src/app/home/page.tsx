@@ -114,10 +114,10 @@ const HomePage = () => {
         </div>
       </div>
       <div className='grid place-content-center'>
-      <div id='studios' className='grid grid-cols-1 text-center w-[1300px]'>
+      <div id='studios' className='grid grid-cols-1 text-center w-[1300px] my-5'>
         <a className='text-4xl'>Наши студии:</a>
 				<div className='inline-flex max-w-full overflow-x-scroll'>
-						<div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+						<div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
               <div>
                 <h3 className='text-4xl'>Уютный камин</h3>  
               </div>
@@ -127,7 +127,7 @@ const HomePage = () => {
               </div>
 						</div>
 
-            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
               <div>
                 <h3 className='text-4xl'>Уютный камин</h3>  
               </div>
@@ -136,8 +136,7 @@ const HomePage = () => {
                 <p>4000 руб/ч</p>        
               </div>
 						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
               <div>
                 <h3 className='text-4xl'>Уютный камин</h3>  
               </div>
@@ -146,8 +145,7 @@ const HomePage = () => {
                 <p>4000 руб/ч</p>        
               </div>
 						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
               <div>
                 <h3 className='text-4xl'>Уютный камин</h3>  
               </div>
@@ -156,8 +154,7 @@ const HomePage = () => {
                 <p>4000 руб/ч</p>        
               </div>
 						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
               <div>
                 <h3 className='text-4xl'>Уютный камин</h3>  
               </div>
@@ -166,8 +163,7 @@ const HomePage = () => {
                 <p>4000 руб/ч</p>        
               </div>
 						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
               <div>
                 <h3 className='text-4xl'>Уютный камин</h3>  
               </div>
@@ -176,8 +172,16 @@ const HomePage = () => {
                 <p>4000 руб/ч</p>        
               </div>
 						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Уютный камин</h3>  
+              </div>
+              <div>
+        				<p>ул. Ленинский проспект, д.6</p>
+                <p>4000 руб/ч</p>        
+              </div>
+						</div>
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
               <div>
                 <h3 className='text-4xl'>Уютный камин</h3>  
               </div>
@@ -192,12 +196,67 @@ const HomePage = () => {
       <div id='photographers' className='grid grid-cols-1 text-center w-[1300px]'>
         <a className='text-4xl'>Наши фотографы:</a>
 				<div className='inline-flex max-w-full overflow-x-scroll'>
-						<div className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
-							<h3>Уютный камин</h3>
-							<p></p>
-              <p></p>
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Ольга</h3>  
+              </div>
+              <div>
+        				<p>Семейные фотосессии</p>
+                <p>2000 руб/ч</p>        
+              </div>
+						</div>
+
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Ольга</h3>  
+              </div>
+              <div>
+        				<p>Семейные фотосессии</p>
+                <p>2000 руб/ч</p>        
+              </div>
+						</div>
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Ольга</h3>  
+              </div>
+              <div>
+        				<p>Семейные фотосессии</p>
+                <p>2000 руб/ч</p>        
+              </div>
+						</div>
+
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Ольга</h3>  
+              </div>
+              <div>
+        				<p>Семейные фотосессии</p>
+                <p>2000 руб/ч</p>        
+              </div>
+						</div>
+
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Ольга</h3>  
+              </div>
+              <div>
+        				<p>Семейные фотосессии</p>
+                <p>2000 руб/ч</p>        
+              </div>
+						</div>
+
+            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
+              <div>
+                <h3 className='text-4xl'>Ольга</h3>  
+              </div>
+              <div>
+        				<p>Семейные фотосессии</p>
+                <p>2000 руб/ч</p>        
+              </div>
 						</div>
 				</div>
+
+        
       </div>
       </div>
       <Footer/>
