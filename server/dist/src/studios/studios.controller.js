@@ -13,11 +13,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudiosController = void 0;
+const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const create_studio_dto_1 = require("./dto/create-studio.dto");
 const studios_service_1 = require("./studios.service");
-const common_1 = require("@nestjs/common");
-const swagger_1 = require("@nestjs/swagger");
 let StudiosController = class StudiosController {
     constructor(StudiosService) {
         this.StudiosService = StudiosService;

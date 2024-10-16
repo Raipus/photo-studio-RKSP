@@ -14,12 +14,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PhotographersService = void 0;
 const common_1 = require("@nestjs/common");
-const photographer_entity_1 = require("./photographer.entity");
 const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
-const user_entity_1 = require("../users/user.entity");
-const photo_entity_1 = require("../photos/photo.entity");
 const booking_entity_1 = require("../bookings/booking.entity");
+const photo_entity_1 = require("../photos/photo.entity");
+const user_entity_1 = require("../users/user.entity");
+const typeorm_2 = require("typeorm");
+const photographer_entity_1 = require("./photographer.entity");
 let PhotographersService = class PhotographersService {
     constructor(userRepository, photographerRepository, photoRepository, bookingRepository) {
         this.userRepository = userRepository;
@@ -29,8 +29,10 @@ let PhotographersService = class PhotographersService {
     }
     async create(photographerNew) {
         try {
-            const photographer = await this.photographerRepository.findOne({ where: { email: photographerNew.email } });
-            if (!photographer) {
+            const photographer = await this.photographerRepository.findOne({
+                where: { email: photographerNew.email },
+            });
+            if (photographer) {
                 throw new common_1.BadRequestException(`Фотограф с почтой ${photographerNew.email} уже существует!`);
             }
             const newPhotographer = this.photographerRepository.create();
@@ -48,7 +50,9 @@ let PhotographersService = class PhotographersService {
     }
     async findOne(email) {
         try {
-            const photographer = await this.photographerRepository.findOne({ where: { email } });
+            const photographer = await this.photographerRepository.findOne({
+                where: { email },
+            });
             if (!photographer) {
                 throw new common_1.NotFoundException(`Фотографа с почтой ${email} не найдено`);
             }
@@ -64,7 +68,9 @@ let PhotographersService = class PhotographersService {
     }
     async update(id, updatedPhotographer) {
         try {
-            const photographer = await this.photographerRepository.findOne({ where: { id } });
+            const photographer = await this.photographerRepository.findOne({
+                where: { id },
+            });
             if (!photographer) {
                 throw new common_1.NotFoundException(`Фотографа с id ${id} не найдено`);
             }
@@ -82,7 +88,9 @@ let PhotographersService = class PhotographersService {
     }
     async remove(id) {
         try {
-            const photographer = await this.photographerRepository.findOne({ where: { id } });
+            const photographer = await this.photographerRepository.findOne({
+                where: { id },
+            });
             if (!photographer) {
                 throw new common_1.NotFoundException(`Фотографа с id ${id} не найдено`);
             }

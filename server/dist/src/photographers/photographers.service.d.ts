@@ -1,10 +1,10 @@
-import { HttpStatus } from "@nestjs/common";
-import { Photographer } from "./photographer.entity";
-import { Repository } from "typeorm";
-import { User } from "src/users/user.entity";
-import { CreatePhotographerDto } from "./dto/create-photographer.dto";
-import { Photo } from "src/photos/photo.entity";
-import { Booking } from "src/bookings/booking.entity";
+import { HttpStatus } from '@nestjs/common';
+import { Booking } from 'src/bookings/booking.entity';
+import { Photo } from 'src/photos/photo.entity';
+import { User } from 'src/users/user.entity';
+import { Repository } from 'typeorm';
+import { CreatePhotographerDto } from './dto/create-photographer.dto';
+import { Photographer } from './photographer.entity';
 export declare class PhotographersService {
     private readonly userRepository;
     private readonly photographerRepository;

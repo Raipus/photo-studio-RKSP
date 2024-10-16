@@ -13,11 +13,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PhotographersController = void 0;
+const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const create_photographer_dto_1 = require("./dto/create-photographer.dto");
 const photographers_service_1 = require("./photographers.service");
-const common_1 = require("@nestjs/common");
-const swagger_1 = require("@nestjs/swagger");
 let PhotographersController = class PhotographersController {
     constructor(PhotographersService) {
         this.PhotographersService = PhotographersService;
@@ -47,7 +47,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotographersController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить конкретного фотографа' }),
     (0, common_1.Get)(':email'),
     __param(0, (0, common_1.Param)('email')),
@@ -66,7 +65,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PhotographersController.prototype, "update", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать фотографа' }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
