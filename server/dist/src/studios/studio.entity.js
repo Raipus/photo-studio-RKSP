@@ -13,7 +13,6 @@ exports.Studio = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const booking_entity_1 = require("../bookings/booking.entity");
-const photo_entity_1 = require("../photos/photo.entity");
 const typeorm_1 = require("typeorm");
 let Studio = class Studio {
 };
@@ -53,11 +52,6 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Studio.prototype, "cost", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: '3', description: 'ID фото студий', type: () => photo_entity_1.Photo }),
-    (0, typeorm_1.OneToMany)(() => photo_entity_1.Photo, photo => photo.studio, { nullable: true }),
-    __metadata("design:type", Array)
-], Studio.prototype, "photos", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID всех бронь, где заказаны услуги данной студии', type: () => booking_entity_1.Booking }),
     (0, typeorm_1.OneToMany)(() => booking_entity_1.Booking, bookings => bookings.studio),

@@ -1,5 +1,4 @@
 import { Booking } from "src/bookings/booking.entity";
-import { Photo } from "src/photos/photo.entity";
 export declare class Photographer {
     id: number;
     fullname: string;
@@ -7,8 +6,8 @@ export declare class Photographer {
     phone: string;
     password: string;
     role: string;
+    refreshToken: string;
     work_exp: number;
     cost: number;
-    photo: Photo;
     bookings: Booking[];
 }

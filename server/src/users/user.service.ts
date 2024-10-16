@@ -6,11 +6,12 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { IncompleteUserDto } from "./dto/incomplete-user.dto";
 import { Photographer } from "src/photographers/photographer.entity";
 import { Studio } from "src/studios/studio.entity";
-import { Photo } from "src/photos/photo.entity";
+//import { Photo } from "src/photos/photo.entity";
 import { Booking } from "src/bookings/booking.entity";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as argon2 from "argon2";
+import { UpdateTokenDto } from "./dto/update-token.dto";
 
 @Injectable ()
 export class UsersService {
@@ -21,11 +22,10 @@ export class UsersService {
         private readonly photographerRepository: Repository<Photographer>,
         @InjectRepository(Studio)
         private readonly studioRepository: Repository<Studio>,
-        @InjectRepository(Photo)
-        private readonly photoRepository: Repository<Photo>,
+//        @InjectRepository(Photo)
+//        private readonly photoRepository: Repository<Photo>,
         @InjectRepository(Booking)
         private readonly bookingRepository: Repository<Booking>,
-        private readonly jwtService: JwtService,
     ) {}
 
     async create(userDto: CreateUserDto) {
@@ -38,12 +38,11 @@ export class UsersService {
 
             const newUser = this.userRepository.create();
             newUser.email = userDto.email;
-            newUser.password = await argon2.hash(userDto.password);
+            newUser.password = userDto.password;
+            newUser.role = "user";
             await this.userRepository.save(newUser);
 
-            const token = this.jwtService.sign({ email: userDto.email })
-
-            return { newUser, token };
+            return newUser;
         }
         catch(error){
             throw error;
@@ -54,9 +53,9 @@ export class UsersService {
         try{
             const user = await this.userRepository.findOne({ where: { email } });
 
-            if (!user) {
-                throw new NotFoundException(`Клиент с почтой ${email} не найден`);
-            }
+//            if (!user) {
+//                throw new NotFoundException(`Клиент с почтой ${email} не найден`);
+//            }
             
             return user;
         }
@@ -66,14 +65,13 @@ export class UsersService {
     }
 
     async findAll(): Promise<User[]> {
-        const users = await this.userRepository.find({ relations: { photo: true } });
+        const users = await this.userRepository.find();
         return users;
     }
 
     async findIncomplete(): Promise<IncompleteUserDto[]> {
         const users = await this.userRepository.find({
             relations: {
-                photo: true,
                 bookings: true
             }
         });
@@ -89,8 +87,7 @@ export class UsersService {
     async update(id: number, updatedUser: UpdateUserDto): Promise<User> {
         try{
             const user = await this.userRepository.findOne({
-                where: { id },
-                relations: { photo: true }
+                where: { id }
             });
 
             if (!user) {
@@ -116,6 +113,27 @@ export class UsersService {
             if (updatedUser.role!=null) {
                 user.role = updatedUser.role;
             }
+            
+            await this.userRepository.save(user);
+
+            return user;
+        }
+        catch(error){
+            throw error;
+        }
+    }
+
+    async updateToken(id: number, updatedUser: UpdateTokenDto): Promise<User> {
+        try{
+            const user = await this.userRepository.findOne({
+                where: { id }
+            });
+
+            if (!user) {
+                throw new NotFoundException(`Клиент с id ${id} не найден`);
+            }
+
+            user.refreshToken = updatedUser.refreshToken;
             
             await this.userRepository.save(user);
 

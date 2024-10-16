@@ -11,4 +11,7 @@ export class CreateUserDto {
     @IsNotEmpty()
     @ApiProperty({ example: 'somepassword', description: 'Пароль' })
     password: string;
+
+    @ApiProperty({ example: 'some token', description: 'Токен' })
+    refreshToken: string;
 }

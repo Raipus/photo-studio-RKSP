@@ -6,11 +6,12 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking } from 'src/bookings/booking.entity';
-import { Photo } from 'src/photos/photo.entity';
+//import { Photo } from 'src/photos/photo.entity';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePhotographerDto } from './dto/create-photographer.dto';
 import { Photographer } from './photographer.entity';
+import { UpdateTokenDto } from 'src/users/dto/update-token.dto';
 
 @Injectable()
 export class PhotographersService {
@@ -19,8 +20,8 @@ export class PhotographersService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Photographer)
     private readonly photographerRepository: Repository<Photographer>,
-    @InjectRepository(Photo)
-    private readonly photoRepository: Repository<Photo>,
+//    @InjectRepository(Photo)
+//    private readonly photoRepository: Repository<Photo>,
     @InjectRepository(Booking)
     private readonly bookingRepository: Repository<Booking>,
   ) {}
@@ -45,7 +46,8 @@ export class PhotographersService {
       newPhotographer.cost = photographerNew.cost;
       await this.photographerRepository.save(newPhotographer);
       return newPhotographer;
-    } catch (error) {
+    } 
+    catch (error) {
       throw error;
     }
   }
@@ -56,9 +58,9 @@ export class PhotographersService {
         where: { email },
       });
 
-      if (!photographer) {
-        throw new NotFoundException(`Фотографа с почтой ${email} не найдено`);
-      }
+//      if (!photographer) {
+//        throw new NotFoundException(`Фотографа с почтой ${email} не найдено`);
+//      }
 
       return photographer;
     } catch (error) {
@@ -114,4 +116,25 @@ export class PhotographersService {
       throw error;
     }
   }
+
+  async updateToken(id: number, updatedPhotographer: UpdateTokenDto): Promise<Photographer> {
+    try{
+        const photographer = await this.photographerRepository.findOne({
+            where: { id }
+        });
+
+        if (!photographer) {
+            throw new NotFoundException(`Фотограф с id ${id} не найден`);
+        }
+
+        photographer.refreshToken = updatedPhotographer.refreshToken;
+        
+        await this.userRepository.save(photographer);
+
+        return photographer;
+    }
+    catch(error){
+        throw error;
+    }
+}
 }

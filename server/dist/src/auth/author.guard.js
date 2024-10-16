@@ -12,11 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthorGuard = void 0;
 const common_1 = require("@nestjs/common");
 const booking_service_1 = require("../bookings/booking.service");
-const photo_service_1 = require("../photos/photo.service");
 let AuthorGuard = class AuthorGuard {
-    constructor(bookingService, photosService) {
+    constructor(bookingService) {
         this.bookingService = bookingService;
-        this.photosService = photosService;
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
@@ -25,9 +23,6 @@ let AuthorGuard = class AuthorGuard {
         let entity;
         if (path.includes('bookings')) {
             entity = await this.bookingService.findOne(id);
-        }
-        if (path.includes('photos')) {
-            entity = await this.photosService.findOne(id);
         }
         const user = request.user;
         if (entity && user && entity.user.id == user.id) {
@@ -39,7 +34,6 @@ let AuthorGuard = class AuthorGuard {
 exports.AuthorGuard = AuthorGuard;
 exports.AuthorGuard = AuthorGuard = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [booking_service_1.BookingsService,
-        photo_service_1.PhotosService])
+    __metadata("design:paramtypes", [booking_service_1.BookingsService])
 ], AuthorGuard);
 //# sourceMappingURL=author.guard.js.map

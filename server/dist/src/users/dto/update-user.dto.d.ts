@@ -4,4 +4,5 @@ export declare class UpdateUserDto {
     phone: string;
     password: string;
     role: string;
+    refreshToken: string;
 }

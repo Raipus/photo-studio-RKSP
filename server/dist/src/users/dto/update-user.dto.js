@@ -45,4 +45,8 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 'user', description: 'Роль пользователя' }),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "role", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'some token', description: 'Токен' }),
+    __metadata("design:type", String)
+], UpdateUserDto.prototype, "refreshToken", void 0);
 //# sourceMappingURL=update-user.dto.js.map

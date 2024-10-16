@@ -16,15 +16,13 @@ exports.PhotographersService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const booking_entity_1 = require("../bookings/booking.entity");
-const photo_entity_1 = require("../photos/photo.entity");
 const user_entity_1 = require("../users/user.entity");
 const typeorm_2 = require("typeorm");
 const photographer_entity_1 = require("./photographer.entity");
 let PhotographersService = class PhotographersService {
-    constructor(userRepository, photographerRepository, photoRepository, bookingRepository) {
+    constructor(userRepository, photographerRepository, bookingRepository) {
         this.userRepository = userRepository;
         this.photographerRepository = photographerRepository;
-        this.photoRepository = photoRepository;
         this.bookingRepository = bookingRepository;
     }
     async create(photographerNew) {
@@ -53,9 +51,6 @@ let PhotographersService = class PhotographersService {
             const photographer = await this.photographerRepository.findOne({
                 where: { email },
             });
-            if (!photographer) {
-                throw new common_1.NotFoundException(`Фотографа с почтой ${email} не найдено`);
-            }
             return photographer;
         }
         catch (error) {
@@ -101,16 +96,30 @@ let PhotographersService = class PhotographersService {
             throw error;
         }
     }
+    async updateToken(id, updatedPhotographer) {
+        try {
+            const photographer = await this.photographerRepository.findOne({
+                where: { id }
+            });
+            if (!photographer) {
+                throw new common_1.NotFoundException(`Фотограф с id ${id} не найден`);
+            }
+            photographer.refreshToken = updatedPhotographer.refreshToken;
+            await this.userRepository.save(photographer);
+            return photographer;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
 };
 exports.PhotographersService = PhotographersService;
 exports.PhotographersService = PhotographersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __param(1, (0, typeorm_1.InjectRepository)(photographer_entity_1.Photographer)),
-    __param(2, (0, typeorm_1.InjectRepository)(photo_entity_1.Photo)),
-    __param(3, (0, typeorm_1.InjectRepository)(booking_entity_1.Booking)),
+    __param(2, (0, typeorm_1.InjectRepository)(booking_entity_1.Booking)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], PhotographersService);

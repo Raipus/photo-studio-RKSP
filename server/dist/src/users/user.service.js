@@ -20,18 +20,13 @@ const typeorm_2 = require("typeorm");
 const incomplete_user_dto_1 = require("./dto/incomplete-user.dto");
 const photographer_entity_1 = require("../photographers/photographer.entity");
 const studio_entity_1 = require("../studios/studio.entity");
-const photo_entity_1 = require("../photos/photo.entity");
 const booking_entity_1 = require("../bookings/booking.entity");
-const jwt_1 = require("@nestjs/jwt");
-const argon2 = require("argon2");
 let UsersService = class UsersService {
-    constructor(userRepository, photographerRepository, studioRepository, photoRepository, bookingRepository, jwtService) {
+    constructor(userRepository, photographerRepository, studioRepository, bookingRepository) {
         this.userRepository = userRepository;
         this.photographerRepository = photographerRepository;
         this.studioRepository = studioRepository;
-        this.photoRepository = photoRepository;
         this.bookingRepository = bookingRepository;
-        this.jwtService = jwtService;
     }
     async create(userDto) {
         try {
@@ -41,10 +36,10 @@ let UsersService = class UsersService {
             }
             const newUser = this.userRepository.create();
             newUser.email = userDto.email;
-            newUser.password = await argon2.hash(userDto.password);
+            newUser.password = userDto.password;
+            newUser.role = "user";
             await this.userRepository.save(newUser);
-            const token = this.jwtService.sign({ email: userDto.email });
-            return { newUser, token };
+            return newUser;
         }
         catch (error) {
             throw error;
@@ -53,9 +48,6 @@ let UsersService = class UsersService {
     async findOne(email) {
         try {
             const user = await this.userRepository.findOne({ where: { email } });
-            if (!user) {
-                throw new common_1.NotFoundException(`Клиент с почтой ${email} не найден`);
-            }
             return user;
         }
         catch (error) {
@@ -63,13 +55,12 @@ let UsersService = class UsersService {
         }
     }
     async findAll() {
-        const users = await this.userRepository.find({ relations: { photo: true } });
+        const users = await this.userRepository.find();
         return users;
     }
     async findIncomplete() {
         const users = await this.userRepository.find({
             relations: {
-                photo: true,
                 bookings: true
             }
         });
@@ -84,8 +75,7 @@ let UsersService = class UsersService {
     async update(id, updatedUser) {
         try {
             const user = await this.userRepository.findOne({
-                where: { id },
-                relations: { photo: true }
+                where: { id }
             });
             if (!user) {
                 throw new common_1.NotFoundException(`Клиент с id ${id} не найден`);
@@ -105,6 +95,22 @@ let UsersService = class UsersService {
             if (updatedUser.role != null) {
                 user.role = updatedUser.role;
             }
+            await this.userRepository.save(user);
+            return user;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async updateToken(id, updatedUser) {
+        try {
+            const user = await this.userRepository.findOne({
+                where: { id }
+            });
+            if (!user) {
+                throw new common_1.NotFoundException(`Клиент с id ${id} не найден`);
+            }
+            user.refreshToken = updatedUser.refreshToken;
             await this.userRepository.save(user);
             return user;
         }
@@ -134,13 +140,10 @@ exports.UsersService = UsersService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __param(1, (0, typeorm_1.InjectRepository)(photographer_entity_1.Photographer)),
     __param(2, (0, typeorm_1.InjectRepository)(studio_entity_1.Studio)),
-    __param(3, (0, typeorm_1.InjectRepository)(photo_entity_1.Photo)),
-    __param(4, (0, typeorm_1.InjectRepository)(booking_entity_1.Booking)),
+    __param(3, (0, typeorm_1.InjectRepository)(booking_entity_1.Booking)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
-        typeorm_2.Repository,
-        typeorm_2.Repository,
-        jwt_1.JwtService])
+        typeorm_2.Repository])
 ], UsersService);
 //# sourceMappingURL=user.service.js.map

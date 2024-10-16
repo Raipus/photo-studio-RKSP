@@ -1,26 +1,45 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { Request } from 'express';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './local-auth.guard';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthDto } from './dto/auth.dto';
+import { AccessTokenGuard } from 'src/guards/accessToken.guard';
+import { RefreshTokenGuard } from 'src/guards/refreshToken.guard';
 
-@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-  @ApiOperation({ summary: 'Аутентификация' }) 
-  @Post('login')
-  @UseGuards(LocalAuthGuard)
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  @Post('signup')
+  signup(@Body() createUserDto: CreateUserDto) {
+    return this.authService.signUp(createUserDto);
   }
 
-  @ApiOperation({ summary: 'Аутентификация' }) 
-  @Get('profile')
-  @UseGuards(JwtAuthGuard)
-  getProfile(@Request() req) {
-    return req.user;
+  @Post('signin')
+  signin(@Body() data: AuthDto) {
+    return this.authService.signIn(data);
   }
 
+  @UseGuards(AccessTokenGuard)
+  @Get('logout')
+  logout(@Req() req: Request) {
+    this.authService.logout(req.user['sub'], req.user['role']);
+  }
+
+  @UseGuards(RefreshTokenGuard)
+  @Get('refresh')
+  refreshTokens(@Req() req: Request) {
+    const userEmail = req.user['email'];
+    const refreshToken = req.user['refreshToken'];
+    return this.authService.refreshTokens(userEmail, refreshToken);
+  }
 }

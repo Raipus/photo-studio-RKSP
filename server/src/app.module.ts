@@ -5,7 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { BookingsModule } from './bookings/booking.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { PhotographersModule } from './photographers/photographers.module';
-import { PhotosModule } from './photos/photo.module';
+//import { PhotosModule } from './photos/photo.module';
 import { StudiosModule } from './studios/studios.module';
 import { UsersModule } from './users/user.module';
 
@@ -15,7 +15,6 @@ import { UsersModule } from './users/user.module';
     PhotographersModule,
     StudiosModule,
     BookingsModule,
-    PhotosModule,
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({

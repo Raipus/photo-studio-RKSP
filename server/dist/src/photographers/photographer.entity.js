@@ -13,7 +13,6 @@ exports.Photographer = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const booking_entity_1 = require("../bookings/booking.entity");
-const photo_entity_1 = require("../photos/photo.entity");
 const typeorm_1 = require("typeorm");
 let Photographer = class Photographer {
 };
@@ -61,6 +60,11 @@ __decorate([
     __metadata("design:type", String)
 ], Photographer.prototype, "role", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'some token', description: 'Токен' }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Photographer.prototype, "refreshToken", void 0);
+__decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: '4', description: 'Опыт работы, в годах' }),
@@ -74,12 +78,6 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Photographer.prototype, "cost", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: '3', description: 'ID фото фотографа', type: () => photo_entity_1.Photo }),
-    (0, typeorm_1.OneToOne)(() => photo_entity_1.Photo, { nullable: true }),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", photo_entity_1.Photo)
-], Photographer.prototype, "photo", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID всех бронь, где заказаны услуги данного фотографа', type: () => booking_entity_1.Booking }),
     (0, typeorm_1.OneToMany)(() => booking_entity_1.Booking, bookings => bookings.photographer),

@@ -14,7 +14,6 @@ const user_service_1 = require("./user.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const photographer_entity_1 = require("../photographers/photographer.entity");
 const studio_entity_1 = require("../studios/studio.entity");
-const photo_entity_1 = require("../photos/photo.entity");
 const booking_entity_1 = require("../bookings/booking.entity");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
@@ -27,7 +26,7 @@ exports.UsersModule = UsersModule = __decorate([
         providers: [user_service_1.UsersService],
         imports: [
             user_entity_1.User,
-            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, photographer_entity_1.Photographer, studio_entity_1.Studio, photo_entity_1.Photo, booking_entity_1.Booking]),
+            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, photographer_entity_1.Photographer, studio_entity_1.Studio, booking_entity_1.Booking]),
             jwt_1.JwtModule.registerAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: (configService) => ({

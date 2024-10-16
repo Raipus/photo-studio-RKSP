@@ -27,4 +27,8 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 'somepassword', description: 'Пароль' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'some token', description: 'Токен' }),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "refreshToken", void 0);
 //# sourceMappingURL=create-user.dto.js.map
