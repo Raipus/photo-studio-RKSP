@@ -31,15 +31,18 @@ const HomePage = () => {
 	useEffect(() => {
 		const fetchStudios = async () => {
       try{
-			const response = await fetch('http://localhost:3001/studios', {
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
-          'Expires': '0',
-        },
-      })
-			const data = await response.json()
-			setStudios(data)
+			  const response = await fetch('http://localhost:3001/studios', {
+          method: 'GET',
+          mode: 'cors',  
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+          },
+        })
+			  const data = await response.json()
+			  setStudios(data)
       }
       catch(error){
         console.log('Ошибка при получении студий:', error)
@@ -58,12 +61,15 @@ const HomePage = () => {
             'Pragma': 'no-cache',
             'Expires': '0',
           },
+          mode: 'no-cors',
+          cache: 'no-cache'
         })
+      console.log('Респонс: ', response)
 			const data = await response.json()
 			setPhotographers(data)
       }
       catch(error){
-        console.log('Ошибка при получении студий:', error)
+        console.log('Ошибка при получении фотографов:', error)
       }
 		}
 
