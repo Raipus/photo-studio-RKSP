@@ -77,11 +77,11 @@ let AuthService = class AuthService {
             await this.photographerService.updateToken(userId, { refreshToken: hashedRefreshToken });
         }
     }
-    async getTokens(userId, username, role) {
+    async getTokens(userId, email, role) {
         const [accessToken, refreshToken] = await Promise.all([
             this.jwtService.signAsync({
                 sub: userId,
-                username,
+                email,
                 role,
             }, {
                 secret: this.configService.get('JWT_ACCESS_SECRET'),
@@ -89,7 +89,7 @@ let AuthService = class AuthService {
             }),
             this.jwtService.signAsync({
                 sub: userId,
-                username,
+                email,
                 role,
             }, {
                 secret: this.configService.get('JWT_REFRESH_SECRET'),
@@ -101,16 +101,29 @@ let AuthService = class AuthService {
             refreshToken,
         };
     }
-    async refreshTokens(userEmail, refreshToken) {
-        const user = await this.usersService.findOne(userEmail);
-        if (!user || !user.refreshToken)
-            throw new common_1.ForbiddenException('Access Denied');
-        const refreshTokenMatches = await argon2.verify(user.refreshToken, refreshToken);
-        if (!refreshTokenMatches)
-            throw new common_1.ForbiddenException('Access Denied');
-        const tokens = await this.getTokens(user.id, user.email, user.role);
-        await this.updateRefreshToken(user.id, tokens.refreshToken, user.role);
-        return tokens;
+    async refreshTokens(userEmail, role, refreshToken) {
+        const user1 = await this.photographerService.findOne(userEmail);
+        if (user1) {
+            if (!user1 || !user1.refreshToken)
+                throw new common_1.ForbiddenException('Access Denied');
+            const refreshTokenMatches = await argon2.verify(user1.refreshToken, refreshToken);
+            if (!refreshTokenMatches)
+                throw new common_1.ForbiddenException('Access Denied');
+            const tokens = await this.getTokens(user1.id, user1.email, user1.role);
+            await this.updateRefreshToken(user1.id, tokens.refreshToken, user1.role);
+            return tokens;
+        }
+        else {
+            const user = await this.usersService.findOne(userEmail);
+            if (!user || !user.refreshToken)
+                throw new common_1.ForbiddenException('Access Denied');
+            const refreshTokenMatches = await argon2.verify(user.refreshToken, refreshToken);
+            if (!refreshTokenMatches)
+                throw new common_1.ForbiddenException('Access Denied');
+            const tokens = await this.getTokens(user.id, user.email, user.role);
+            await this.updateRefreshToken(user.id, tokens.refreshToken, user.role);
+            return tokens;
+        }
     }
 };
 exports.AuthService = AuthService;

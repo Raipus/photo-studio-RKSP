@@ -41,7 +41,7 @@ export class User {
     @Column({ nullable: true })
     role: string;
 
-    @ApiProperty({ example: 'some token', description: 'Токен' })
+    @ApiProperty({ example: '', description: 'Токен - не требуется указывать' })
     @Column({ nullable: true })
     refreshToken: string;
 

@@ -7,6 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking } from 'src/bookings/booking.entity';
 //import { Photo } from 'src/photos/photo.entity';
+import * as argon2 from 'argon2';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePhotographerDto } from './dto/create-photographer.dto';
@@ -41,9 +42,10 @@ export class PhotographersService {
       const newPhotographer = this.photographerRepository.create();
       newPhotographer.fullname = photographerNew.fullname;
       newPhotographer.email = photographerNew.email;
-      newPhotographer.password = photographerNew.password;
+      newPhotographer.password = await argon2.hash(photographerNew.password);
       newPhotographer.work_exp = photographerNew.work_exp;
       newPhotographer.cost = photographerNew.cost;
+      newPhotographer.role = "photographer";
       await this.photographerRepository.save(newPhotographer);
       return newPhotographer;
     } 
@@ -59,7 +61,7 @@ export class PhotographersService {
       });
 
 //      if (!photographer) {
-//        throw new NotFoundException(`Фотографа с почтой ${email} не найдено`);
+//        throw new NotFoundException(`Фотограф с почтой ${email} не найден`);
 //      }
 
       return photographer;
@@ -88,7 +90,7 @@ export class PhotographersService {
 
       photographer.fullname = updatedPhotographer.fullname;
       photographer.email = updatedPhotographer.email;
-      photographer.password = updatedPhotographer.password;
+      photographer.password = await argon2.hash(updatedPhotographer.password);
       photographer.work_exp = updatedPhotographer.work_exp;
       photographer.cost = updatedPhotographer.cost;
 
@@ -129,7 +131,7 @@ export class PhotographersService {
 
         photographer.refreshToken = updatedPhotographer.refreshToken;
         
-        await this.userRepository.save(photographer);
+        await this.photographerRepository.save(photographer);
 
         return photographer;
     }

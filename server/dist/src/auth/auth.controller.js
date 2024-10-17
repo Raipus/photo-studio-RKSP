@@ -33,9 +33,8 @@ let AuthController = class AuthController {
         this.authService.logout(req.user['sub'], req.user['role']);
     }
     refreshTokens(req) {
-        const userEmail = req.user['email'];
-        const refreshToken = req.user['refreshToken'];
-        return this.authService.refreshTokens(userEmail, refreshToken);
+        const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
+        return this.authService.refreshTokens(req.user['email'], req.user['role'], refreshToken);
     }
 };
 exports.AuthController = AuthController;

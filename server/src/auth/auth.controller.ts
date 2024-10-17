@@ -38,8 +38,7 @@ export class AuthController {
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   refreshTokens(@Req() req: Request) {
-    const userEmail = req.user['email'];
-    const refreshToken = req.user['refreshToken'];
-    return this.authService.refreshTokens(userEmail, refreshToken);
+    const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
+    return this.authService.refreshTokens(req.user['email'], req.user['role'], refreshToken);
   }
 }

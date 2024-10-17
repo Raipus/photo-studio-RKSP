@@ -12,6 +12,7 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as argon2 from "argon2";
 import { UpdateTokenDto } from "./dto/update-token.dto";
+import { UpdateRoleDto } from "./dto/update-role.dto";
 
 @Injectable ()
 export class UsersService {
@@ -54,8 +55,23 @@ export class UsersService {
             const user = await this.userRepository.findOne({ where: { email } });
 
 //            if (!user) {
-//                throw new NotFoundException(`Клиент с почтой ${email} не найден`);
+//                throw new NotFoundException(`Пользователь с почтой ${email} не найден`);
 //            }
+            
+            return user;
+        }
+        catch(error){
+            throw error;
+        }
+    }
+
+    async findOneId(id: number): Promise<User> {
+        try{
+            const user = await this.userRepository.findOne({ where: { id } });
+
+            if (!user) {
+                throw new NotFoundException(`Пользователь с id ${id} не найден`);
+            }
             
             return user;
         }
@@ -107,11 +123,30 @@ export class UsersService {
             }
             
             if (updatedUser.password!=null) {
-                user.password = updatedUser.password;
+                user.password = await argon2.hash(updatedUser.password);
             }
             
-            if (updatedUser.role!=null) {
-                user.role = updatedUser.role;
+            await this.userRepository.save(user);
+
+            return user;
+        }
+        catch(error){
+            throw error;
+        }
+    }
+
+    async updateRole(id: number, updatedRole: UpdateRoleDto): Promise<User> {
+        try{
+            const user = await this.userRepository.findOne({
+                where: { id }
+            });
+
+            if (!user) {
+                throw new NotFoundException(`Клиент с id ${id} не найден`);
+            }
+            
+            if (updatedRole.role!=null) {
+                user.role = updatedRole.role;
             }
             
             await this.userRepository.save(user);

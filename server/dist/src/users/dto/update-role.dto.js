@@ -9,22 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserDto = void 0;
+exports.UpdateRoleDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-class CreateUserDto {
+class UpdateRoleDto {
 }
-exports.CreateUserDto = CreateUserDto;
-__decorate([
-    (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: 'someemail@mail.ru', description: 'Почта (Логин)' }),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "email", void 0);
+exports.UpdateRoleDto = UpdateRoleDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: 'somepassword', description: 'Пароль' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiProperty)({ example: 'user', description: 'Роль пользователя' }),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "password", void 0);
-//# sourceMappingURL=create-user.dto.js.map
+], UpdateRoleDto.prototype, "role", void 0);
+//# sourceMappingURL=update-role.dto.js.map

@@ -44,7 +44,7 @@ export class Photographer {
     role: string;
 
     @ApiProperty({ example: 'some token', description: 'Токен' })
-    @Column()
+    @Column({ nullable: true })
     refreshToken: string;
 
     @IsNumber()

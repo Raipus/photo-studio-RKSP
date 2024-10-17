@@ -28,14 +28,20 @@ __decorate([
     __metadata("design:type", Number)
 ], CreateBookingDto.prototype, "people_number", void 0);
 __decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: 1, description: 'ID юзера' }),
     __metadata("design:type", Number)
 ], CreateBookingDto.prototype, "user_id", void 0);
 __decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: 1, description: 'ID студии' }),
     __metadata("design:type", Number)
 ], CreateBookingDto.prototype, "studio_id", void 0);
 __decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: 1, description: 'ID фотографа' }),
     __metadata("design:type", Number)
 ], CreateBookingDto.prototype, "photographer_id", void 0);

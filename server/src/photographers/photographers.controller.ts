@@ -14,6 +14,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreatePhotographerDto } from './dto/create-photographer.dto';
 import { PhotographersService } from './photographers.service';
 import { AccessTokenGuard } from 'src/guards/accessToken.guard';
+import { AdminGuard } from 'src/guards/admin.guard';
 
 @Controller('photographers')
 @ApiTags('Фотографы')
@@ -34,7 +35,7 @@ export class PhotographersController {
     return this.PhotographersService.findOne(email);
   }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @ApiOperation({ summary: 'Изменить фотографа' })
   @Put(':id')
   update(
@@ -44,14 +45,14 @@ export class PhotographersController {
     return this.PhotographersService.update(+id, updatePhotographer);
   }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @ApiOperation({ summary: 'Создать фотографа' })
   @Post()
   create(@Body() createPhotographer: CreatePhotographerDto) {
     return this.PhotographersService.create(createPhotographer);
   }
 
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard, AdminGuard)
   @ApiOperation({ summary: 'Удалить фотографа' })
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: string) {

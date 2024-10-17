@@ -59,7 +59,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'some token', description: 'Токен' }),
+    (0, swagger_1.ApiProperty)({ example: '', description: 'Токен - не требуется указывать' }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "refreshToken", void 0);

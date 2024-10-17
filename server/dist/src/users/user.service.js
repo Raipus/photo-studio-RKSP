@@ -21,6 +21,7 @@ const incomplete_user_dto_1 = require("./dto/incomplete-user.dto");
 const photographer_entity_1 = require("../photographers/photographer.entity");
 const studio_entity_1 = require("../studios/studio.entity");
 const booking_entity_1 = require("../bookings/booking.entity");
+const argon2 = require("argon2");
 let UsersService = class UsersService {
     constructor(userRepository, photographerRepository, studioRepository, bookingRepository) {
         this.userRepository = userRepository;
@@ -48,6 +49,18 @@ let UsersService = class UsersService {
     async findOne(email) {
         try {
             const user = await this.userRepository.findOne({ where: { email } });
+            return user;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async findOneId(id) {
+        try {
+            const user = await this.userRepository.findOne({ where: { id } });
+            if (!user) {
+                throw new common_1.NotFoundException(`Пользователь с id ${id} не найден`);
+            }
             return user;
         }
         catch (error) {
@@ -90,10 +103,25 @@ let UsersService = class UsersService {
                 user.phone = updatedUser.phone;
             }
             if (updatedUser.password != null) {
-                user.password = updatedUser.password;
+                user.password = await argon2.hash(updatedUser.password);
             }
-            if (updatedUser.role != null) {
-                user.role = updatedUser.role;
+            await this.userRepository.save(user);
+            return user;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async updateRole(id, updatedRole) {
+        try {
+            const user = await this.userRepository.findOne({
+                where: { id }
+            });
+            if (!user) {
+                throw new common_1.NotFoundException(`Клиент с id ${id} не найден`);
+            }
+            if (updatedRole.role != null) {
+                user.role = updatedRole.role;
             }
             await this.userRepository.save(user);
             return user;

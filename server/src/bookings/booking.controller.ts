@@ -1,10 +1,11 @@
-import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe, UseGuards } from "@nestjs/common";
+import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe, UseGuards, Req } from "@nestjs/common";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { BookingsService } from "./booking.service";
 import { Booking } from "./booking.entity";
 import { CreateBookingDto } from "./dto/create-booking.dto";
-import { AuthorGuard } from "src/auth/author.guard";
+import { AuthorGuard } from "src/guards/author.guard";
 import { AccessTokenGuard } from "src/guards/accessToken.guard";
+import { Request } from 'express';
 //import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
 @Controller('bookings')
@@ -15,8 +16,8 @@ export class BookingsController {
     @UseGuards(AccessTokenGuard)
     @ApiOperation({ summary: 'Получить все брони' }) 
     @Get()
-    findAll(){
-        return this.BookingsService.findAll();
+    findAll(@Req() req: Request){
+        return this.BookingsService.findAll(req.user['email'], req.user['role']);
     }
 
     @UseGuards(AccessTokenGuard, AuthorGuard)
@@ -44,6 +45,7 @@ export class BookingsController {
     @ApiOperation({ summary: 'Удалить бронь' }) 
     @Delete(':id')
     remove(@Param('id',ParseIntPipe) id: number){
+        console.log(id)
         return this.BookingsService.remove(+id);
     }
 }

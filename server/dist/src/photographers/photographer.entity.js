@@ -61,7 +61,7 @@ __decorate([
 ], Photographer.prototype, "role", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: 'some token', description: 'Токен' }),
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Photographer.prototype, "refreshToken", void 0);
 __decorate([

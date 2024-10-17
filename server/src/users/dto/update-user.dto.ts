@@ -21,12 +21,4 @@ export class UpdateUserDto {
     @IsOptional()
     @ApiProperty({ example: 'somepassword', description: 'Пароль' })
     password: string;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ example: 'user', description: 'Роль пользователя' })
-    role: string;
-
-    @ApiProperty({ example: 'some token', description: 'Токен' })
-    refreshToken: string;
 }

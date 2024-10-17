@@ -18,12 +18,10 @@ let RefreshTokenStrategy = class RefreshTokenStrategy extends (0, passport_1.Pas
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
             secretOrKey: process.env.JWT_REFRESH_SECRET,
-            passReqToCallback: true,
         });
     }
-    validate(req, payload) {
-        const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
-        return { ...payload, refreshToken };
+    validate(payload) {
+        return payload;
     }
 };
 exports.RefreshTokenStrategy = RefreshTokenStrategy;

@@ -5,6 +5,9 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { AccessTokenGuard } from "src/guards/accessToken.guard";
+import { AdminGuard } from "src/guards/admin.guard";
+import { AuthorGuard } from "src/guards/author.guard";
+import { UpdateRoleDto } from "./dto/update-role.dto";
 //import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
 @Controller('users')
@@ -12,7 +15,7 @@ import { AccessTokenGuard } from "src/guards/accessToken.guard";
 export class UsersController {
     constructor(private readonly UsersService: UsersService) {}
 
-    @UseGuards(AccessTokenGuard)
+    @UseGuards(AccessTokenGuard, AdminGuard)
     @ApiOperation({ summary: 'Демонстрация возможности получения всех пользователей в неполном формате' }) 
     @Get('incomplete')
     findIncomplete() {
@@ -27,27 +30,41 @@ export class UsersController {
     }
 
     @UseGuards(AccessTokenGuard)
-    @ApiOperation({ summary: 'Получить конкретного пользователя' }) 
+    @ApiOperation({ summary: 'Получить конкретного пользователя по email' }) 
     @Get(':email')
     findOne(@Param('email') email:string) {
         return this.UsersService.findOne(email);
     }
 
     @UseGuards(AccessTokenGuard)
+    @ApiOperation({ summary: 'Получить конкретного пользователя по id' }) 
+    @Get(':id')
+    findOneId(@Param('id',ParseIntPipe) id: number) {
+        return this.UsersService.findOneId(+id);
+    }
+
+    @UseGuards(AccessTokenGuard, AuthorGuard)
     @ApiOperation({ summary: 'Изменить пользователя' }) 
     @Put(':id')
     update(@Param('id',ParseIntPipe) id: number, @Body() updateUser: UpdateUserDto) {
         return this.UsersService.update(+id,updateUser);
     }
 
-    @UseGuards(AccessTokenGuard)
+    @UseGuards(AccessTokenGuard, AdminGuard)
+    @ApiOperation({ summary: 'Изменить роль пользователя' }) 
+    @Put(':id')
+    updateRole(@Param('id',ParseIntPipe) id: number, @Body() updateUserRole: UpdateRoleDto) {
+        return this.UsersService.updateRole(+id,updateUserRole);
+    }
+
+    @UseGuards(AccessTokenGuard, AdminGuard)
     @ApiOperation({ summary: 'Создать пользователя' }) 
     @Post()
     create(@Body() createUser: CreateUserDto) {
         return this.UsersService.create(createUser);
     }
 
-    @UseGuards(AccessTokenGuard)
+    @UseGuards(AccessTokenGuard, AdminGuard)
     @ApiOperation({ summary: 'Удалить пользователя' }) 
     @Delete(':id')
     remove(@Param('id',ParseIntPipe) id: number){

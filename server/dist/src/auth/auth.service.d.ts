@@ -18,11 +18,11 @@ export declare class AuthService {
     logout(userId: number, role: string): Promise<import("../users/user.entity").User | import("../photographers/photographer.entity").Photographer>;
     hashData(data: string): Promise<string>;
     updateRefreshToken(userId: number, refreshToken: string, role: string): Promise<void>;
-    getTokens(userId: number, username: string, role: string): Promise<{
+    getTokens(userId: number, email: string, role: string): Promise<{
         accessToken: string;
         refreshToken: string;
     }>;
-    refreshTokens(userEmail: string, refreshToken: string): Promise<{
+    refreshTokens(userEmail: string, role: string, refreshToken: string): Promise<{
         accessToken: string;
         refreshToken: string;
     }>;

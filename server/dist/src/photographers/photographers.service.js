@@ -16,6 +16,7 @@ exports.PhotographersService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const booking_entity_1 = require("../bookings/booking.entity");
+const argon2 = require("argon2");
 const user_entity_1 = require("../users/user.entity");
 const typeorm_2 = require("typeorm");
 const photographer_entity_1 = require("./photographer.entity");
@@ -36,9 +37,10 @@ let PhotographersService = class PhotographersService {
             const newPhotographer = this.photographerRepository.create();
             newPhotographer.fullname = photographerNew.fullname;
             newPhotographer.email = photographerNew.email;
-            newPhotographer.password = photographerNew.password;
+            newPhotographer.password = await argon2.hash(photographerNew.password);
             newPhotographer.work_exp = photographerNew.work_exp;
             newPhotographer.cost = photographerNew.cost;
+            newPhotographer.role = "photographer";
             await this.photographerRepository.save(newPhotographer);
             return newPhotographer;
         }
@@ -71,7 +73,7 @@ let PhotographersService = class PhotographersService {
             }
             photographer.fullname = updatedPhotographer.fullname;
             photographer.email = updatedPhotographer.email;
-            photographer.password = updatedPhotographer.password;
+            photographer.password = await argon2.hash(updatedPhotographer.password);
             photographer.work_exp = updatedPhotographer.work_exp;
             photographer.cost = updatedPhotographer.cost;
             await this.photographerRepository.save(photographer);
@@ -105,7 +107,7 @@ let PhotographersService = class PhotographersService {
                 throw new common_1.NotFoundException(`Фотограф с id ${id} не найден`);
             }
             photographer.refreshToken = updatedPhotographer.refreshToken;
-            await this.userRepository.save(photographer);
+            await this.photographerRepository.save(photographer);
             return photographer;
         }
         catch (error) {
