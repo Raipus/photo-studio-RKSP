@@ -15,9 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudiosController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
-const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const create_studio_dto_1 = require("./dto/create-studio.dto");
 const studios_service_1 = require("./studios.service");
+const accessToken_guard_1 = require("../guards/accessToken.guard");
+const admin_guard_1 = require("../guards/admin.guard");
 let StudiosController = class StudiosController {
     constructor(StudiosService) {
         this.StudiosService = StudiosService;
@@ -40,6 +41,7 @@ let StudiosController = class StudiosController {
 };
 exports.StudiosController = StudiosController;
 __decorate([
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить все студии' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -47,7 +49,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StudiosController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить конкретную студию' }),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -56,7 +58,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StudiosController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard, admin_guard_1.AdminGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Изменить студию' }),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -66,6 +68,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StudiosController.prototype, "update", null);
 __decorate([
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard, admin_guard_1.AdminGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать студию' }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
@@ -74,7 +77,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StudiosController.prototype, "create", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard, admin_guard_1.AdminGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Удалить студию' }),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),

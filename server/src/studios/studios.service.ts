@@ -3,7 +3,7 @@ import { Studio } from "./studio.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
 import { CreateStudioDto } from "./dto/create-studio.dto";
-import { Photo } from "src/photos/photo.entity";
+//import { Photo } from "src/photos/photo.entity";
 import { Booking } from "src/bookings/booking.entity";
 
 @Injectable ()
@@ -13,8 +13,8 @@ export class StudiosService {
         private readonly bookingRepository: Repository<Booking>,
         @InjectRepository(Studio)
         private readonly studioRepository: Repository<Studio>,
-        @InjectRepository(Photo)
-        private readonly photoRepository: Repository<Photo>
+//        @InjectRepository(Photo)
+//        private readonly photoRepository: Repository<Photo>
     ) {}
 
     async create(studioNew: CreateStudioDto): Promise<Studio> {
@@ -52,7 +52,6 @@ export class StudiosService {
             const studio = await this.studioRepository.findOne({
                 where: { id },
                 relations: {
-                    photos:true,
                     bookings:true
                 }
             });

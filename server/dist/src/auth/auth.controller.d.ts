@@ -1,9 +1,18 @@
+import { Request } from 'express';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
+import { AuthDto } from './dto/auth.dto';
 export declare class AuthController {
-    private readonly authService;
+    private authService;
     constructor(authService: AuthService);
-    login(req: any): Promise<{
-        access_token: string;
+    signup(createUserDto: CreateUserDto): Promise<any>;
+    signin(data: AuthDto): Promise<{
+        accessToken: string;
+        refreshToken: string;
     }>;
-    getProfile(req: any): any;
+    logout(req: Request): void;
+    refreshTokens(req: Request): Promise<{
+        accessToken: string;
+        refreshToken: string;
+    }>;
 }

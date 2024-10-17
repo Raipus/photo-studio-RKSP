@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
 import { Photographer } from "src/photographers/photographer.entity";
@@ -6,6 +6,8 @@ import { Studio } from "src/studios/studio.entity";
 import { Booking } from "src/bookings/booking.entity";
 import { User } from "src/users/user.entity";
 import { CreateBookingDto } from "./dto/create-booking.dto";
+import { UsersService } from "src/users/user.service";
+import { PhotographersService } from "src/photographers/photographers.service";
 
 @Injectable ()
 export class BookingsService {
@@ -17,7 +19,9 @@ export class BookingsService {
         @InjectRepository(Studio)
         private readonly studioRepository: Repository<Studio>,
         @InjectRepository(Booking)
-        private readonly bookingRepository: Repository<Booking>
+        private readonly bookingRepository: Repository<Booking>,
+        private usersService: UsersService,
+        private photographersService: PhotographersService,
     ) {}
 
     async create(bookingDto: CreateBookingDto): Promise<Booking> {
@@ -25,11 +29,14 @@ export class BookingsService {
 
         booking.date = bookingDto.date;
         booking.people_number = bookingDto.people_number;
-
+        console.log(bookingDto.user_id)
         if (bookingDto.user_id!=null) {
             const user = await this.userRepository.findOne({
                 where: { id: bookingDto.user_id },
             });
+            if (!user) {
+                throw new NotFoundException(`Пользователь с id ${bookingDto.user_id} не найден!`);
+            }
             booking.user = user;
         }
 
@@ -37,6 +44,9 @@ export class BookingsService {
             const studio = await this.studioRepository.findOne({
                 where: { id: bookingDto.studio_id },
             });
+            if (!studio) {
+                throw new NotFoundException(`Студия с id ${bookingDto.studio_id} не найдена!`);
+            }
             booking.studio = studio;
         }
 
@@ -44,6 +54,9 @@ export class BookingsService {
             const photographer = await this.photographerRepository.findOne({
                 where: { id: bookingDto.photographer_id },
             });
+            if (!photographer) {
+                throw new NotFoundException(`Фотограф с id ${bookingDto.photographer_id} не найден!`);
+            }
             booking.photographer = photographer;
         }
 
@@ -53,7 +66,14 @@ export class BookingsService {
 
     async findOne(id: number): Promise<Booking> {
         try{
-            const booking = await this.bookingRepository.findOne({ where: { id } });
+            const booking = await this.bookingRepository.findOne({
+                where: { id },
+                relations: {
+                    user: true,
+                    studio: true,
+                    photographer: true
+                }
+            });
 
             if (!booking) {
                 throw new NotFoundException(`Бронь с ID ${id} не найдена`);
@@ -66,9 +86,45 @@ export class BookingsService {
         }
     }
 
-    async findAll(): Promise<Booking[]> {
-        const bookings = await this.bookingRepository.find();
-        return bookings;
+    async findAll(email: string, role: string): Promise<Booking[]> {
+        if (role == "admin") {
+            const bookings = await this.bookingRepository.find({
+                relations: {
+                    user: true,
+                    studio: true,
+                    photographer: true
+                }
+            });
+            return bookings;
+        } else if (role == "user") {
+            const user = await this.usersService.findOne(email);
+            if (!user) {throw new NotFoundException(`Пользователь с почтой ${email} не найден`);}
+            const bookings = await this.bookingRepository.find({
+                relations: {
+                    user: true,
+                    studio: true,
+                    photographer: true
+                },
+                where: {
+                    user: user
+                }
+            });
+            return bookings;
+        } else if (role == "photographer") {
+            const photographer = await this.photographersService.findOne(email);
+            if (!photographer) {throw new NotFoundException(`Фотограф с почтой ${email} не найден`)}
+            const bookings = await this.bookingRepository.find({
+                relations: {
+                    user: true,
+                    studio: true,
+                    photographer: true
+                },
+                where: {
+                    photographer: photographer
+                }
+            });
+            return bookings;
+        } else {throw new BadRequestException('Что-то пошло не так!')}
     }
 
     async update(id: number, updatedBooking: CreateBookingDto): Promise<Booking> {
@@ -98,6 +154,9 @@ export class BookingsService {
             const user = await this.userRepository.findOne({
                 where: { id: updatedBooking.user_id },
             });
+            if (!user) {
+                throw new NotFoundException(`Пользователь с id ${updatedBooking.user_id} не найден!`);
+            }
             booking.user = user;
             }
     
@@ -105,6 +164,9 @@ export class BookingsService {
             const studio = await this.studioRepository.findOne({
                 where: { id: updatedBooking.studio_id },
             });
+            if (!studio) {
+                throw new NotFoundException(`Студия с id ${updatedBooking.studio_id} не найдена!`);
+            }
             booking.studio = studio;
             }
     
@@ -112,6 +174,9 @@ export class BookingsService {
                 const photographer = await this.photographerRepository.findOne({
                     where: { id: updatedBooking.photographer_id },
                 });
+                if (!photographer) {
+                    throw new NotFoundException(`Фотограф с id ${updatedBooking.photographer_id} не найден!`);
+                }
                 booking.photographer = photographer;
             }
 

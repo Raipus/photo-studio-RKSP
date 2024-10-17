@@ -3,14 +3,16 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from 'src/users/user.module';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtStrategy } from './jwt.strategy';
+import { AccessTokenStrategy } from './strategies/accessToken.strategy';
+import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
+import { PhotographersModule } from 'src/photographers/photographers.module';
 
 @Module({
   imports: [
-    UsersModule, 
+    UsersModule,
+    PhotographersModule, 
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -22,6 +24,6 @@ import { JwtStrategy } from './jwt.strategy';
     })
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, AccessTokenStrategy, RefreshTokenStrategy],
 })
 export class AuthModule {}

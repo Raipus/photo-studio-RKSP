@@ -12,12 +12,18 @@ export class CreateBookingDto {
     @ApiProperty({ example: '5', description: 'Количество людей на брони' })
     people_number: number;
     
+    @IsNumber()
+    @IsNotEmpty()
     @ApiProperty({ example: 1, description: 'ID юзера' })
     user_id: number;
 
+    @IsNumber()
+    @IsNotEmpty()
     @ApiProperty({ example: 1, description: 'ID студии' })
     studio_id: number;
 
+    @IsNumber()
+    @IsNotEmpty()
     @ApiProperty({ example: 1, description: 'ID фотографа' })
     photographer_id: number;
 }

@@ -14,42 +14,61 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
+const create_user_dto_1 = require("../users/dto/create-user.dto");
 const auth_service_1 = require("./auth.service");
-const local_auth_guard_1 = require("./local-auth.guard");
-const jwt_auth_guard_1 = require("./jwt-auth.guard");
-const swagger_1 = require("@nestjs/swagger");
+const auth_dto_1 = require("./dto/auth.dto");
+const accessToken_guard_1 = require("../guards/accessToken.guard");
+const refreshToken_guard_1 = require("../guards/refreshToken.guard");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    async login(req) {
-        return this.authService.login(req.user);
+    signup(createUserDto) {
+        return this.authService.signUp(createUserDto);
     }
-    getProfile(req) {
-        return req.user;
+    signin(data) {
+        return this.authService.signIn(data);
+    }
+    logout(req) {
+        this.authService.logout(req.user['sub'], req.user['role']);
+    }
+    refreshTokens(req) {
+        const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
+        return this.authService.refreshTokens(req.user['email'], req.user['role'], refreshToken);
     }
 };
 exports.AuthController = AuthController;
 __decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Аутентификация' }),
-    (0, common_1.Post)('login'),
-    (0, common_1.UseGuards)(local_auth_guard_1.LocalAuthGuard),
-    __param(0, (0, common_1.Request)()),
+    (0, common_1.Post)('signup'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "login", null);
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "signup", null);
 __decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Аутентификация' }),
-    (0, common_1.Get)('profile'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    __param(0, (0, common_1.Request)()),
+    (0, common_1.Post)('signin'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [auth_dto_1.AuthDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "signin", null);
+__decorate([
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
+    (0, common_1.Get)('logout'),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], AuthController.prototype, "getProfile", null);
+], AuthController.prototype, "logout", null);
+__decorate([
+    (0, common_1.UseGuards)(refreshToken_guard_1.RefreshTokenGuard),
+    (0, common_1.Get)('refresh'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "refreshTokens", null);
 exports.AuthController = AuthController = __decorate([
-    (0, swagger_1.ApiTags)('auth'),
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);

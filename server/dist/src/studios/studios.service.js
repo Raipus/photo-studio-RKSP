@@ -17,13 +17,11 @@ const common_1 = require("@nestjs/common");
 const studio_entity_1 = require("./studio.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const photo_entity_1 = require("../photos/photo.entity");
 const booking_entity_1 = require("../bookings/booking.entity");
 let StudiosService = class StudiosService {
-    constructor(bookingRepository, studioRepository, photoRepository) {
+    constructor(bookingRepository, studioRepository) {
         this.bookingRepository = bookingRepository;
         this.studioRepository = studioRepository;
-        this.photoRepository = photoRepository;
     }
     async create(studioNew) {
         const studio = this.studioRepository.create();
@@ -55,7 +53,6 @@ let StudiosService = class StudiosService {
             const studio = await this.studioRepository.findOne({
                 where: { id },
                 relations: {
-                    photos: true,
                     bookings: true
                 }
             });
@@ -92,9 +89,7 @@ exports.StudiosService = StudiosService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(booking_entity_1.Booking)),
     __param(1, (0, typeorm_1.InjectRepository)(studio_entity_1.Studio)),
-    __param(2, (0, typeorm_1.InjectRepository)(photo_entity_1.Photo)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository,
         typeorm_2.Repository])
 ], StudiosService);
 //# sourceMappingURL=studios.service.js.map

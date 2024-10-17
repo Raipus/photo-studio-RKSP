@@ -2,7 +2,7 @@ import { forwardRef } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, IsString, MinLength } from "class-validator";
 import { Booking } from "src/bookings/booking.entity";
-import { Photo } from "src/photos/photo.entity";
+//import { Photo } from "src/photos/photo.entity";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('photographers')
@@ -43,6 +43,10 @@ export class Photographer {
     @Column({ nullable: true })
     role: string;
 
+    @ApiProperty({ example: 'some token', description: 'Токен' })
+    @Column({ nullable: true })
+    refreshToken: string;
+
     @IsNumber()
     @IsNotEmpty()
     @ApiProperty({ example: '4', description: 'Опыт работы, в годах' })
@@ -55,10 +59,10 @@ export class Photographer {
     @Column()
     cost: number;
 
-    @ApiProperty({ example: '3', description: 'ID фото фотографа', type: () => Photo })
-    @OneToOne(() => Photo, { nullable: true })
-    @JoinColumn()
-    photo: Photo;
+ //   @ApiProperty({ example: '3', description: 'ID фото фотографа', type: () => Photo })
+ //   @OneToOne(() => Photo, { nullable: true })
+ //   @JoinColumn()
+ //   photo: Photo;
 
     @ApiProperty({ example: [1, 4], description: 'ID всех бронь, где заказаны услуги данного фотографа', type: () => Booking })
     @OneToMany(() => Booking, bookings => bookings.photographer)

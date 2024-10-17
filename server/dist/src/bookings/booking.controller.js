@@ -17,14 +17,14 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const booking_service_1 = require("./booking.service");
 const create_booking_dto_1 = require("./dto/create-booking.dto");
-const author_guard_1 = require("../auth/author.guard");
-const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
+const author_guard_1 = require("../guards/author.guard");
+const accessToken_guard_1 = require("../guards/accessToken.guard");
 let BookingsController = class BookingsController {
     constructor(BookingsService) {
         this.BookingsService = BookingsService;
     }
-    findAll() {
-        return this.BookingsService.findAll();
+    findAll(req) {
+        return this.BookingsService.findAll(req.user['email'], req.user['role']);
     }
     findOne(id) {
         return this.BookingsService.findOne(+id);
@@ -36,20 +36,22 @@ let BookingsController = class BookingsController {
         return this.BookingsService.create(createBooking);
     }
     remove(id) {
+        console.log(id);
         return this.BookingsService.remove(+id);
     }
 };
 exports.BookingsController = BookingsController;
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить все брони' }),
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], BookingsController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, author_guard_1.AuthorGuard),
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard, author_guard_1.AuthorGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить конкретную бронь' }),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -58,7 +60,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], BookingsController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, author_guard_1.AuthorGuard),
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard, author_guard_1.AuthorGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Изменить бронь' }),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -68,7 +70,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], BookingsController.prototype, "update", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать бронь' }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
@@ -77,7 +79,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], BookingsController.prototype, "create", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, author_guard_1.AuthorGuard),
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard, author_guard_1.AuthorGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Удалить бронь' }),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),

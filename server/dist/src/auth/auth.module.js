@@ -12,10 +12,11 @@ const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const user_module_1 = require("../users/user.module");
 const passport_1 = require("@nestjs/passport");
-const local_strategy_1 = require("./local.strategy");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
-const jwt_strategy_1 = require("./jwt.strategy");
+const accessToken_strategy_1 = require("./strategies/accessToken.strategy");
+const refreshToken_strategy_1 = require("./strategies/refreshToken.strategy");
+const photographers_module_1 = require("../photographers/photographers.module");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -23,6 +24,7 @@ exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             user_module_1.UsersModule,
+            photographers_module_1.PhotographersModule,
             passport_1.PassportModule,
             jwt_1.JwtModule.registerAsync({
                 imports: [config_1.ConfigModule],
@@ -34,7 +36,7 @@ exports.AuthModule = AuthModule = __decorate([
             })
         ],
         controllers: [auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy],
+        providers: [auth_service_1.AuthService, accessToken_strategy_1.AccessTokenStrategy, refreshToken_strategy_1.RefreshTokenStrategy],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

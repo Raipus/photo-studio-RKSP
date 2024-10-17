@@ -4,48 +4,67 @@ import { Controller, Get, Put, Param, Body, Post, Delete, ParseIntPipe, UseGuard
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
+import { AccessTokenGuard } from "src/guards/accessToken.guard";
+import { AdminGuard } from "src/guards/admin.guard";
+import { AuthorGuard } from "src/guards/author.guard";
+import { UpdateRoleDto } from "./dto/update-role.dto";
+//import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
 @Controller('users')
 @ApiTags('Пользователи')
 export class UsersController {
     constructor(private readonly UsersService: UsersService) {}
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(AccessTokenGuard, AdminGuard)
     @ApiOperation({ summary: 'Демонстрация возможности получения всех пользователей в неполном формате' }) 
     @Get('incomplete')
     findIncomplete() {
         return this.UsersService.findIncomplete();
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(AccessTokenGuard)
     @ApiOperation({ summary: 'Получить всех пользователей' }) 
     @Get()
     findAll(){
         return this.UsersService.findAll();
     }
 
-    @UseGuards(JwtAuthGuard)
-    @ApiOperation({ summary: 'Получить конкретного пользователя' }) 
+    @UseGuards(AccessTokenGuard)
+    @ApiOperation({ summary: 'Получить конкретного пользователя по email' }) 
     @Get(':email')
     findOne(@Param('email') email:string) {
         return this.UsersService.findOne(email);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(AccessTokenGuard)
+    @ApiOperation({ summary: 'Получить конкретного пользователя по id' }) 
+    @Get(':id')
+    findOneId(@Param('id',ParseIntPipe) id: number) {
+        return this.UsersService.findOneId(+id);
+    }
+
+    @UseGuards(AccessTokenGuard, AuthorGuard)
     @ApiOperation({ summary: 'Изменить пользователя' }) 
     @Put(':id')
     update(@Param('id',ParseIntPipe) id: number, @Body() updateUser: UpdateUserDto) {
         return this.UsersService.update(+id,updateUser);
     }
 
+    @UseGuards(AccessTokenGuard, AdminGuard)
+    @ApiOperation({ summary: 'Изменить роль пользователя' }) 
+    @Put(':id')
+    updateRole(@Param('id',ParseIntPipe) id: number, @Body() updateUserRole: UpdateRoleDto) {
+        return this.UsersService.updateRole(+id,updateUserRole);
+    }
+
+    @UseGuards(AccessTokenGuard, AdminGuard)
     @ApiOperation({ summary: 'Создать пользователя' }) 
     @Post()
     create(@Body() createUser: CreateUserDto) {
         return this.UsersService.create(createUser);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(AccessTokenGuard, AdminGuard)
     @ApiOperation({ summary: 'Удалить пользователя' }) 
     @Delete(':id')
     remove(@Param('id',ParseIntPipe) id: number){
