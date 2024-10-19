@@ -1,3 +1,4 @@
+"use client"
 import Footer from "@/components/LK/footer"
 import Header from "@/components/LK/header"
 import { useEffect, useState } from 'react'

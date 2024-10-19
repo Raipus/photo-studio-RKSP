@@ -26,7 +26,7 @@ __decorate([
 ], User.prototype, "id", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)({ example: 'Алексей', description: 'Имя' }),
+    (0, swagger_1.ApiProperty)({ example: 'Барышкин Антон Владимирович', description: 'Фамилия Имя Отчество' }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "fullname", void 0);
@@ -39,7 +39,7 @@ __decorate([
 ], User.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.IsPhoneNumber)(),
-    (0, swagger_1.ApiProperty)({ example: '+7 (985) 242-52-64', description: 'Телефон (Альтернативный логин)' }),
+    (0, swagger_1.ApiProperty)({ example: '+7 (985) 242-52-64', description: 'Телефон' }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "phone", void 0);

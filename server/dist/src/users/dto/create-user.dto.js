@@ -16,11 +16,21 @@ class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;
 __decorate([
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ example: 'Барышкин Антон Владимирович', description: 'Фамилия Имя Отчество' }),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "fullname", void 0);
+__decorate([
     (0, class_validator_1.IsEmail)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: 'someemail@mail.ru', description: 'Почта (Логин)' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "email", void 0);
+__decorate([
+    (0, class_validator_1.IsPhoneNumber)(),
+    (0, swagger_1.ApiProperty)({ example: '+7 (985) 242-52-64', description: 'Телефон' }),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "phone", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),

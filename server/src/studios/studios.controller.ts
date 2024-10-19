@@ -10,7 +10,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-//import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateStudioDto } from './dto/create-studio.dto';
 import { StudiosService } from './studios.service';
 import { AccessTokenGuard } from 'src/guards/accessToken.guard';
@@ -21,7 +20,6 @@ import { AdminGuard } from 'src/guards/admin.guard';
 export class StudiosController {
   constructor(private readonly StudiosService: StudiosService) {}
 
-  @UseGuards(AccessTokenGuard)
   @ApiOperation({ summary: 'Получить все студии' })
   @Get()
   findAll() {

@@ -3,25 +3,26 @@ import {
   Controller,
   Delete,
   Get,
+  Options,
   Param,
   ParseIntPipe,
   Post,
   Put,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-//import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreatePhotographerDto } from './dto/create-photographer.dto';
 import { PhotographersService } from './photographers.service';
 import { AccessTokenGuard } from 'src/guards/accessToken.guard';
 import { AdminGuard } from 'src/guards/admin.guard';
+import { Response } from 'express';
 
 @Controller('photographers')
 @ApiTags('Фотографы')
 export class PhotographersController {
   constructor(private readonly PhotographersService: PhotographersService) {}
 
-  @UseGuards(AccessTokenGuard)
   @ApiOperation({ summary: 'Получить всех фотографов' })
   @Get()
   findAll() {

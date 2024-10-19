@@ -41,7 +41,6 @@ let StudiosController = class StudiosController {
 };
 exports.StudiosController = StudiosController;
 __decorate([
-    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить все студии' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),

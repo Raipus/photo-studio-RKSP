@@ -1,3 +1,4 @@
+"use client"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
 import Image from "next/image"
@@ -31,6 +32,7 @@ const HomePage = () => {
 		const fetchStudios = async () => {
       try{
 			const response = await fetch('http://localhost:3001/studios', {
+        method: 'GET',
         headers: {
           'Cache-Control': 'no-cache',
           'Pragma': 'no-cache',
@@ -52,6 +54,7 @@ const HomePage = () => {
 		const fetchPhotographers = async () => {
       try{
 			const response = await fetch('http://localhost:3001/photographers', {
+          method: 'GET',
           headers: {
             'Cache-Control': 'no-cache',
             'Pragma': 'no-cache',
@@ -113,149 +116,34 @@ const HomePage = () => {
         </div>
       </div>
       <div className='grid place-content-center'>
-      <div id='studios' className='grid grid-cols-1 text-center w-[1300px] my-5'>
+      <div id='studios' className='grid grid-cols-1 text-center w-[1300px]'>
         <a className='text-4xl'>Наши студии:</a>
 				<div className='inline-flex max-w-full overflow-x-scroll'>
-						<div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
+					{studios.map(studio => (
+						<div key={studio.id} className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
               <div>
-                <h3 className='text-4xl'>Уютный камин</h3>  
+                <h3 className='text-4xl'>{studio.name}</h3>  
               </div>
               <div>
-        				<p>ул. Ленинский проспект, д.6</p>
-                <p>4000 руб/ч</p>        
-              </div>
-						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Уютный камин</h3>  
-              </div>
-              <div>
-        				<p>ул. Ленинский проспект, д.6</p>
-                <p>4000 руб/ч</p>        
+        				<p>{studio.location}</p>
+                <p>{studio.cost}</p>        
               </div>
 						</div>
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Уютный камин</h3>  
-              </div>
-              <div>
-        				<p>ул. Ленинский проспект, д.6</p>
-                <p>4000 руб/ч</p>        
-              </div>
-						</div>
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Уютный камин</h3>  
-              </div>
-              <div>
-        				<p>ул. Ленинский проспект, д.6</p>
-                <p>4000 руб/ч</p>        
-              </div>
-						</div>
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Уютный камин</h3>  
-              </div>
-              <div>
-        				<p>ул. Ленинский проспект, д.6</p>
-                <p>4000 руб/ч</p>        
-              </div>
-						</div>
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Уютный камин</h3>  
-              </div>
-              <div>
-        				<p>ул. Ленинский проспект, д.6</p>
-                <p>4000 руб/ч</p>        
-              </div>
-						</div>
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Уютный камин</h3>  
-              </div>
-              <div>
-        				<p>ул. Ленинский проспект, д.6</p>
-                <p>4000 руб/ч</p>        
-              </div>
-						</div>
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Уютный камин</h3>  
-              </div>
-              <div>
-        				<p>ул. Ленинский проспект, д.6</p>
-                <p>4000 руб/ч</p>        
-              </div>
-						</div>
+					))}
 				</div>
       </div>
       
       <div id='photographers' className='grid grid-cols-1 text-center w-[1300px]'>
         <a className='text-4xl'>Наши фотографы:</a>
 				<div className='inline-flex max-w-full overflow-x-scroll'>
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Ольга</h3>  
-              </div>
-              <div>
-        				<p>Семейные фотосессии</p>
-                <p>2000 руб/ч</p>        
-              </div>
+					{photographers.map(photographer => (
+						<div key={photographer.id} className='bg-[#1C6758] m-10 p-4 h-[300px] w-[400px] rounded-3xl grid content-around'>
+							<h3>{photographer.fullname}</h3>
+							<p>{photographer.work_exp}</p>
+              <p>{photographer.cost}</p>
 						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Ольга</h3>  
-              </div>
-              <div>
-        				<p>Семейные фотосессии</p>
-                <p>2000 руб/ч</p>        
-              </div>
-						</div>
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Ольга</h3>  
-              </div>
-              <div>
-        				<p>Семейные фотосессии</p>
-                <p>2000 руб/ч</p>        
-              </div>
-						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Ольга</h3>  
-              </div>
-              <div>
-        				<p>Семейные фотосессии</p>
-                <p>2000 руб/ч</p>        
-              </div>
-						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Ольга</h3>  
-              </div>
-              <div>
-        				<p>Семейные фотосессии</p>
-                <p>2000 руб/ч</p>        
-              </div>
-						</div>
-
-            <div className='bg-[#1C6758] m-10 p-4 min-h-[300px] min-w-[400px] rounded-3xl grid content-around'>
-              <div>
-                <h3 className='text-4xl'>Ольга</h3>  
-              </div>
-              <div>
-        				<p>Семейные фотосессии</p>
-                <p>2000 руб/ч</p>        
-              </div>
-						</div>
+					))}
 				</div>
-
-        
       </div>
       </div>
       <Footer/>

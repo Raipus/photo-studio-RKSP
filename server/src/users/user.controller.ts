@@ -8,7 +8,6 @@ import { AccessTokenGuard } from "src/guards/accessToken.guard";
 import { AdminGuard } from "src/guards/admin.guard";
 import { AuthorGuard } from "src/guards/author.guard";
 import { UpdateRoleDto } from "./dto/update-role.dto";
-//import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
 @Controller('users')
 @ApiTags('Пользователи')

@@ -16,7 +16,7 @@ const Header = () => {
                         <a className="p-4 mr-4">Фотографы</a>
                         <a className="p-4 mr-4">Контакты</a>
                     </div>
-                    <Link href='/loginPage'>
+                    <Link href='/signin'>
                         <button className="pt-3 pb-3 pl-14 pr-14 bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 rounded-md text-white">Вход
                         </button>
                     </Link>

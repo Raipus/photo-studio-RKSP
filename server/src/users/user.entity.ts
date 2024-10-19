@@ -13,7 +13,7 @@ export class User {
     id: number;
     
     @IsString()
-    @ApiProperty({ example: 'Алексей', description: 'Имя' })
+    @ApiProperty({ example: 'Барышкин Антон Владимирович', description: 'Фамилия Имя Отчество' })
     @Column({ nullable: true })
     fullname: string;
 
@@ -24,7 +24,7 @@ export class User {
     email: string;
 
     @IsPhoneNumber()
-    @ApiProperty({ example: '+7 (985) 242-52-64', description: 'Телефон (Альтернативный логин)' })
+    @ApiProperty({ example: '+7 (985) 242-52-64', description: 'Телефон' })
     @Column({ nullable: true })
     phone: string;
 

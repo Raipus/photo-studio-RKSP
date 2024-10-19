@@ -36,7 +36,9 @@ let UsersService = class UsersService {
                 throw new common_1.BadRequestException(`Клиент с почтой ${userDto.email} уже существует!`);
             }
             const newUser = this.userRepository.create();
+            newUser.fullname = userDto.fullname;
             newUser.email = userDto.email;
+            newUser.phone = userDto.phone;
             newUser.password = userDto.password;
             newUser.role = "user";
             await this.userRepository.save(newUser);

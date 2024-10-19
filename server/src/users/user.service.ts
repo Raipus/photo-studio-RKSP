@@ -38,7 +38,9 @@ export class UsersService {
             }
 
             const newUser = this.userRepository.create();
+            newUser.fullname = userDto.fullname;
             newUser.email = userDto.email;
+            newUser.phone = userDto.phone;
             newUser.password = userDto.password;
             newUser.role = "user";
             await this.userRepository.save(newUser);
