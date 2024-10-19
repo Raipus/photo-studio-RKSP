@@ -60,6 +60,11 @@ export class AuthService {
       else {return this.photographerService.updateToken(userId, { refreshToken: null });}
   }
 
+  async getUserInfo(email: string, role: string) {
+    if (role == "user" || role == "admin") return this.usersService.findOne(email)
+      else {return this.photographerService.findOne(email)}
+  }
+
   hashData(data: string) {
     return argon2.hash(data);
   }

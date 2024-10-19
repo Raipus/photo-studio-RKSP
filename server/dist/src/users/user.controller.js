@@ -99,7 +99,7 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard, admin_guard_1.AdminGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Изменить роль пользователя' }),
-    (0, common_1.Put)(':id'),
+    (0, common_1.Put)(':id/role'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),

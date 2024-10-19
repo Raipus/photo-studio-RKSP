@@ -66,6 +66,13 @@ let AuthService = class AuthService {
             return this.photographerService.updateToken(userId, { refreshToken: null });
         }
     }
+    async getUserInfo(email, role) {
+        if (role == "user" || role == "admin")
+            return this.usersService.findOne(email);
+        else {
+            return this.photographerService.findOne(email);
+        }
+    }
     hashData(data) {
         return argon2.hash(data);
     }

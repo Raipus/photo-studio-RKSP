@@ -51,7 +51,7 @@ export class UsersController {
 
     @UseGuards(AccessTokenGuard, AdminGuard)
     @ApiOperation({ summary: 'Изменить роль пользователя' }) 
-    @Put(':id')
+    @Put(':id/role')
     updateRole(@Param('id',ParseIntPipe) id: number, @Body() updateUserRole: UpdateRoleDto) {
         return this.UsersService.updateRole(+id,updateUserRole);
     }

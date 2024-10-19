@@ -15,4 +15,5 @@ export declare class AuthController {
         accessToken: string;
         refreshToken: string;
     }>;
+    getUserInfo(req: Request): Promise<import("../users/user.entity").User | import("../photographers/photographer.entity").Photographer>;
 }

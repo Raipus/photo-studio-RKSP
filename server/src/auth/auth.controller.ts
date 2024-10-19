@@ -41,4 +41,10 @@ export class AuthController {
     const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
     return this.authService.refreshTokens(req.user['email'], req.user['role'], refreshToken);
   }
+
+  @UseGuards(AccessTokenGuard)
+  @Get('getUserInfo')
+  getUserInfo(@Req() req: Request) {
+    return this.authService.getUserInfo(req.user['email'], req.user['role']);
+  }
 }

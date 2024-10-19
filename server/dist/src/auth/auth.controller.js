@@ -36,6 +36,9 @@ let AuthController = class AuthController {
         const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
         return this.authService.refreshTokens(req.user['email'], req.user['role'], refreshToken);
     }
+    getUserInfo(req) {
+        return this.authService.getUserInfo(req.user['email'], req.user['role']);
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -68,6 +71,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "refreshTokens", null);
+__decorate([
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
+    (0, common_1.Get)('getUserInfo'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "getUserInfo", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
