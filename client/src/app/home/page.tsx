@@ -83,7 +83,7 @@ const HomePage = () => {
             <div className="animate-[slideRightEnter_1.25s_ease-in-out] w-[300px] h-auto mt-10">
               Richard's Studios предлагает аренду студий для всех ваших потребностей в фото и видео съемке. 
             </div>
-            <Link href='/loginPage'>
+            <Link href='/signin'>
               <button className="animate-[slideRightEnter_1.5s_ease-in-out] mt-10 pt-3 pb-3 pl-11 pr-11 bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 rounded-md text-white font-medium">Забронировать студию сейчас</button>
             </Link>
           </div>

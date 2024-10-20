@@ -30,7 +30,7 @@ export default function SigninPage() {
     .then(response => response.json()).then(data1 => {
       setCookie('access_token', data1.accessToken,{maxAge:60*15});
       setCookie('refresh_token', data1.refreshToken,{maxAge:60*60*24*7});
-      router.push('/adminID')
+      router.push('/userID')
     })
     .catch(error => {
       console.error('Error:', error);
