@@ -27,18 +27,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                         router.push('/adminID');
                     } else if (data.role == 'user') {
                         setIsAdmin(true);
-                        router.push('/userID');
                     } else if (data.role == 'photographer') {
                         setIsAdmin(false);
-                        router.push('/');
+                        router.push('/photographerID');
                     } else {
                         setIsAdmin(false);
-                        router.push('/');
+                        router.push('/logout');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    router.push('/');
+                    router.push('/logout');
                 });
             }
         }

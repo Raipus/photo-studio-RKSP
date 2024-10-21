@@ -2,7 +2,7 @@
 import Header from '@/components/header'
 import Footer from '@/components/LK/footer'
 import Link from "next/link"
-import {setCookie} from "cookies-next";
+import {deleteCookie, setCookie} from "cookies-next";
 import { useRouter } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useState } from 'react';
@@ -16,6 +16,7 @@ export default function LoginPage() {
   const {register, handleSubmit} = useForm<IFormStateLogin>();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const onSubmit: SubmitHandler<IFormStateLogin> = async (data) => {
     setLoading(true);
@@ -33,6 +34,8 @@ export default function LoginPage() {
     })
     .catch(error => {
       console.error('Error:', error);
+      deleteCookie('access_token');
+      deleteCookie('refresh_token');
     });
   }
   return (

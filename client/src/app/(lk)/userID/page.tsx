@@ -1,7 +1,7 @@
 import Footer from "@/components/LK/footer"
 import Header from "@/components/LK/header"
 
-export default function HomePage() {
+export default function UserPage() {
     return (
     <div className="items-center justify-items-center min-h-screen min-w-screen font-[family-name:var(--font-roboto-mono)] text-lg">
       <Header/>

@@ -43,9 +43,16 @@ export class AuthService {
       await this.updateRefreshToken(user1.id, tokens.refreshToken, user1.role);
       return tokens;
     }
+    else if (!user1) {
+      console.log(`[ERROR] Пользователя с почтой ${data.email} не существует!`);
+      throw new BadRequestException(`Пользователя с почтой ${data.email} не существует!`);
+    }
     else {
       const user = await this.usersService.findOne(data.email);
-      if (!user) throw new BadRequestException(`Пользователя с почтой ${data.email} не существует!`);
+      if (!user) {
+        console.log(`[ERROR] Пользователя с почтой ${data.email} не существует!`);
+        throw new BadRequestException(`Пользователя с почтой ${data.email} не существует!`);
+      }
       const passwordMatches = await argon2.verify(user.password, data.password);
       if (!passwordMatches)
         throw new BadRequestException('Пароль неверный!');

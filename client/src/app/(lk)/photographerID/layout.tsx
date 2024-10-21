@@ -23,19 +23,20 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.role == 'admin') {
-                        setIsAdmin(true);
+                        setIsAdmin(false);
+                        router.push('/adminID');
                     } else if (data.role == 'user') {
                         setIsAdmin(false);
                         router.push('/userID');
                     } else if (data.role == 'photographer') {
-                        setIsAdmin(false);
-                        router.push('/photographerID');
+                        setIsAdmin(true);
                     } else {
                         setIsAdmin(false);
                         router.push('/logout');
                     }
                 })
                 .catch(error => {
+                    
                     console.error('Error:', error);
                     router.push('/logout');
                 });

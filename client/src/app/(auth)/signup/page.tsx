@@ -1,7 +1,7 @@
 "use client"
 import Header from '@/components/header'
 import Footer from '@/components/LK/footer'
-import { setCookie } from 'cookies-next'
+import { deleteCookie, setCookie } from 'cookies-next'
 import { useRouter } from "next/navigation"
 import { useState } from 'react'
 import { SubmitHandler, useForm } from "react-hook-form"
@@ -20,7 +20,7 @@ export default function SigninPage() {
 
   const onSubmit: SubmitHandler<IFormStateSignIn>= async (data) => {
     setLoading(true);
-    const response = await fetch('http://localhost:3001/auth/signup', {
+    await fetch('http://localhost:3001/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,6 +34,8 @@ export default function SigninPage() {
     })
     .catch(error => {
       console.error('Error:', error);
+      deleteCookie('access_token');
+      deleteCookie('refresh_token');
     });
   }
   return (

@@ -14,12 +14,10 @@ const LogoutPage = () => {
             let accessToken = (await getJwt()).access
             let refreshToken = (await getJwt()).refresh
             if (!refreshToken) {
-              console.log('aboba143124124')
               router.push('/signin')
             } else {
-            console.log('aboba')
-            deleteCookie('access_token')
-            deleteCookie('refresh_token')
+            deleteCookie('access_token');
+            deleteCookie('refresh_token');
             await fetch('http://localhost:3001/auth/logout', {
               method: 'GET',
               headers: {
