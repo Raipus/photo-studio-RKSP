@@ -2,6 +2,8 @@
 import { useRouter } from 'next/navigation';
 import React, {useEffect, useState} from 'react';
 import { getJwt } from '@/utils/auth/getJwt';
+import Footer from '@/components/LK/footer';
+import Header from '@/components/LK/header';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
@@ -49,7 +51,21 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <div style={{height:'100vh'}}>
-            {isAdmin ? children : null}
+            {isAdmin ? (
+                <div className="items-center justify-items-center min-h-screen min-w-screen font-[family-name:var(--font-roboto-mono)] text-lg">
+                <Header/>
+                <label className='grid place-content-center text-4xl pb-9 mt-28'>Админ панель</label>
+                <div className='bg-[#1C6758] grid place-content-center'>
+                  <div className='w-[1300px] grid grid-cols-3'>
+                      <a href='/admin/studios' className='rounded-lg py-4 text-center hover:scale-90 text-2xl bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 m-1 mr-2 ml-2'>Студии</a>
+                      <a href='/admin/photographers' className='rounded-lg py-4 text-center hover:scale-90 text-2xl bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 m-1 mr-2 ml-2'>Фотографы</a>
+                        <a href='/admin/bookings' className='rounded-lg py-4 text-center hover:scale-90 text-2xl bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 m-1 mr-2 ml-2'>Брони</a>
+                  </div>
+                </div>
+                {children}
+                <Footer/>
+              </div>
+            ) : null}
         </div>
     );
 };

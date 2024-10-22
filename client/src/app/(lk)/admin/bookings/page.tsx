@@ -12,7 +12,7 @@ interface IBooking{
 	photographerID: number
 }
 
-export default function PhotographerPage() {
+export default function AdminBookingsPage() {
 	const [bookings, setBookings] = useState<IBooking[]>([])
 
 	useEffect(() => {
@@ -30,18 +30,6 @@ export default function PhotographerPage() {
 	}, [])
 
     return (
-    <div className="items-center justify-items-center min-h-screen min-w-screen font-[family-name:var(--font-roboto-mono)] text-lg">
-    	<Header/>
-    	<label className='grid place-content-center text-4xl pb-9 mt-28'>NAME</label>
-    		<div className='bg-[#1C6758] grid place-content-center'>
-    			<div className='w-[1300px] grid grid-cols-1'>
-					<a className='py-4 text-center text-2xl duration-300 m-1'>Брони, в которых Вы принимаете участие</a>
-        		</div>
-      		</div>
-		<div className=''>
-			
-		</div>
-      <Footer/>
-    </div>
+		<div className="">book</div>
     )
 }

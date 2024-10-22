@@ -38,7 +38,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     }
                 })
                 .catch(error => {
-                    
                     console.error('Error:', error);
                     router.push('/');
                 });

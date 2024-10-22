@@ -2,6 +2,8 @@
 import { useRouter } from 'next/navigation';
 import React, {useEffect, useState} from 'react';
 import { getJwt } from '@/utils/auth/getJwt';
+import Footer from '@/components/LK/footer';
+import Header from '@/components/LK/header';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
@@ -47,8 +49,21 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }, [router]);
 
     return (
-        <div style={{height:'100vh'}}>
-            {isAdmin ? children : null}
+        <div>
+            {isAdmin ? (
+                <div className="items-center justify-items-center min-h-screen min-w-screen font-[family-name:var(--font-roboto-mono)] text-lg">
+                    <Header/>
+                    <label className='grid place-content-center text-4xl pb-9 mt-28'>NAME</label>
+                    <div className='bg-[#1C6758] grid place-content-center'>
+                        <div className='w-[1300px] grid grid-cols-2'>
+                            <a href='/user/info' className='rounded-lg py-4 text-center hover:scale-90 text-2xl bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 m-1 mr-2'>Личная информация</a>
+                            <a href='/user/bookings' className='rounded-lg py-4 text-center hover:scale-90 text-2xl bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 m-1 ml-2'>Мои брони</a>
+                        </div>
+                    </div>
+                    {children}
+                    <Footer/>
+                </div>
+            ) : null}
         </div>
     );
 };

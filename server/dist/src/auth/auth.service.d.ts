@@ -15,8 +15,8 @@ export declare class AuthService {
         accessToken: string;
         refreshToken: string;
     }>;
-    logout(userId: number, role: string): Promise<import("../users/user.entity").User | import("../photographers/photographer.entity").Photographer>;
-    getUserInfo(email: string, role: string): Promise<import("../users/user.entity").User | import("../photographers/photographer.entity").Photographer>;
+    logout(userId: number, role: string): Promise<import("../photographers/photographer.entity").Photographer | import("../users/user.entity").User>;
+    getUserInfo(email: string, role: string): Promise<import("../photographers/photographer.entity").Photographer | import("../users/user.entity").User>;
     hashData(data: string): Promise<string>;
     updateRefreshToken(userId: number, refreshToken: string, role: string): Promise<void>;
     getTokens(userId: number, email: string, role: string): Promise<{
