@@ -17,28 +17,31 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 await fetch('http://localhost:3001/auth/getUserInfo', {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${accessToken}`
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache',
+                        'Expires': '0',
                     }
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.role == 'admin') {
                         setIsAdmin(false);
-                        router.push('/adminID');
+                        router.push('/admin');
                     } else if (data.role == 'user') {
                         setIsAdmin(false);
-                        router.push('/userID');
+                        router.push('/user');
                     } else if (data.role == 'photographer') {
                         setIsAdmin(true);
                     } else {
                         setIsAdmin(false);
-                        router.push('/logout');
+                        router.push('/signin');
                     }
                 })
                 .catch(error => {
                     
                     console.error('Error:', error);
-                    router.push('/logout');
+                    router.push('/');
                 });
             }
         }

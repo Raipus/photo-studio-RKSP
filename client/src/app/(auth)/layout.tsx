@@ -14,7 +14,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 setHasTokens(false);
             } else {
                 setHasTokens(true);
-                router.push('/userID');
+                router.push('/user');
             }
         }
         TokenCheck()

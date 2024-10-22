@@ -33,7 +33,7 @@ const Header = () => {
                         <a className="p-4 mr-4">Контакты</a>
                     </div>
                     {hasTokens ? (
-                        <Link href='/userID'>
+                        <Link href='/user'>
                             <button className="pt-3 pb-3 pl-12 pr-12 bg-[#3D8361] hover:bg-[#2F6A4E] duration-300 rounded-md text-white whitespace-nowrap">Личный кабинет
                             </button>
                         </Link>
