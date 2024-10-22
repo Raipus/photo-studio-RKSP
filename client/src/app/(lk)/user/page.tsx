@@ -8,8 +8,8 @@ export default function UserPage() {
       <label className='grid place-content-center text-4xl pb-9'>NAME</label>
       <div className='bg-[#1C6758] grid place-content-center'>
         <div className='w-[1300px] grid grid-cols-2'>
-          <a className='py-4 text-center hover: scale-30 hover:bg-[#3D8361] duration-300'>Личная информация</a>
-          <a className='py-4 text-center hover: scale-30 hover:bg-[#3D8361] duration-300'>Мои брони</a>
+          <a className='py-4 text-center hover:scale-90 text-2xl hover:bg-[#17574ab0] duration-300'>Личная информация</a>
+          <a className='py-4 text-center hover:scale-90 text-2xl hover:bg-[#17574ab0] duration-300'>Мои брони</a>
         </div>
       </div>
       <Footer/>

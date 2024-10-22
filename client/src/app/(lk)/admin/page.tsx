@@ -32,10 +32,12 @@ export default function AdminPage() {
     return (
     <div className="items-center justify-items-center min-h-screen min-w-screen font-[family-name:var(--font-roboto-mono)] text-lg">
       <Header/>
-      <label className='grid place-content-center text-4xl pb-9'>NAME</label>
+      <label className='grid place-content-center text-4xl pb-9'>Админ панель</label>
       <div className='bg-[#1C6758] grid place-content-center'>
-        <div className='w-[1300px] grid grid-cols-1'>
-          <a className='py-4 text-center text-2xl hover:bg-[#3D8361] duration-300'>брони</a>
+        <div className='w-[1300px] grid grid-cols-3'>
+			<a className='py-4 text-center hover:scale-90 text-2xl hover:bg-[#17574ab0] duration-300'>Студии</a>
+			<a className='py-4 text-center hover:scale-90 text-2xl hover:bg-[#17574ab0] duration-300'>Фотографы</a>
+          	<a className='py-4 text-center hover:scale-90 text-2xl hover:bg-[#17574ab0] duration-300'>Брони</a>
         </div>
       </div>
 

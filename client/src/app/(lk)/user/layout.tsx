@@ -26,8 +26,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.role == 'admin') {
-                        setIsAdmin(false);
-                        router.push('/admin');
+                        setIsAdmin(true);
                     } else if (data.role == 'user') {
                         setIsAdmin(true);
                     } else if (data.role == 'photographer') {
