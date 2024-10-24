@@ -1,6 +1,6 @@
-import { BookingsService } from "./booking.service";
-import { Booking } from "./booking.entity";
-import { CreateBookingDto } from "./dto/create-booking.dto";
+import { BookingsService } from './booking.service';
+import { Booking } from './booking.entity';
+import { CreateBookingDto } from './dto/create-booking.dto';
 import { Request } from 'express';
 export declare class BookingsController {
     private readonly BookingsService;

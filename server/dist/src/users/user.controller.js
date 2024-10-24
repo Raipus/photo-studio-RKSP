@@ -54,14 +54,15 @@ let UsersController = class UsersController {
 exports.UsersController = UsersController;
 __decorate([
     (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard, admin_guard_1.AdminGuard),
-    (0, swagger_1.ApiOperation)({ summary: 'Демонстрация возможности получения всех пользователей в неполном формате' }),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Демонстрация возможности получения всех пользователей в неполном формате',
+    }),
     (0, common_1.Get)('incomplete'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "findIncomplete", null);
 __decorate([
-    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить всех пользователей' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),

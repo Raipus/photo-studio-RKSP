@@ -73,8 +73,8 @@ let BookingsService = class BookingsService {
                 relations: {
                     user: true,
                     studio: true,
-                    photographer: true
-                }
+                    photographer: true,
+                },
             });
             if (!booking) {
                 throw new common_1.NotFoundException(`Бронь с ID ${id} не найдена`);
@@ -86,17 +86,20 @@ let BookingsService = class BookingsService {
         }
     }
     async findAll(email, role) {
-        if (role == "admin") {
+        if (role == 'admin') {
             const bookings = await this.bookingRepository.find({
                 relations: {
                     user: true,
                     studio: true,
-                    photographer: true
-                }
+                    photographer: true,
+                },
             });
+            if (!bookings) {
+                throw new common_1.NotFoundException(`Брони от почты ${email} не найдены`);
+            }
             return bookings;
         }
-        else if (role == "user") {
+        else if (role == 'user') {
             const user = await this.usersService.findOne(email);
             if (!user) {
                 throw new common_1.NotFoundException(`Пользователь с почтой ${email} не найден`);
@@ -105,15 +108,15 @@ let BookingsService = class BookingsService {
                 relations: {
                     user: true,
                     studio: true,
-                    photographer: true
+                    photographer: true,
                 },
                 where: {
-                    user: user
-                }
+                    user: user,
+                },
             });
             return bookings;
         }
-        else if (role == "photographer") {
+        else if (role == 'photographer') {
             const photographer = await this.photographersService.findOne(email);
             if (!photographer) {
                 throw new common_1.NotFoundException(`Фотограф с почтой ${email} не найден`);
@@ -122,11 +125,11 @@ let BookingsService = class BookingsService {
                 relations: {
                     user: true,
                     studio: true,
-                    photographer: true
+                    photographer: true,
                 },
                 where: {
-                    photographer: photographer
-                }
+                    photographer: photographer,
+                },
             });
             return bookings;
         }
@@ -141,8 +144,8 @@ let BookingsService = class BookingsService {
                 relations: {
                     user: true,
                     studio: true,
-                    photographer: true
-                }
+                    photographer: true,
+                },
             });
             if (!booking) {
                 throw new common_1.NotFoundException(`Бронь с id ${id} не найдена`);
@@ -190,7 +193,7 @@ let BookingsService = class BookingsService {
     async remove(id) {
         try {
             const booking = await this.bookingRepository.findOne({
-                where: { id }
+                where: { id },
             });
             if (!booking) {
                 throw new common_1.NotFoundException(`Бронь с id ${id} не найдена`);

@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background: #FFFFFF;
-  --foreground: #111111;
+	--background: #ffffff;
+	--foreground: #111111;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #111111;
-    --foreground: #FFFFFF;
-  }
+	:root {
+		--background: #111111;
+		--foreground: #ffffff;
+	}
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+	color: var(--foreground);
+	background: var(--background);
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 /* html * {
@@ -27,41 +27,41 @@ body {
 
 *::-webkit-scrollbar,
 html *::-webkit-scrollbar {
-  height: 12px;
-  width: 10px;
+	height: 12px;
+	width: 10px;
 }
 
 *::-webkit-scrollbar-track,
 html *::-webkit-scrollbar-track {
-  background: transparent;
+	background: transparent;
 }
 
 *::-webkit-scrollbar-thumb,
 html *::-webkit-scrollbar-thumb {
-  background-color: #6b7280;
-  border-radius: 6px;
+	background-color: #6b7280;
+	border-radius: 6px;
 }
 
 *::-webkit-scrollbar-thumb:hover,
 html *::-webkit-scrollbar-thumb:hover {
-  background: #616774;
+	background: #616774;
 }
 
 .overflow-x-scroll::-webkit-scrollbar {
-  height: 10px;
+	height: 10px;
 }
 
 .overflow-x-scroll::-webkit-scrollbar-track {
-  background: transparent;
+	background: transparent;
 }
 
 .overflow-x-scroll::-webkit-scrollbar-thumb {
-  background: #6b7280;
-  border-radius: 6px;
+	background: #6b7280;
+	border-radius: 6px;
 }
 
 .overflow-x-scroll::-webkit-scrollbar-thumb:hover {
-  background: #616774;
+	background: #616774;
 }
 
 /* .overflow-x-scroll {
@@ -69,4 +69,5 @@ html *::-webkit-scrollbar-thumb:hover {
   scrollbar-color: #6b7280 transparent;
 } */
 
-@layer utilities {}
+@layer utilities {
+}

@@ -1,12 +1,12 @@
-import { HttpStatus } from "@nestjs/common";
-import { Repository } from "typeorm";
-import { Photographer } from "src/photographers/photographer.entity";
-import { Studio } from "src/studios/studio.entity";
-import { Booking } from "src/bookings/booking.entity";
-import { User } from "src/users/user.entity";
-import { CreateBookingDto } from "./dto/create-booking.dto";
-import { UsersService } from "src/users/user.service";
-import { PhotographersService } from "src/photographers/photographers.service";
+import { HttpStatus } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { Photographer } from 'src/photographers/photographer.entity';
+import { Studio } from 'src/studios/studio.entity';
+import { Booking } from 'src/bookings/booking.entity';
+import { User } from 'src/users/user.entity';
+import { CreateBookingDto } from './dto/create-booking.dto';
+import { UsersService } from 'src/users/user.service';
+import { PhotographersService } from 'src/photographers/photographers.service';
 export declare class BookingsService {
     private readonly userRepository;
     private readonly photographerRepository;

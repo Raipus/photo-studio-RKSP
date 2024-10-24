@@ -1,5 +1,3 @@
 export default function UserInfoPage() {
-    return (
-    <div className="">Info</div>
-    )
+	return <div className=''>Info</div>
 }

@@ -1,5 +1,3 @@
 export default function UserBookingsPage() {
-    return (
-    <div className="">Book</div>
-    )
+	return <div className=''>Book</div>
 }
