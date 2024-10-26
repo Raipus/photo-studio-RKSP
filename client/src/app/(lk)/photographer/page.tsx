@@ -21,9 +21,7 @@ export default function PhotographerPage() {
 					method: 'GET',
 					headers: {
 						Authorization: `Bearer ${accessToken}`,
-						'Cache-Control': 'no-cache',
-						Pragma: 'no-cache',
-						Expires: '0'
+						'Cache-Control': 'no-cache'
 					}
 				})
 				const data = await response.json()
@@ -44,9 +42,7 @@ export default function PhotographerPage() {
 					method: 'GET',
 					headers: {
 						Authorization: `Bearer ${accessToken}`,
-						'Cache-Control': 'no-cache',
-						Pragma: 'no-cache',
-						Expires: '0'
+						'Cache-Control': 'no-cache'
 					}
 				})
 				const data = await response.json()
@@ -81,12 +77,12 @@ export default function PhotographerPage() {
 				<p className='mb-3 mt-3 text-center text-2xl text-red-400'>{error}</p>
 			)}
 			<div className='flex items-center justify-center justify-items-center'>
-				<div className='h-[320px] w-[1300px] rounded-sm bg-[#1D1D1C]'>
-					<div className='grid h-[320px] max-w-full overflow-y-scroll'>
+				<div className='h-[400px] w-[1300px] rounded-md bg-[#1D1D1C]'>
+					<div className='h-[400px] max-w-full overflow-y-auto'>
 						{bookings.map(booking => (
 							<div
 								key={booking.id}
-								className='m-1 h-min w-[1282px] max-w-full rounded-md bg-[#1C6758] p-1'
+								className='m-1 h-min min-w-[1282px] max-w-full rounded-md bg-[#1C6758] p-1'
 							>
 								<p>
 									Студия: {booking.studio.name} | Дата:{' '}

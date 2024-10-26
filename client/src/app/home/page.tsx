@@ -19,9 +19,7 @@ const HomePage = () => {
 				const response = await fetch('http://localhost:3001/studios', {
 					method: 'GET',
 					headers: {
-						'Cache-Control': 'no-cache',
-						Pragma: 'no-cache',
-						Expires: '0'
+						'Cache-Control': 'no-cache'
 					}
 				})
 				const data = await response.json()
@@ -40,9 +38,7 @@ const HomePage = () => {
 				const response = await fetch('http://localhost:3001/photographers', {
 					method: 'GET',
 					headers: {
-						'Cache-Control': 'no-cache',
-						Pragma: 'no-cache',
-						Expires: '0'
+						'Cache-Control': 'no-cache'
 					}
 				})
 				const data = await response.json()

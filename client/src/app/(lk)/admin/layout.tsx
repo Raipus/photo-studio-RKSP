@@ -64,19 +64,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 						<div className='grid w-[1300px] grid-cols-3'>
 							<a
 								href='/admin/studios'
-								className='m-1 ml-2 mr-2 rounded-lg bg-[#3D8361] py-4 text-center text-2xl duration-300 hover:scale-90 hover:bg-[#2F6A4E]'
+								className='m-1 ml-2 mr-2 rounded-lg bg-[#3D8361] py-4 text-center text-2xl text-white duration-300 hover:scale-90 hover:bg-[#2F6A4E]'
 							>
 								Студии
 							</a>
 							<a
 								href='/admin/photographers'
-								className='m-1 ml-2 mr-2 rounded-lg bg-[#3D8361] py-4 text-center text-2xl duration-300 hover:scale-90 hover:bg-[#2F6A4E]'
+								className='m-1 ml-2 mr-2 rounded-lg bg-[#3D8361] py-4 text-center text-2xl text-white duration-300 hover:scale-90 hover:bg-[#2F6A4E]'
 							>
 								Фотографы
 							</a>
 							<a
 								href='/admin/bookings'
-								className='m-1 ml-2 mr-2 rounded-lg bg-[#3D8361] py-4 text-center text-2xl duration-300 hover:scale-90 hover:bg-[#2F6A4E]'
+								className='m-1 ml-2 mr-2 rounded-lg bg-[#3D8361] py-4 text-center text-2xl text-white duration-300 hover:scale-90 hover:bg-[#2F6A4E]'
 							>
 								Брони
 							</a>

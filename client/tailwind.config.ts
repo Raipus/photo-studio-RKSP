@@ -40,6 +40,14 @@ const config: Config = {
 					'100%': {
 						opacity: 100
 					}
+				},
+				opacityExit: {
+					'0%': {
+						opacity: 100
+					},
+					'100%': {
+						opacity: 0
+					}
 				}
 			}
 		}
