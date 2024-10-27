@@ -7,12 +7,35 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import BookingCreateForm from '@/components/LK/forms/BookingCreateForm'
 import BookingUpdateForm from '@/components/LK/forms/BookingUpdateForm'
+import UserBookingCreateForm from '@/components/LK/forms/UserBookingCreateForm'
 
 import { getJwt } from '@/utils/auth/getJwt'
-import { IBooking, IBookingCreate } from '@/utils/interfaces'
+import { IBooking, IBookingCreate, IUser } from '@/utils/interfaces'
 
 export default function UserBookingsPage() {
 	const [bookings, setBookings] = useState<IBooking[]>([])
+	const [user, setUser] = useState<IUser>()
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			try {
+				let accessToken = (await getJwt()).access
+				const response = await fetch('http://localhost:3001/auth/getUserInfo', {
+					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+						'Cache-Control': 'no-cache'
+					}
+				})
+				const data = await response.json()
+				setUser(data)
+			} catch (error) {
+				console.log('Ошибка при получении пользователя:', error)
+			}
+		}
+
+		fetchUser()
+	}, [])
 
 	const [isCreateModalOpen, setCreateModalOpen] = useState(false)
 	const handleCreateOpenModal = () => setCreateModalOpen(true)
@@ -93,7 +116,7 @@ export default function UserBookingsPage() {
 					})
 				} else {
 					setBookings(data)
-					toast.success(`Бронь с id ${id} успешно удалена!`, {
+					toast.success(`Бронь с id ${id} успешно отменена!`, {
 						position: 'top-center',
 						autoClose: 2000,
 						hideProgressBar: false,
@@ -137,10 +160,11 @@ export default function UserBookingsPage() {
 	return (
 		<div>
 			<ToastContainer />
-			<BookingCreateForm
+			<UserBookingCreateForm
 				isOpen={isCreateModalOpen}
 				onClose={handleCreateCloseModal}
 				onSubmit={handleCreateSubmit}
+				userId={user?.id}
 			/>
 			<div className='grid place-content-center'>
 				<div className='m-12 grid w-[600px] grid-cols-2 place-items-center text-center font-[family-name:var(--font-inter)] font-light'>
@@ -165,7 +189,7 @@ export default function UserBookingsPage() {
 								className='m-1 flex h-min min-w-[1282px] max-w-full items-center justify-between rounded-md bg-[#1C6758] p-1 text-white'
 							>
 								<p>
-									ID: {booking.id} | Студия: {booking.studio.name} | Дата:{' '}
+									Студия: {booking.studio.name} | Дата:{' '}
 									{booking.date.toString()} | Кол-во людей:{' '}
 									{booking.people_number} | Пользователь:{' '}
 									{booking.user.fullname}, {booking.user.phone}

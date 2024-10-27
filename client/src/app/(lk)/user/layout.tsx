@@ -28,7 +28,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 				const data = await response.json()
 				setUser(data)
 			} catch (error) {
-				console.log('Ошибка при получении фотографа:', error)
+				console.log('Ошибка при получении пользователя:', error)
 			}
 		}
 
@@ -54,7 +54,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 					.then(response => response.json())
 					.then(data => {
 						if (data.role == 'admin') {
-							setIsUser(true)
+							setIsUser(false)
 							router.push('/admin')
 						} else if (data.role == 'user') {
 							setIsUser(true)

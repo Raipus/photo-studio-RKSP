@@ -41,7 +41,7 @@ export default function SignupPage() {
 			setCookie('refresh_token', data1.refreshToken, {
 				maxAge: 60 * 60 * 24 * 7
 			})
-			router.push('/userID')
+			router.push('/user')
 		}
 	}
 	return (

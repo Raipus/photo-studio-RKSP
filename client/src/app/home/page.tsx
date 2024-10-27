@@ -120,16 +120,13 @@ const HomePage = () => {
 						{studios.map(studio => (
 							<div
 								key={studio.id}
-								className='mr-12 h-[300px] min-w-[400px] max-w-[400px] rounded-3xl bg-[#1C6758] p-4'
+								className='mb-3 mr-12 h-[320px] min-w-[400px] max-w-[400px] rounded-3xl bg-[#1C6758] p-4'
 							>
-								<div>
-									<h3 className='mb-10 text-4xl'>{studio.name}</h3>
-								</div>
-								<div>
-									<p className='mb-5'>Описание: {studio.description}</p>
-									<p className='mb-5'>Локация: {studio.location}</p>
-									<p className='mb-5'>Цена (за час): {studio.cost}</p>
-								</div>
+								<h3 className='mb-5 text-4xl'>{studio.name}</h3>
+								<h3 className='mb-10 text-2xl'>Номер студии: {studio.id}</h3>
+								<p className='mb-5'>Описание: {studio.description}</p>
+								<p className='mb-5'>Локация: {studio.location}</p>
+								<p className='mb-5'>Цена (за час): {studio.cost}</p>
 							</div>
 						))}
 					</div>
@@ -144,9 +141,12 @@ const HomePage = () => {
 						{photographers.map(photographer => (
 							<div
 								key={photographer.id}
-								className='mr-12 h-[300px] min-w-[400px] max-w-[600px] rounded-3xl bg-[#1C6758] p-4'
+								className='mb-3 mr-12 h-[300px] min-w-[400px] max-w-[600px] rounded-3xl bg-[#1C6758] p-4'
 							>
-								<h3 className='mb-10 text-4xl'>{photographer.fullname}</h3>
+								<h3 className='mb-5 text-4xl'>{photographer.fullname}</h3>
+								<h3 className='mb-10 text-2xl'>
+									Номер фотографа: {photographer.id}
+								</h3>
 								<p className='mb-5'>Опыт работы: {photographer.work_exp}</p>
 								<p className='mb-5'>Цена (за час): {photographer.cost}</p>
 							</div>
