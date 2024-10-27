@@ -27,7 +27,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: 'Алексей', description: 'Имя' }),
+    (0, swagger_1.ApiProperty)({ example: 'Иванов Алексей Валерьевич', description: 'ФИО' }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Photographer.prototype, "fullname", void 0);
@@ -40,7 +40,10 @@ __decorate([
 ], Photographer.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.IsPhoneNumber)(),
-    (0, swagger_1.ApiProperty)({ example: '+7 (985) 242-52-64', description: 'Телефон (Альтернативный логин)' }),
+    (0, swagger_1.ApiProperty)({
+        example: '+7 (985) 242-52-64',
+        description: 'Телефон (Альтернативный логин)',
+    }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Photographer.prototype, "phone", void 0);
@@ -74,13 +77,20 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ example: '1600', description: 'Стоимость услуг за час в рублях' }),
+    (0, swagger_1.ApiProperty)({
+        example: '1600',
+        description: 'Стоимость услуг за час в рублях',
+    }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Photographer.prototype, "cost", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: [1, 4], description: 'ID всех бронь, где заказаны услуги данного фотографа', type: () => booking_entity_1.Booking }),
-    (0, typeorm_1.OneToMany)(() => booking_entity_1.Booking, bookings => bookings.photographer),
+    (0, swagger_1.ApiProperty)({
+        example: [1, 4],
+        description: 'ID всех бронь, где заказаны услуги данного фотографа',
+        type: () => booking_entity_1.Booking,
+    }),
+    (0, typeorm_1.OneToMany)(() => booking_entity_1.Booking, (bookings) => bookings.photographer),
     __metadata("design:type", Array)
 ], Photographer.prototype, "bookings", void 0);
 exports.Photographer = Photographer = __decorate([

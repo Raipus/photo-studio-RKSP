@@ -1,4 +1,4 @@
-import { Booking } from "src/bookings/booking.entity";
+import { Booking } from 'src/bookings/booking.entity';
 export declare class Photographer {
     id: number;
     fullname: string;

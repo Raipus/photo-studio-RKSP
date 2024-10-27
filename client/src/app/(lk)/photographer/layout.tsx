@@ -7,7 +7,7 @@ import { getJwt } from '@/utils/auth/getJwt'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
 	const router = useRouter()
-	const [isAdmin, setIsAdmin] = useState(false)
+	const [isPhotographer, setIsPhotographer] = useState(false)
 
 	useEffect(() => {
 		async function RoleCheck() {
@@ -28,14 +28,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 					.then(response => response.json())
 					.then(data => {
 						if (data.role == 'admin') {
-							setIsAdmin(true)
+							setIsPhotographer(true)
+							router.push('/admin')
 						} else if (data.role == 'user') {
-							setIsAdmin(false)
+							setIsPhotographer(false)
 							router.push('/user')
 						} else if (data.role == 'photographer') {
-							setIsAdmin(true)
+							setIsPhotographer(true)
 						} else {
-							setIsAdmin(false)
+							setIsPhotographer(false)
 							router.push('/signin')
 						}
 					})
@@ -48,7 +49,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 		RoleCheck()
 	}, [router])
 
-	return <div style={{ height: '100vh' }}>{isAdmin ? children : null}</div>
+	return (
+		<div style={{ height: '100vh' }}>{isPhotographer ? children : null}</div>
+	)
 }
 
 export default Layout

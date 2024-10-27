@@ -57,7 +57,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 			{isAdmin ? (
 				<div className='min-w-screen min-h-screen items-center justify-items-center font-[family-name:var(--font-roboto-mono)] text-lg'>
 					<Header />
-					<label className='mt-28 grid place-content-center pb-9 text-4xl'>
+					<label className='mt-28 grid place-content-center pb-9 text-4xl uppercase'>
 						Админ панель
 					</label>
 					<div className='grid place-content-center bg-[#1C6758]'>

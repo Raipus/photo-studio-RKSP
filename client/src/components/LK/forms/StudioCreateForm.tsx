@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import {
-	FieldErrors,
-	UseFormHandleSubmit,
-	UseFormRegister
-} from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { IBookingCreate } from '@/utils/interfaces'
+import { IStudioCreate } from '@/utils/interfaces'
 
-interface BookingModalProps {
+interface StudioModalProps {
 	isOpen: boolean
 	onClose: () => void
-	onSubmit: (data: IBookingCreate) => Promise<void>
-	register: UseFormRegister<IBookingCreate>
-	errors: FieldErrors<IBookingCreate>
-	handleSubmit: UseFormHandleSubmit<IBookingCreate, undefined>
+	onSubmit: SubmitHandler<IStudioCreate>
 }
 
-const BookingUpdateForm: React.FC<BookingModalProps> = ({
+const StudioCreateForm: React.FC<StudioModalProps> = ({
 	isOpen,
 	onClose,
-	onSubmit,
-	register,
-	errors,
-	handleSubmit
+	onSubmit
 }) => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm<IStudioCreate>()
 	const [isAnimating, setIsAnimating] = useState(false)
 
 	useEffect(() => {
@@ -65,7 +60,7 @@ const BookingUpdateForm: React.FC<BookingModalProps> = ({
 			<div
 				className={`w-96 transform rounded-lg bg-[#FFFFFF] p-6 shadow-lg transition-transform duration-500 dark:bg-[#111111] ${isAnimating ? 'scale-90' : 'scale-100'}`}
 			>
-				<h2 className='mb-4 text-xl font-semibold'>Изменить бронь</h2>
+				<h2 className='mb-4 text-xl font-semibold'>Создать студию</h2>
 				<button
 					className='absolute right-3 top-1 scale-110 text-gray-500 transition-transform duration-500 hover:scale-150'
 					onClick={closeModal}
@@ -74,77 +69,60 @@ const BookingUpdateForm: React.FC<BookingModalProps> = ({
 				</button>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<label className='mb-2 block'>
-						Дата:
+						Название:
 						<input
-							type='date'
-							{...register('date', { required: true })}
+							type='text'
+							placeholder='Уютный камин'
 							className='mt-1 block w-full rounded-md border p-2 text-black'
+							{...register('name', {
+								required: true
+							})}
 						/>
-						{errors.date && (
+						{errors.name && (
 							<span className='text-red-500'>Это поле обязательно</span>
 						)}
 					</label>
 					<label className='mb-2 block'>
-						Кол-во людей:
+						Локация:
 						<input
-							type='number'
-							placeholder='1'
-							{...register('people_number', {
-								required: true,
-								min: 1,
-								valueAsNumber: true
-							})}
+							type='text'
+							placeholder='г. Москва, Ленинский проспект, д. 6'
 							className='mt-1 block w-full rounded-md border p-2 text-black'
+							{...register('location', {
+								required: true
+							})}
 						/>
-						{errors.people_number && (
+						{errors.location && (
 							<span className='text-red-500'>Это поле обязательно</span>
 						)}
 					</label>
 					<label className='mb-2 block'>
-						ID студии:
+						Описание:
 						<input
-							type='number'
-							placeholder='1'
-							{...register('studio_id', {
-								required: true,
-								min: 1,
-								valueAsNumber: true
-							})}
+							type='text'
+							placeholder='Помещение с красивым уютным камином'
 							className='mt-1 block w-full rounded-md border p-2 text-black'
+							{...register('description', {
+								required: true
+							})}
 						/>
-						{errors.studio_id && (
+						{errors.description && (
 							<span className='text-red-500'>Это поле обязательно</span>
 						)}
 					</label>
 					<label className='mb-2 block'>
-						ID пользователя:
+						Цена:
 						<input
 							type='number'
-							placeholder='1'
-							{...register('user_id', {
+							placeholder='1000'
+							className='mt-1 block w-full rounded-md border p-2 text-black'
+							{...register('cost', {
 								required: true,
 								min: 1,
 								valueAsNumber: true
 							})}
-							className='mt-1 block w-full rounded-md border p-2 text-black'
 						/>
-						{errors.user_id && (
-							<span className='text-red-500'>Это поле обязательно</span>
-						)}
-					</label>
-					<label className='mb-2 block'>
-						ID фотографа:
-						<input
-							type='number'
-							placeholder='1'
-							{...register('photographer_id', {
-								required: true,
-								min: 1,
-								valueAsNumber: true
-							})}
-							className='mt-1 block w-full rounded-md border p-2 text-black'
-						/>
-						{errors.photographer_id && (
+						{errors.cost && (
 							<span className='text-red-500'>Это поле обязательно</span>
 						)}
 					</label>
@@ -152,7 +130,7 @@ const BookingUpdateForm: React.FC<BookingModalProps> = ({
 						type='submit'
 						className='mt-4 w-full rounded-md bg-[#3D8361] p-2 text-white duration-300 hover:bg-[#2F6A4E]'
 					>
-						Изменить бронь
+						Создать студию
 					</button>
 				</form>
 			</div>
@@ -160,4 +138,4 @@ const BookingUpdateForm: React.FC<BookingModalProps> = ({
 	)
 }
 
-export default BookingUpdateForm
+export default StudioCreateForm

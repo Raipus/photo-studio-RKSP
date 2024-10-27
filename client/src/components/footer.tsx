@@ -4,7 +4,10 @@ import Link from 'next/link'
 
 const Footer = () => {
 	return (
-		<div className='flex h-auto w-full flex-col items-center justify-center bg-[#FFFFFF] pb-5 pt-24 dark:bg-[#111111]'>
+		<div
+			id='contacts'
+			className='flex h-auto w-full flex-col items-center justify-center bg-[#FFFFFF] pb-5 pt-24 dark:bg-[#111111]'
+		>
 			<div className='order-1 flex w-[1300px] items-end justify-between pb-[50px]'>
 				<p className='w-[650px] font-[family-name:var(--font-inter)] text-4xl font-bold'>
 					Дайте волю своему творчеству в наших универсальных студийных

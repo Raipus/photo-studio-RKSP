@@ -115,19 +115,20 @@ const HomePage = () => {
 					id='studios'
 					className='grid w-[1300px] grid-cols-1 text-center'
 				>
-					<a className='text-4xl'>Наши студии:</a>
-					<div className='inline-flex max-w-full overflow-x-scroll'>
+					<a className='mb-10 mt-20 text-4xl'>Наши студии:</a>
+					<div className='inline-flex overflow-x-scroll text-white'>
 						{studios.map(studio => (
 							<div
 								key={studio.id}
-								className='mr-12 grid h-[300px] w-[400px] content-around rounded-3xl bg-[#1C6758] p-4'
+								className='mr-12 h-[300px] min-w-[400px] max-w-[400px] rounded-3xl bg-[#1C6758] p-4'
 							>
 								<div>
-									<h3 className='text-4xl'>{studio.name}</h3>
+									<h3 className='mb-10 text-4xl'>{studio.name}</h3>
 								</div>
 								<div>
-									<p>{studio.location}</p>
-									<p>{studio.cost}</p>
+									<p className='mb-5'>Описание: {studio.description}</p>
+									<p className='mb-5'>Локация: {studio.location}</p>
+									<p className='mb-5'>Цена (за час): {studio.cost}</p>
 								</div>
 							</div>
 						))}
@@ -138,16 +139,16 @@ const HomePage = () => {
 					id='photographers'
 					className='grid w-[1300px] grid-cols-1 text-center'
 				>
-					<a className='text-4xl'>Наши фотографы:</a>
-					<div className='inline-flex max-w-full overflow-x-scroll'>
+					<a className='mb-10 mt-20 text-4xl'>Наши фотографы:</a>
+					<div className='inline-flex overflow-x-scroll text-white'>
 						{photographers.map(photographer => (
 							<div
 								key={photographer.id}
-								className='mr-12 grid h-[300px] w-[400px] content-around rounded-3xl bg-[#1C6758] p-4'
+								className='mr-12 h-[300px] min-w-[400px] max-w-[600px] rounded-3xl bg-[#1C6758] p-4'
 							>
-								<h3>{photographer.fullname}</h3>
-								<p>{photographer.work_exp}</p>
-								<p>{photographer.cost}</p>
+								<h3 className='mb-10 text-4xl'>{photographer.fullname}</h3>
+								<p className='mb-5'>Опыт работы: {photographer.work_exp}</p>
+								<p className='mb-5'>Цена (за час): {photographer.cost}</p>
 							</div>
 						))}
 					</div>

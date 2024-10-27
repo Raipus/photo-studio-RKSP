@@ -29,7 +29,6 @@ __decorate([
 ], CreatePhotographerDto.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ example: 'somepassword', description: 'Пароль' }),
     __metadata("design:type", String)
 ], CreatePhotographerDto.prototype, "password", void 0);
@@ -40,7 +39,10 @@ __decorate([
 ], CreatePhotographerDto.prototype, "work_exp", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
-    (0, swagger_1.ApiProperty)({ example: '1600', description: 'Стоимость услуг за час в рублях' }),
+    (0, swagger_1.ApiProperty)({
+        example: '1600',
+        description: 'Стоимость услуг за час в рублях',
+    }),
     __metadata("design:type", Number)
 ], CreatePhotographerDto.prototype, "cost", void 0);
 //# sourceMappingURL=create-photographer.dto.js.map

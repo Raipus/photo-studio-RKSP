@@ -5,12 +5,26 @@ export interface IUser {
 	phone: string
 }
 
+export interface IUserCreate {
+	fullname: string
+	email: string
+	phone: string
+	password?: string
+}
+
 export interface IStudio {
 	id: number
 	name: string
 	location: string
 	description: string
-	cost: string
+	cost: number
+}
+
+export interface IStudioCreate {
+	name: string
+	location: string
+	description: string
+	cost: number
 }
 
 export interface IPhotographer {
@@ -18,6 +32,14 @@ export interface IPhotographer {
 	fullname: string
 	email: string
 	phone: string
+	work_exp: number
+	cost: number
+}
+
+export interface IPhotographerCreate {
+	fullname: string
+	email: string
+	password?: string
 	work_exp: number
 	cost: number
 }
