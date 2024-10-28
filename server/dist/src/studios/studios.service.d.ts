@@ -1,8 +1,8 @@
-import { HttpStatus } from "@nestjs/common";
-import { Studio } from "./studio.entity";
-import { Repository } from "typeorm";
-import { CreateStudioDto } from "./dto/create-studio.dto";
-import { Booking } from "src/bookings/booking.entity";
+import { HttpStatus } from '@nestjs/common';
+import { Studio } from './studio.entity';
+import { Repository } from 'typeorm';
+import { CreateStudioDto } from './dto/create-studio.dto';
+import { Booking } from 'src/bookings/booking.entity';
 export declare class StudiosService {
     private readonly bookingRepository;
     private readonly studioRepository;

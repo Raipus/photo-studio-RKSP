@@ -40,7 +40,7 @@ let PhotographersService = class PhotographersService {
             newPhotographer.password = await argon2.hash(photographerNew.password);
             newPhotographer.work_exp = photographerNew.work_exp;
             newPhotographer.cost = photographerNew.cost;
-            newPhotographer.role = "photographer";
+            newPhotographer.role = 'photographer';
             await this.photographerRepository.save(newPhotographer);
             return newPhotographer;
         }
@@ -60,7 +60,11 @@ let PhotographersService = class PhotographersService {
         }
     }
     async findAll() {
-        const photographers = await this.photographerRepository.find();
+        const photographers = await this.photographerRepository.find({
+            order: {
+                id: 'ASC',
+            },
+        });
         return photographers;
     }
     async update(id, updatedPhotographer) {
@@ -101,7 +105,7 @@ let PhotographersService = class PhotographersService {
     async updateToken(id, updatedPhotographer) {
         try {
             const photographer = await this.photographerRepository.findOne({
-                where: { id }
+                where: { id },
             });
             if (!photographer) {
                 throw new common_1.NotFoundException(`Фотограф с id ${id} не найден`);

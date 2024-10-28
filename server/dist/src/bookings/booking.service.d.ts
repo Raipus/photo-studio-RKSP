@@ -20,4 +20,7 @@ export declare class BookingsService {
     findAll(email: string, role: string): Promise<Booking[]>;
     update(id: number, updatedBooking: CreateBookingDto): Promise<Booking>;
     remove(id: number): Promise<HttpStatus>;
+    check(studioId: number, date: string): Promise<{
+        available: boolean;
+    }>;
 }

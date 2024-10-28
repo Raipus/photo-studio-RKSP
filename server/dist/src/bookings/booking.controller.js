@@ -23,6 +23,9 @@ let BookingsController = class BookingsController {
     constructor(BookingsService) {
         this.BookingsService = BookingsService;
     }
+    check(studioId, date) {
+        return this.BookingsService.check(studioId, date);
+    }
     findAll(req) {
         return this.BookingsService.findAll(req.user['email'], req.user['role']);
     }
@@ -41,6 +44,16 @@ let BookingsController = class BookingsController {
     }
 };
 exports.BookingsController = BookingsController;
+__decorate([
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
+    (0, swagger_1.ApiOperation)({ summary: 'Проверить доступность брони' }),
+    (0, common_1.Get)('check/:studioId/:date'),
+    __param(0, (0, common_1.Param)('studioId', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Param)('date')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String]),
+    __metadata("design:returntype", void 0)
+], BookingsController.prototype, "check", null);
 __decorate([
     (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить все брони' }),

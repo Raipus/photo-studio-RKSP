@@ -21,8 +21,8 @@ export class PhotographersService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Photographer)
     private readonly photographerRepository: Repository<Photographer>,
-//    @InjectRepository(Photo)
-//    private readonly photoRepository: Repository<Photo>,
+    //    @InjectRepository(Photo)
+    //    private readonly photoRepository: Repository<Photo>,
     @InjectRepository(Booking)
     private readonly bookingRepository: Repository<Booking>,
   ) {}
@@ -45,11 +45,10 @@ export class PhotographersService {
       newPhotographer.password = await argon2.hash(photographerNew.password);
       newPhotographer.work_exp = photographerNew.work_exp;
       newPhotographer.cost = photographerNew.cost;
-      newPhotographer.role = "photographer";
+      newPhotographer.role = 'photographer';
       await this.photographerRepository.save(newPhotographer);
       return newPhotographer;
-    } 
-    catch (error) {
+    } catch (error) {
       throw error;
     }
   }
@@ -60,9 +59,9 @@ export class PhotographersService {
         where: { email },
       });
 
-//      if (!photographer) {
-//        throw new NotFoundException(`Фотограф с почтой ${email} не найден`);
-//      }
+      //      if (!photographer) {
+      //        throw new NotFoundException(`Фотограф с почтой ${email} не найден`);
+      //      }
 
       return photographer;
     } catch (error) {
@@ -71,7 +70,11 @@ export class PhotographersService {
   }
 
   async findAll(): Promise<Photographer[]> {
-    const photographers = await this.photographerRepository.find();
+    const photographers = await this.photographerRepository.find({
+      order: {
+        id: 'ASC',
+      },
+    });
     return photographers;
   }
 
@@ -119,24 +122,26 @@ export class PhotographersService {
     }
   }
 
-  async updateToken(id: number, updatedPhotographer: UpdateTokenDto): Promise<Photographer> {
-    try{
-        const photographer = await this.photographerRepository.findOne({
-            where: { id }
-        });
+  async updateToken(
+    id: number,
+    updatedPhotographer: UpdateTokenDto,
+  ): Promise<Photographer> {
+    try {
+      const photographer = await this.photographerRepository.findOne({
+        where: { id },
+      });
 
-        if (!photographer) {
-            throw new NotFoundException(`Фотограф с id ${id} не найден`);
-        }
+      if (!photographer) {
+        throw new NotFoundException(`Фотограф с id ${id} не найден`);
+      }
 
-        photographer.refreshToken = updatedPhotographer.refreshToken;
-        
-        await this.photographerRepository.save(photographer);
+      photographer.refreshToken = updatedPhotographer.refreshToken;
 
-        return photographer;
+      await this.photographerRepository.save(photographer);
+
+      return photographer;
+    } catch (error) {
+      throw error;
     }
-    catch(error){
-        throw error;
-    }
-}
+  }
 }

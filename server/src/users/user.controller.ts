@@ -34,7 +34,7 @@ export class UsersController {
     return this.UsersService.findIncomplete();
   }
 
-  //@UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard)
   @ApiOperation({ summary: 'Получить всех пользователей' })
   @Get()
   findAll() {

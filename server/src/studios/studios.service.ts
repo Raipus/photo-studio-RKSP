@@ -1,91 +1,92 @@
-import { HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
-import { Studio } from "./studio.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { In, Repository } from "typeorm";
-import { CreateStudioDto } from "./dto/create-studio.dto";
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Studio } from './studio.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { In, Repository } from 'typeorm';
+import { CreateStudioDto } from './dto/create-studio.dto';
 //import { Photo } from "src/photos/photo.entity";
-import { Booking } from "src/bookings/booking.entity";
+import { Booking } from 'src/bookings/booking.entity';
 
-@Injectable ()
+@Injectable()
 export class StudiosService {
-    constructor (
-        @InjectRepository(Booking)
-        private readonly bookingRepository: Repository<Booking>,
-        @InjectRepository(Studio)
-        private readonly studioRepository: Repository<Studio>,
-//        @InjectRepository(Photo)
-//        private readonly photoRepository: Repository<Photo>
-    ) {}
+  constructor(
+    @InjectRepository(Booking)
+    private readonly bookingRepository: Repository<Booking>,
+    @InjectRepository(Studio)
+    private readonly studioRepository: Repository<Studio>,
+    //        @InjectRepository(Photo)
+    //        private readonly photoRepository: Repository<Photo>
+  ) {}
 
-    async create(studioNew: CreateStudioDto): Promise<Studio> {
-        const studio = this.studioRepository.create();
-        studio.name = studioNew.name;
-        studio.location = studioNew.location;
-        studio.description = studioNew.description;
-        studio.cost = studioNew.cost;
-        await this.studioRepository.save(studio);
-        return studio;
+  async create(studioNew: CreateStudioDto): Promise<Studio> {
+    const studio = this.studioRepository.create();
+    studio.name = studioNew.name;
+    studio.location = studioNew.location;
+    studio.description = studioNew.description;
+    studio.cost = studioNew.cost;
+    await this.studioRepository.save(studio);
+    return studio;
+  }
+
+  async findOne(id: number): Promise<Studio> {
+    try {
+      const studio = await this.studioRepository.findOne({ where: { id } });
+
+      if (!studio) {
+        throw new NotFoundException(`Студия с id ${id} не найдена`);
+      }
+
+      return studio;
+    } catch (error) {
+      throw error;
     }
+  }
 
-    async findOne(id: number): Promise<Studio> {
-        try{
-            const studio = await this.studioRepository.findOne({ where: { id } });
-            
-            if(!studio){
-                throw new NotFoundException(`Студия с id ${id} не найдена`);
-            }
+  async findAll(): Promise<Studio[]> {
+    const studios = await this.studioRepository.find({
+      order: {
+        id: 'ASC',
+      },
+    });
+    return studios;
+  }
 
-            return studio;
-        }
-        catch(error){
-            throw error;
-        }
+  async update(id: number, updatedStudio: CreateStudioDto): Promise<Studio> {
+    try {
+      const studio = await this.studioRepository.findOne({
+        where: { id },
+        relations: {
+          bookings: true,
+        },
+      });
+
+      if (!studio) {
+        throw new NotFoundException(`Студия с id ${id} не найдена`);
+      }
+
+      studio.name = updatedStudio.name;
+      studio.location = updatedStudio.location;
+      studio.description = updatedStudio.description;
+      studio.cost = updatedStudio.cost;
+
+      await this.studioRepository.save(studio);
+      return studio;
+    } catch (error) {
+      throw error;
     }
+  }
 
-    async findAll(): Promise<Studio[]> {
-        const studios = await this.studioRepository.find();
-        return studios;
+  async remove(id: number) {
+    try {
+      const studio = await this.studioRepository.findOne({ where: { id } });
+
+      if (!studio) {
+        throw new NotFoundException(`Студия с id ${id} не найдена`);
+      }
+
+      this.studioRepository.delete({ id });
+      return HttpStatus.OK;
+    } catch (error) {
+      throw error;
     }
-
-    async update(id: number, updatedStudio: CreateStudioDto): Promise<Studio>  {
-        try{
-            const studio = await this.studioRepository.findOne({
-                where: { id },
-                relations: {
-                    bookings:true
-                }
-            });
-
-            if(!studio){
-                throw new NotFoundException(`Студия с id ${id} не найдена`);
-            }
-            
-            studio.name = updatedStudio.name;
-            studio.location = updatedStudio.location;
-            studio.description = updatedStudio.description;
-            studio.cost = updatedStudio.cost;
-
-            await this.studioRepository.save(studio);
-            return studio;
-        }
-        catch(error){
-            throw error;
-        }
-    }
-
-    async remove(id: number) {
-        try{
-            const studio = await this.studioRepository.findOne({where: { id }});
-            
-            if(!studio){
-                throw new NotFoundException(`Студия с id ${id} не найдена`);
-            }
-
-            this.studioRepository.delete({id});
-            return HttpStatus.OK;
-        }
-        catch(error){
-            throw error;
-        }
-    }
+  }
 }

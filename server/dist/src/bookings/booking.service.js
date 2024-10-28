@@ -63,8 +63,14 @@ let BookingsService = class BookingsService {
             }
             booking.photographer = photographer;
         }
-        await this.bookingRepository.save(booking);
-        return booking;
+        const isAvailable = await this.check(bookingDto.studio_id, bookingDto.date);
+        if (isAvailable.available) {
+            await this.bookingRepository.save(booking);
+            return booking;
+        }
+        else {
+            throw new common_1.BadRequestException(`Студия ${booking.studio.name} уже забронирована на время ${booking.date}!`);
+        }
     }
     async findOne(id) {
         try {
@@ -92,6 +98,9 @@ let BookingsService = class BookingsService {
                     user: true,
                     studio: true,
                     photographer: true,
+                },
+                order: {
+                    id: 'ASC',
                 },
             });
             if (!bookings) {
@@ -200,6 +209,31 @@ let BookingsService = class BookingsService {
             }
             this.bookingRepository.delete({ id });
             return common_1.HttpStatus.OK;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    async check(studioId, date) {
+        try {
+            let isAvailable = false;
+            const studio = await this.studioRepository.findOne({
+                where: { id: studioId },
+            });
+            const booking = await this.bookingRepository.findOne({
+                where: {
+                    studio,
+                    date,
+                },
+            });
+            if (booking) {
+                isAvailable = false;
+                return { available: isAvailable };
+            }
+            else {
+                isAvailable = true;
+                return { available: isAvailable };
+            }
         }
         catch (error) {
             throw error;

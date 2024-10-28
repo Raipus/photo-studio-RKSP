@@ -51,7 +51,18 @@ export default function AdminBookingsPage() {
 							position: 'top-center',
 							autoClose: 2000
 						})
-					} else setBookings(data)
+					} else {
+						setBookings(data)
+						toast.success(`Бронь успешно создана!`, {
+							position: 'top-center',
+							autoClose: 2000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined
+						})
+					}
 				} catch (error) {
 					console.error('Ошибка при получении броней:', error)
 				}

@@ -24,6 +24,16 @@ export class BookingsController {
   constructor(private readonly BookingsService: BookingsService) {}
 
   @UseGuards(AccessTokenGuard)
+  @ApiOperation({ summary: 'Проверить доступность брони' })
+  @Get('check/:studioId/:date')
+  check(
+    @Param('studioId', ParseIntPipe) studioId: number,
+    @Param('date') date: string,
+  ) {
+    return this.BookingsService.check(studioId, date);
+  }
+
+  @UseGuards(AccessTokenGuard)
   @ApiOperation({ summary: 'Получить все брони' })
   @Get()
   findAll(@Req() req: Request) {

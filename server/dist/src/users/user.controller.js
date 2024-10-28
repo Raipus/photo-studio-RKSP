@@ -63,6 +63,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "findIncomplete", null);
 __decorate([
+    (0, common_1.UseGuards)(accessToken_guard_1.AccessTokenGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Получить всех пользователей' }),
     (0, common_1.Get)(),
     __metadata("design:type", Function),

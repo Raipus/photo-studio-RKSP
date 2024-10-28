@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { getJwt } from '@/utils/auth/getJwt'
 import { IBookingCreate } from '@/utils/interfaces'
 
 interface BookingModalProps {
@@ -17,9 +18,39 @@ const BookingCreateForm: React.FC<BookingModalProps> = ({
 	const {
 		register,
 		handleSubmit,
+		watch,
 		formState: { errors }
 	} = useForm<IBookingCreate>()
 	const [isAnimating, setIsAnimating] = useState(false)
+	const date = watch('date')
+	const studioId = watch('studio_id')
+	const [isAvailable, setIsAvailable] = React.useState(null)
+
+	const checkAvailability = async () => {
+		if (!date || !studioId) return null
+
+		try {
+			let accessToken = (await getJwt()).access
+			const response = await fetch(
+				`http://localhost:3001/bookings/check/${studioId}/${date}`,
+				{
+					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+						'Cache-Control': 'no-cache'
+					}
+				}
+			)
+			const data = await response.json()
+			setIsAvailable(data.available)
+		} catch (error) {
+			console.error('Ошибка при проверке доступности:', error)
+		}
+	}
+
+	useEffect(() => {
+		checkAvailability()
+	}, [date, studioId])
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -110,6 +141,12 @@ const BookingCreateForm: React.FC<BookingModalProps> = ({
 						{errors.studio_id && (
 							<span className='text-red-500'>Это поле обязательно</span>
 						)}
+						{isAvailable !== null && (
+							<p className={isAvailable ? 'text-green-400' : 'text-red-400'}>
+								Студия {isAvailable ? 'доступна' : 'недоступна'} на выбранную
+								дату.
+							</p>
+						)}
 					</label>
 					<label className='mb-2 block'>
 						ID пользователя:
@@ -145,7 +182,8 @@ const BookingCreateForm: React.FC<BookingModalProps> = ({
 					</label>
 					<button
 						type='submit'
-						className='mt-4 w-full rounded-md bg-[#3D8361] p-2 text-white duration-300 hover:bg-[#2F6A4E]'
+						className={`mt-4 w-full rounded-md bg-[#3D8361] p-2 text-white duration-300 hover:bg-[#2F6A4E] ${isAvailable === false ? 'cursor-not-allowed opacity-50' : ''}`}
+						disabled={isAvailable === false}
 					>
 						Создать бронь
 					</button>

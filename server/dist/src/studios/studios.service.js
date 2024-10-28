@@ -45,7 +45,11 @@ let StudiosService = class StudiosService {
         }
     }
     async findAll() {
-        const studios = await this.studioRepository.find();
+        const studios = await this.studioRepository.find({
+            order: {
+                id: 'ASC',
+            },
+        });
         return studios;
     }
     async update(id, updatedStudio) {
@@ -53,8 +57,8 @@ let StudiosService = class StudiosService {
             const studio = await this.studioRepository.findOne({
                 where: { id },
                 relations: {
-                    bookings: true
-                }
+                    bookings: true,
+                },
             });
             if (!studio) {
                 throw new common_1.NotFoundException(`Студия с id ${id} не найдена`);
