@@ -61,14 +61,16 @@ let AuthService = class AuthService {
         }
     }
     async logout(userId, role) {
-        if (role == "user" || role == "admin")
+        if (role == 'user' || role == 'admin')
             return this.usersService.updateToken(userId, { refreshToken: null });
         else {
-            return this.photographerService.updateToken(userId, { refreshToken: null });
+            return this.photographerService.updateToken(userId, {
+                refreshToken: null,
+            });
         }
     }
     async getUserInfo(email, role) {
-        if (role == "user" || role == "admin")
+        if (role == 'user' || role == 'admin')
             return this.usersService.findOne(email);
         else {
             return this.photographerService.findOne(email);
@@ -79,10 +81,14 @@ let AuthService = class AuthService {
     }
     async updateRefreshToken(userId, refreshToken, role) {
         const hashedRefreshToken = await this.hashData(refreshToken);
-        if (role == "user" || role == "admin")
-            await this.usersService.updateToken(userId, { refreshToken: hashedRefreshToken });
+        if (role == 'user' || role == 'admin')
+            await this.usersService.updateToken(userId, {
+                refreshToken: hashedRefreshToken,
+            });
         else {
-            await this.photographerService.updateToken(userId, { refreshToken: hashedRefreshToken });
+            await this.photographerService.updateToken(userId, {
+                refreshToken: hashedRefreshToken,
+            });
         }
     }
     async getTokens(userId, email, role) {
